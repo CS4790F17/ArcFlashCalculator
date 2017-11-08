@@ -150,7 +150,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BatteryController.cs" />
+    <Compile Include="Controllers\CapacitorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SubRFController.cs" />
     <Compile Include="Controllers\UserInputs60HzController.cs" />
     <Compile Include="Controllers\UserInputsDCsController.cs" />
     <Compile Include="Global.asax.cs">
@@ -223,6 +226,9 @@
     <Content Include="Views\UserInputsDCs\Details.cshtml" />
     <Content Include="Views\UserInputsDCs\Edit.cshtml" />
     <Content Include="Views\UserInputsDCs\Index.cshtml" />
+    <Content Include="Views\SubRF\Index.cshtml" />
+    <Content Include="Views\Battery\Index.cshtml" />
+    <Content Include="Views\Capacitor\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
