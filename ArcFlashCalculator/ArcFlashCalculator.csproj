@@ -223,6 +223,7 @@
     <Content Include="Views\UserInputsDCs\Details.cshtml" />
     <Content Include="Views\UserInputsDCs\Edit.cshtml" />
     <Content Include="Views\UserInputsDCs\Index.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
