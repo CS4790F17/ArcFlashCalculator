@@ -28,7 +28,10 @@ namespace ArcFlashCalculator.Models
         public Object data { get; set; }
     }
 
-    public class Status
+    /// <summary>
+    /// This class provides several constants for setting status/error codes.
+    /// </summary>
+    public class StatusCode
     {        
         public const int GOOD = 0;
         public const int DATABASE_CONNECTION_FAILED = 1;
