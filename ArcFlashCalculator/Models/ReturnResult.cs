@@ -26,8 +26,10 @@ namespace ArcFlashCalculator.Models
         /// The data to be passed around (if no errors occur).
         /// </summary>
         public Object data { get; set; }
+    }
 
-        
+    public class Status
+    {        
         public const int GOOD = 0;
         public const int DATABASE_CONNECTION_FAILED = 1;
         public const int CORRUPTED_DATA = 2;
