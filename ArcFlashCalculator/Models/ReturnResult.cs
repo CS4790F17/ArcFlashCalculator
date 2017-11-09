@@ -14,8 +14,6 @@ namespace ArcFlashCalculator.Models
     {
         /// <summary>
         /// The error code produced (if any).
-        /// 0 = all clear, no errors
-        /// 1 = error, see error message
         /// </summary>
         public int ErrCode { get; set; }
 
@@ -28,5 +26,11 @@ namespace ArcFlashCalculator.Models
         /// The data to be passed around (if no errors occur).
         /// </summary>
         public Object data { get; set; }
+
+        
+        public const int GOOD = 0;
+        public const int DATABASE_CONNECTION_FAILED = 1;
+        public const int CORRUPTED_DATA = 2;
+        public const int GENERAL_ERROR = 3;        
     }
 }
