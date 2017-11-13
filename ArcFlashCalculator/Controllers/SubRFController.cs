@@ -11,7 +11,8 @@ namespace ArcFlashCalculator.Controllers
         // GET: SubRF
         public ActionResult Index()
         {
-            return View();
+            Models.SubRF subRF = new Models.SubRF();
+            return View(subRF);
         }
     }
 }
