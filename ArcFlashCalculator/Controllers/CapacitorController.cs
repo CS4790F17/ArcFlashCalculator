@@ -11,7 +11,8 @@ namespace ArcFlashCalculator.Controllers
         // GET: Capacity
         public ActionResult Index()
         {
-            return View();
+            Models.Capacitors capacitors = new Models.Capacitors();
+            return View(capacitors);
         }
     }
 }
