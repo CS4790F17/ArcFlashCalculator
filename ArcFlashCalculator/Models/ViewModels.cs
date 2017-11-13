@@ -31,15 +31,15 @@ namespace ArcFlashCalculator.Models
             ConduitTypeList.Add("Steel");
         }
         //Lists for populating combo boxes
-        public List<String> EquipmentList = new List<string>();
-        public List<String> WorkModeList = new List<string>();
-        public List<String> ConductTypeList = new List<string>();
-        public List<String> ConduitTypeList = new List<string>();
+        public List<string> EquipmentList = new List<string>();
+        public List<string> WorkModeList = new List<string>();
+        public List<string> ConductTypeList = new List<string>();
+        public List<string> ConduitTypeList = new List<string>();
 
         //Variables that get assigned
         public UserInputs60Hz Inputs { get; set; }
-        public String EquipmentType { get; set; }
-        public String WorkMode { get; set; }
+        public string EquipmentType { get; set; }
+        public string WorkMode { get; set; }
         public bool CalcImpedance { get; set; }
         public double CableLength { get; set; }
         public double ConductorSize { get; set; }
@@ -60,11 +60,11 @@ namespace ArcFlashCalculator.Models
         }
 
         //Lists for populating combo boxes
-        public List<String> WorkModeList = new List<string>();
+        public List<string> WorkModeList = new List<string>();
 
         //Variables that get assigned
         public UserInputsDC Inputs { get; set; }
-        public String WorkMode { get; set; }
+        public string WorkMode { get; set; }
     }
 
     public class Capacitors
@@ -79,12 +79,12 @@ namespace ArcFlashCalculator.Models
         }
 
         //Lists for populating combo boxes
-        public List<String> WorkModeList = new List<string>();
+        public List<string> WorkModeList = new List<string>();
 
         //Variables that get assigned
         public int CapicitorVal { get; set; }
         public int Voltage { get; set; }
-        public String WorkMode { get; set; }
+        public string WorkMode { get; set; }
     }
 
     public class SubRF
@@ -99,13 +99,41 @@ namespace ArcFlashCalculator.Models
         }
 
         //Lists for populating combo boxes
-        public List<String> WorkModeList = new List<string>();
+        public List<string> WorkModeList = new List<string>();
 
         //Variables that get assigned
         public int ExpACVoltage { get; set; }
         public int AvailSCC { get; set; }
         public decimal DurofExp { get; set; }
-        public String WorkMode { get; set; }
+        public string WorkMode { get; set; }
+    }
+
+    public class Battery
+    {
+        public Battery()
+        {
+            //Assign defaults to each list
+            WorkModeList.Add("Option1");
+            WorkModeList.Add("Option2");
+            WorkModeList.Add("Option3");
+            WorkModeList.Add("Option4");
+
+            BatteryTypeList.Add("Option1");
+            BatteryTypeList.Add("Option2");
+            BatteryTypeList.Add("Option3");
+            BatteryTypeList.Add("Option4");
+        }
+
+        //Lists for populating combo boxes
+        public List<string> WorkModeList = new List<string>();
+        public List<string> BatteryTypeList = new List<string>();
+
+        //Variables that get assigned
+        public string BatteryType { get; set; }
+        public int Voltage { get; set; }
+        public int SCC { get; set; }
+        public decimal DurofExp { get; set; }
+        public string WorkMode { get; set; }
     }
 
     public class Login
