@@ -11,7 +11,8 @@ namespace ArcFlashCalculator.Controllers
         // GET: Battery
         public ActionResult Index()
         {
-            return View();
+            Models.Battery battery = new Models.Battery();
+            return View(battery);
         }
     }
 }
