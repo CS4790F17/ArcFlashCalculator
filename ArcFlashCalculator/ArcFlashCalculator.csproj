@@ -232,6 +232,7 @@
     <Content Include="Views\SubRF\Index.cshtml" />
     <Content Include="Views\Battery\Index.cshtml" />
     <Content Include="Views\Capacitor\Index.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
