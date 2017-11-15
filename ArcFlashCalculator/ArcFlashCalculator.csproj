@@ -152,6 +152,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BatteryController.cs" />
     <Compile Include="Controllers\CapacitorController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SubRFController.cs" />
     <Compile Include="Controllers\UserInputs60HzController.cs" />
@@ -234,6 +235,8 @@
     <Content Include="Views\Battery\Index.cshtml" />
     <Content Include="Views\Capacitor\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Shared\_AdminNavbarPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
