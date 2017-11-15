@@ -8,11 +8,11 @@ namespace ArcFlashCalculator.Controllers
 {
     public class CapacitorController : Controller
     {
-        // GET: Capacity
-        public ActionResult Index()
+        // GET: Calculate Capacitor
+        public ActionResult CalcCap()
         {
-            Models.Capacitors capacitors = new Models.Capacitors();
-            return View(capacitors);
+            Models.Capacitors capacitor = new Models.Capacitors();
+            return View(capacitor);
         }
     }
 }

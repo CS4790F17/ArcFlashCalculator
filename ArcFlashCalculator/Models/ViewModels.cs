@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -7,6 +8,60 @@ namespace ArcFlashCalculator.Models
 {
     public class ViewModels
     {
+        public static List<UserInputs60Hz> GetAllUserInputs60Hz()
+        {
+            return DataLink.GetAllUserInputs60Hz();
+        }
+
+        public static void CreateUserInputs60Hz(UserInputs60Hz ui)
+        {
+            DataLink.CreateUserInputs60Hz(ui);
+        }
+
+        public static void DeleteUserInputs60Hz(int? id)
+        {
+            DataLink.DeleteUserInputs60Hz(id);
+        }
+
+        public static List<UserInputsDC> GetAllUserInputsDC()
+        {
+            return DataLink.GetAllUserInputsDC();
+        }
+
+        public static void CreateUserInputsDC(UserInputsDC ui)
+        {
+            DataLink.CreateUserInputsDC(ui);
+        }
+
+        public static void DeleteUserInputsDC(int? id)
+        {
+            DataLink.DeleteUserInputsDC(id);
+        }
+
+        public static List<Users> GetAllUsers()
+        {
+            return DataLink.GetAllUsers();
+        }
+
+        public static Users GetUser(int? id)
+        {
+            return DataLink.GetUser(id);
+        }
+
+        public static void CreateUser(Users u)
+        {
+            DataLink.CreateUser(u);
+        }
+
+        public static void DeleteUser(int? id)
+        {
+            DataLink.DeleteUser(id);
+        }
+
+        public static void UpdateUser(Users u, EntityState Modified)
+        {
+            DataLink.UpdateUser(u, Modified);
+        }
     }
 
     public class Power60Hz {

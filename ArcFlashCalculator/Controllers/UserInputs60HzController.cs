@@ -21,6 +21,13 @@ namespace ArcFlashCalculator.Controllers
             return View(power60Hz);
         }
 
+        // GET: Create a UserInputs60Hz
+        public ActionResult Calc60Hz()
+        {
+            Models.Power60Hz power60Hz = new Models.Power60Hz();
+            return View(power60Hz);
+        }
+
         // GET: UserInputs60Hz/Details/5
         public ActionResult Details(int? id)
         {

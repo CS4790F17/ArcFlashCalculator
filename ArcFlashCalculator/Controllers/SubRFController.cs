@@ -8,11 +8,11 @@ namespace ArcFlashCalculator.Controllers
 {
     public class SubRFController : Controller
     {
-        // GET: SubRF
-        public ActionResult Index()
+        // GET: Calculate SUBRF
+        public ActionResult CalcSubRF()
         {
-            Models.SubRF subRF = new Models.SubRF();
-            return View(subRF);
+            Models.SubRF powerSubRF = new Models.SubRF();
+            return View(powerSubRF);
         }
     }
 }
