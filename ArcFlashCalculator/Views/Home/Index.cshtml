@@ -77,3 +77,24 @@
     <p class="">Specialized system knowledge and methods may be necessary to calculate the shock and arc flash boundaries for some non-typical electrical equipment found in the workplace, such as DC or capacitor systems, as methods are not available in existing codes and standards.</p>
 
 </div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        var dialog = bootbox.dialog({
+            title: 'Please Read',
+            message: "Personal Protective Equipment (PPE) presented in this app is based on the task tables from NFPA-70E 2012, NEC and IEEE Refereed Articles. For Tri-Services (US Army Corps of Engineers, Navy-Marines & Air Force) facilities electrical (VAC) work, consult your AHJ to determine if the principal reference for shock and arc flash boundary analysis is the UFC 3-560-01 dated May 2012.",
+            buttons: {
+                confirm: {
+                    label: "Accept",
+                    className: 'btn-success',
+                    callback: function () {
+                        console.log('accept clicked');
+                    }
+                }
+            },
+            closeButton: false,
+            onEscape: false
+        });
+    </script>
+}
