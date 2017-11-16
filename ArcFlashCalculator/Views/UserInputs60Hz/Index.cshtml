@@ -1,100 +1,13 @@
 ﻿@model IEnumerable<ArcFlashCalculator.Models.UserInputs60Hz>
-@*
-    @{
-        ViewBag.Title = "Index";
-    }
-
-    <h2>Index</h2>
-
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TransSize)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Impedance)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SCC)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FaultClearing)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Voltage)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OEInFreshAir)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IPAddress)
-            </th>
-            <th></th>
-        </tr>
-
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TransSize)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Impedance)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SCC)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FaultClearing)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Voltage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OEInFreshAir)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IPAddress)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-            </td>
-        </tr>
-    }
-
-    </table>*@
-
-@*wesley's code below here*@
-
-        
 
 <style>
     body {
-        /*padding-top: 60px; !* 60px to make the container go all the way to the bottom of the topbar *!*/
+        padding-top: 60px;
         padding-bottom: 70px;
     }
 </style>
 
 <link href="~/Content/css/main.css" rel="stylesheet" />
-
-<span  class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Hooray!"></span>
-
-
-<div class="container">
-    <h2>Simple Collapsible</h2>
-    <a href="#demo" class="btn btn-info" data-toggle="collapse">Simple collapsible</a>
-    <div id="demo" class="collapse">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    </div>
-</div>
-
-
 
 <nav id="navBtm" class="navbar navbar-default navbar-fixed-bottom hidden">
     <div class="container-fluid">
@@ -115,7 +28,7 @@
                 </p>
 
                 <div class="form-group">
-                    <label>Voltage (Vrms) <i class="icon-question-sign help-tooltip" data-title="The phase-to-phase voltage or phase-to-neutral * &radic;3 of the exposed conductor."></i>:</label>
+                    <label>Voltage (Vrms) <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="The phase-to-phase voltage or phase-to-neutral * &radic;3 of the exposed conductor."></span>:</label>
                     <input class="form-control" id="voltage-input" type="number" />
                 </div>
 
@@ -138,12 +51,12 @@
                 </div>
 
                 <div class="form-group" id="short-circuit-current-field">
-                    <label>Short Circuit Current (kA) <i class="icon-question-sign help-tooltip" data-title="Refer to upstream Circuit Breaker specifications."></i>:</label>
+                    <label>Short Circuit Current (kA) <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Refer to upstream Circuit Breaker specifications."></span>:</label>
                     <input class="form-control" id="short-circuit-current-input" type="number" />
                 </div>
 
                 <div class="form-group" id="fault-clearning-time-field">
-                    <label>Fault Clearing Time (seconds) <i class="icon-question-sign help-tooltip" data-title="Refer to upstream Circuit Breaker specifications."></i>:</label>
+                    <label>Fault Clearing Time (seconds) <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Refer to upstream Circuit Breaker specifications."></span>:</label>
                     <input class="form-control" id="fault-clearing-time-input" type="number" />
                 </div>
 
@@ -212,63 +125,56 @@
             </p>
 
             <div class="section">
-                <h3>Shock Boundaries</h3>
-                <div class="row results">
+                <h3 href="#shockboundaries" data-toggle="collapse">Shock Boundaries</h3>
+                <div id="shockboundaries" class="row results collapse in">
                     <div class="col-md-4">
                         <div id="restricted-approach-display" class="display"></div>
                         <h6>
                             Restricted Approach
-                            <i id="restricted-approach-help" class="icon-question-sign help-tooltip"
-                                data-title="Distance from an exposed conductor within which there is an increased risk of shock
-            due to electrical arc over combined with inadvertent movement. PPE required."></i>
+                            <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Distance from an exposed conductor within which there is an increased risk of shock
+            due to electrical arc over combined with inadvertent movement. PPE required."></span>
                         </h6>
                     </div>
                     <div class="col-md-4">
                         <div id="prohibited-approach-display" class="display"></div>
                         <h6>
                             Prohibited Approach
-                            <i id="prohibited-approach-help" class="icon-question-sign help-tooltip"
-                                data-title="Distance from an exposed conductor within which work is considered the same as making contact with the electrical conductor or circuit part."></i>
+                            <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Distance from an exposed conductor within which work is considered the same as making contact with the electrical conductor or circuit part."></span>
                         </h6>
                     </div>
                     <div class="col-md-4">
                         <div id="limited-approach-fixed-circuit-display" class="display"></div>
                         <h6>
                             Limited Approach Fixed Circuit Part
-                            <i id="limited-approach-help" class="icon-question-sign help-tooltip"
-                                data-title="Distance from an exposed conductor within which a shock hazard exists. Training or escort required."></i>
+                            <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Distance from an exposed conductor within which a shock hazard exists. Training or escort required."></span>
                         </h6>
                     </div>
                 </div>
             </div>
 
             <div class="section">
-                <h3>Safety Requirements</h3>
-                <div class="row results">
+                <h3 href="#safetyrequirements" data-toggle="collapse">Safety Requirements</h3>
+                <div id="safetyrequirements"class="row results collapse in">
                     <div class="col-md-6">
                         <div id="safety-req-workers-display" class="display"></div><h6>
-                            Workers <i class="icon-question-sign help-popover"
-                                        data-title="Workers Definitions"
-                                        data-content="<strong>Alone</strong> - No other workers required.<br/>
-                        <strong>Two Person</strong> - An additional worker qualified to work on energized circuits, understanding the work activities and the hazards present, and trained to know what to do in case of an electrical accident involving the other worker. Must be within eyesight of the hazardous task.<br/>
-                        <strong>Safety Watch</strong> - The safety watch should be a worker qualified to work on energized circuits who accepts responsibility for monitoring qualified worker(s) performing high-hazard electrical work. Must be actively working with/beside the primary worker and have the same PPE and training."></i>
+                            Workers <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="popover" title="Workers Definitions" data-content="Alone - No other workers required.
+                        Two Person - An additional worker qualified to work on energized circuits, understanding the work activities and the hazards present, and trained to know what to do in case of an electrical accident involving the other worker. Must be within eyesight of the hazardous task.
+                        Safety Watch - The safety watch should be a worker qualified to work on energized circuits who accepts responsibility for monitoring qualified worker(s) performing high-hazard electrical work. Must be actively working with/beside the primary worker and have the same PPE and training."></span>
                         </h6>
                     </div>
                     <div class="col-md-6">
                         <div id="safety-req-work-control-display" class="display"></div><h6>
-                            Work Control <i class="icon-question-sign help-popover"
-                                            data-title="Training Definitions"
-                                            data-content="<strong>EEWP</strong> - Energized Electrical Work Permit, higher level signing authority required<br/>
-                        <strong>SOP</strong> - Standard Operating Procedure"></i>
+                            Work Control <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="popover" title="Training Definitions" data-content="EEWP - Energized Electrical Work Permit, higher level signing authority required
+                        SOP - Standard Operating Procedure"></span>
                         </h6>
                     </div>
                 </div>
             </div>
 
             <div class="section" id="arc-flash-boundaries">
-                <h3>Arc Flash Boundaries</h3>
+                <h3 href="#arcflashboundaries" data-toggle="collapse">Arc Flash Boundaries</h3>
                 <!-- <p>This analysis is based on 2012 NFPA 70E, Table 130.7(C)(15)(a).</p> -->
-                <div class="row results" id="arc-flash-boundary-display-container">
+                <div id="arcflashboundaries" class="row results collapse in" id="arc-flash-boundary-display-container">
                     <div class="col-md-4">
                         <div id="arc-flash-boundary-display" class="display">Xmm (Y")</div><h6>Enclosed Box Arc Flash Boundary</h6>
                     </div>
@@ -848,9 +754,20 @@
                         </figure>
                     </div>
         -->
+
+            @*<div class="container">
+            <h2>Simple Collapsible</h2>
+            <a href="#demo" class="btn btn-info" data-toggle="collapse">Simple collapsible</a>
+            <div id="demo"  ">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            </div>
+            </div>*@
+
             <div class="section">
-                <h3>Classes</h3>
-                <div class="row results">
+                <h3 href="#classes" data-toggle="collapse">Classes</h3>
+                <div id="classes" class="row results collapse in">
                     <div class="col-md-12"><img style="width:100%" src="~/Content/images/60hz-classes.png" /></div>
                 </div>
             </div>

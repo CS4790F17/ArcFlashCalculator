@@ -55,11 +55,8 @@ var UI = {
             // target element
             var $id = $("#results-wrapper");
 
-            // prevent standard hash navigation (avoid blinking in IE)
-            //e.preventDefault();
-
             // top position relative to the document
-            var pos = $id.offset().top;
+            var pos = $id.offset().top - 60;
 
             // animated top scrolling
             $('body, html').animate({ scrollTop: pos });
@@ -279,19 +276,22 @@ $(function () {
     $('#voltage-input, #transformer-size-input, #short-circuit-current-input, #fault-clearing-time-input').bind('textchange', UI.evaluate);
     $('#equipment-type-input, #work-mode-input').bind('change', UI.evaluate);
 
+    // make sure that the user must re-enter the work mode if they are going to adjust the voltage
+    // this will prevent the form submitting if the use is entering a multi digit number
+    jQuery('#voltage-input').on('input', function () {
+        // do your stuff
+        $('#work-mode-input').val('');
+    });
+
     // set button actions
     $('#reset-button').bind('click', UI.reset);
-
-    // help popovers
-    //$('.help-popover').popover({ html: true });
-    //$('.help-tooltip').tooltip();
 
     // when back to top link is pressed send user back to the top
     $('#backToTop').click(function () {
         $('#navBtm').addClass('hidden');
     });
 
-    // when user scrolls to top hide nav bar
+     //when user scrolls to top hide nav bar
     $(window).scroll(function () {
         var top_offset = $(window).scrollTop();
         if (top_offset == 0) {
@@ -301,13 +301,16 @@ $(function () {
 
     //$(document).scroll(function () {
     //    if ($(window).scrollTop() === 0) {
-    //        // $('#navBtm').addClass('hidden');
-    //        alert("we are at the top");
+    //        $('#navBtm').addClass('hidden');
+    //        //alert("we are at the top");
     //    } else {
-    //        alert("we are not at the top");
+    //        //alert("we are not at the top");
+    //        $('#navBtm').removeClass('hidden');
     //    }
     //});
 
     $('[data-toggle="tooltip"]').tooltip();
+
+    $('[data-toggle="popover"]').popover();
 
 });
