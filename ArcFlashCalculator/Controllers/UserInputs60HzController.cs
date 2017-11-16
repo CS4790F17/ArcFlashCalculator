@@ -17,7 +17,7 @@ namespace ArcFlashCalculator.Controllers
         // GET: UserInputs60Hz
         public ActionResult Index()
         {
-            return View(db.userInputs60Hz.ToList());
+            return View(/*db.userInputs60Hz.ToList()*/);
         }
 
         // GET: UserInputs60Hz/Details/5
