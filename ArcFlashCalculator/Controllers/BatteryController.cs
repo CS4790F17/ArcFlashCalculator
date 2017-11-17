@@ -8,8 +8,8 @@ namespace ArcFlashCalculator.Controllers
 {
     public class BatteryController : Controller
     {
-        // GET: Battery
-        public ActionResult Index()
+        // GET: Calculate Capacitor
+        public ActionResult CalcBat()
         {
             Models.Battery battery = new Models.Battery();
             return View(battery);

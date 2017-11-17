@@ -11,6 +11,85 @@ namespace ArcFlashCalculator.Models
 {
     public class DataLink
     {
+        public static List<UserInputs60Hz> GetAllUserInputs60Hz()
+        {
+            ArcCalculatorDbContext db = new ArcCalculatorDbContext();
+            List<UserInputs60Hz> uiList = db.userInputs60Hz.ToList();
+            return uiList;            
+        }
+
+        public static void CreateUserInputs60Hz(UserInputs60Hz ui)
+        {
+            ArcCalculatorDbContext db = new ArcCalculatorDbContext();
+            db.userInputs60Hz.Add(ui);
+            db.SaveChanges();
+        }
+
+        public static void DeleteUserInputs60Hz(int? id)
+        {
+            ArcCalculatorDbContext db = new ArcCalculatorDbContext();
+            UserInputs60Hz ui = db.userInputs60Hz.Find(id);
+            db.userInputs60Hz.Remove(ui);
+            db.SaveChanges();
+        }
+
+        public static List<UserInputsDC> GetAllUserInputsDC()
+        {
+            ArcCalculatorDbContext db = new ArcCalculatorDbContext();
+            List<UserInputsDC> uiList = db.userInputsDC.ToList();
+            return uiList;
+        }
+
+        public static void CreateUserInputsDC(UserInputsDC ui)
+        {
+            ArcCalculatorDbContext db = new ArcCalculatorDbContext();
+            db.userInputsDC.Add(ui);
+            db.SaveChanges();
+        }
+
+        public static void DeleteUserInputsDC(int? id)
+        {
+            ArcCalculatorDbContext db = new ArcCalculatorDbContext();
+            UserInputsDC ui = db.userInputsDC.Find(id);
+            db.userInputsDC.Remove(ui);
+            db.SaveChanges();
+        }
+
+        public static List<Users> GetAllUsers()
+        {
+            ArcCalculatorDbContext db = new ArcCalculatorDbContext();
+            List<Users> uiList = db.users.ToList();
+            return uiList;
+        }
+
+        public static Users GetUser(int? id)
+        {
+            ArcCalculatorDbContext db = new ArcCalculatorDbContext();
+            Users ui = db.users.Find(id);
+            return ui;
+        }
+
+        public static void CreateUser(Users u)
+        {
+            ArcCalculatorDbContext db = new ArcCalculatorDbContext();
+            db.users.Add(u);
+            db.SaveChanges();
+        }
+
+        public static void DeleteUser(int? id)
+        {
+            ArcCalculatorDbContext db = new ArcCalculatorDbContext();
+            Users ui = db.users.Find(id);
+            db.users.Remove(ui);
+            db.SaveChanges();
+        }
+
+        public static void UpdateUser(Users u, EntityState Modified)
+        {
+            ArcCalculatorDbContext db = new ArcCalculatorDbContext();
+            db.Entry(u).State = Modified;
+            db.SaveChanges();
+        }
     }
 
     [Table("UserInputs60Hz")]
