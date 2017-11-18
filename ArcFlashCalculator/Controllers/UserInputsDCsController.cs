@@ -21,12 +21,26 @@ namespace ArcFlashCalculator.Controllers
             return View(PowerDC);
         }
 
-        // GET: Create a userInputsDC
+        // ------------------------------- These are the important actionresults//
+        // GET: UserInputsDC/CalcDC
         public ActionResult CalcDC()
         {
             Models.PowerDC PowerDC = new Models.PowerDC();
             return View(PowerDC);
         }
+
+        // POST: UserInputs60Hz/Calc60Hz
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CalcDC(PowerDC powerDC)
+        {
+            if (ModelState.IsValid)
+            {
+                ViewModels.CreateUserInputsDC(powerDC.Inputs);
+            }
+            return View();
+        }
+        // ------------------------------- These are the important actionresults//
 
         // GET: UserInputsDCs/Details/5
         public ActionResult Details(int? id)
