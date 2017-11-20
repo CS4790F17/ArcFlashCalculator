@@ -1,51 +1,400 @@
 ﻿@model IEnumerable<ArcFlashCalculator.Models.UserInputsDC>
 
-@{
-    ViewBag.Title = "Index";
-}
+<!DOCTYPE html>
+<html manifest="../application.manifest">
+<head>
+    <meta charset="utf-8">
+    <title>E-Safe Pro - DC</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-<h2>Index</h2>
+    <!-- Le styles -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.PotMaxExp)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AvailSCC)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Duration)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IPAddress)
-        </th>
-        <th></th>
-    </tr>
+    <style>
+        body {
+            /*padding-top: 60px; !* 60px to make the container go all the way to the bottom of the topbar *!*/
+            padding-bottom: 70px;
+        }
+    </style>
+    <!--<link href="../bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">-->
+    <link href="~/Content/css/main.css" rel="stylesheet" />
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.PotMaxExp)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AvailSCC)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Duration)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IPAddress)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+</head>
 
-</table>
+<body>
+
+    <nav id="navBtm" class="navbar navbar-default navbar-fixed-bottom hidden">
+        <div class="container-fluid">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a id="backToTop" href="#">Back to top</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div id="system-information" class="col-md-4 col-md-offset-4">
+                <form class="well">
+                    <h2>System Information</h2>
+                    <p id="instructions">
+                        Please provide data for all of the fields in the System Information form. Safety information
+                        will automatically display as data is entered.
+                    </p>
+
+                    <div class="form-group">
+                        <label>Potential Maximum Exposed DC (VDC):</label>
+                        <input class="form-control" id="maximum-exposed-input" type="number" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            Available (Bolted Fault) Short Circuit Current (Amps) <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Some power supplies are power limited therefore the maximum current available may be different for a specific voltage setting.."></span>:
+                        </label>
+                        <input class="form-control" id="available-current-input" type="number" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            Duration of Exposure (Seconds) <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Clearing time of upstream fuse or circuit breaker. System Inductance should be taken into account when deriving fuse/breaker clearing time. In addition, when deriving fuse or circuit breaker clearing time the Arcing Current = 0.5 * Short Circuit Current since at the max power point the Arc resistance = System resistance. Enter 2 seconds if you do not know the clearing time."></span>:
+                        </label>
+                        <input class="form-control" id="duration-input" type="number" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Work Mode:</label>
+                        <select class="form-control" id="work-mode-input">
+                            <option value="">Select a mode</option>
+                            <option value="0">Mode 0 - Electrically safe work condition</option>
+                            <option value="1">Mode 1 - De-energize and verify a safe work condition exists</option>
+                            <option value="2">Mode 2 - Testing, troubleshoot, tune and adjust</option>
+                            <option value="3">Mode 3 - Energized, Energized Electrical Work Permit (EEWP) to modify, repair or adjust</option>
+                        </select>
+                    </div>
+
+                    <div id="form-actions">
+                        <hr /><a id="reset-button" href="#" class="btn">Reset</a>
+                    </div>
+                </form>
+
+            </div>
+            <div id="results-wrapper" class="col-md-12">
+
+                <div class="section ahj-notice" id="exposure-duration-warning">
+                    The Duration of Exposure exceeds 2 seconds. Consult an SME and your AHJ.
+                </div>
+
+                <div class="section">
+                    <div id="not-enough-data" class="classification">
+                        Please provide data for all of the fields in this form. Safety information
+                        will automatically display as valid data is entered.
+                    </div>
+                    <div id="class-0" class="classification">Classification <span class="classification-display"></span> - No hazard. No engineering or administrative controls are needed.</div>
+                    <div id="class-1" class="classification">Classification <span class="classification-display"></span> - Little to no hazards. Few or no engineering or administrative controls are needed.</div>
+                    <div id="class-2" class="classification">
+                        Classification <span class="classification-display"></span> - Injury or death could occur by close proximity or contact;
+                        often the hazard is shock or contact burn; engineering controls are necessary for operation (e.g., listing or equipment approval),
+                        and administrative controls are necessary for electrical work in this classification.
+                    </div>
+                    <div id="class-3" class="classification">
+                        Classification <span class="classification-display"></span> - Injury or death could occur by proximity or contact; often the hazard is shock, contact burn,
+                        or arc-flash burn; engineering controls are necessary for operation (e.g., listing or equipment approval),
+                        and administrative controls are necessary for electrical work in this classification.
+                    </div>
+                    <div id="class-4" class="classification">
+                        Classification <span class="classification-display"></span> - Highest level of risk. Significant engineering and administrative controls are
+                        necessary to manage the hazard in this classification.
+                    </div>
+                    <div id="class-5" class="classification">
+                        Classification <span class="classification-display"></span> - Highest level of risk. Significant engineering and administrative controls are
+                        necessary to manage the hazard in this classification.
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 href="#general" data-toggle="collapse">General</h3>
+                    <div id="general"class="row results collapse in">
+                        <div class="col-md-4"><div id="watts-display" class="display"></div><h6>DC Power</h6></div>
+                        <div class="col-md-4"><div id="joules-display" class="display"></div><h6>DC Energy</h6></div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 href="#shockboundaries" data-toggle="collapse">Shock Boundaries</h3>
+                    <div id="shockboundaries"class="row results collapse in">
+                        <div class="col-md-4">
+                            <div id="limited-approach-fixed-circuit-display" class="display"></div>
+                            <h6>
+                                Limited Approach Fixed Circuit Part
+                                <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Distance from an exposed conductor within which a shock hazard exists. Training or escort required."></span>
+                            </h6>
+                        </div>
+                        <div class="col-md-4">
+                            <div id="restricted-approach-display" class="display"></div>
+                            <h6>
+                                Restricted Approach
+                                <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Distance from an exposed conductor within which there is an increased risk of shock
+                        due to electrical arc over combined with inadvertent movement. PPE required."></span>
+                            </h6>
+                        </div>
+                        <div class="col-md-4">
+                            <div id="prohibited-approach-display" class="display"></div>
+                            <h6>
+                                Prohibited Approach
+                                <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Distance from an exposed conductor within which work is considered the same as making contact with the electrical conductor or circuit part."></span>
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 href="#arcflashboundaries" data-toggle="collapse">
+                        Arc Flash Boundaries (Applicable at >100V and >500A)
+                        <span style="color:black"class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="From:
+                     Arc Flash Calculations for Exposures to DC Systems - Daniel R. Doan, Senior Member, IEEE - IEEE TRANSACTIONS ON INDUSTRY APPLICATIONS, VOL. 46, NO. 6, NOVEMBER/DECEMBER 2010
+                     DC Arc Flash Calculations – Arc-InOpen-Air &amp; Arc-In-A-Box Using a Simplified Approach, Fontaine &amp; Walsh Electrical Safety Workshop (ESW), 2012 IEEE IAS, Date: Jan. 31 2012-Feb. 3 2012"></span>
+                    </h3>
+                    <div id="arcflashboundaries" class="collapse in">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="important">The calculated Arc Flash boundary does not account for hearing or lung damage or potential flying debris which may be present during a failure mode event.</p>
+                                <p><em>Free space</em> is defined as omni-directional energy radiation. An example of an <em>enclosed box</em> is a rack system with the front panel removed.</p>
+                            </div>
+                        </div>
+                        <div class="row results">
+                            <div class="col-md-6">
+                                <div id="arc-flash-free-space-incident-energy" class="display"></div>
+                                <h6>
+                                    Free Space Incident Energy at 18"
+                                    <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Free space incident energy at a standard working distance of 18&quot;.
+                                    Assumes worst case of all energy being converted into radiant heat.
+                                    Calculated from:
+                                    Incident Energy = 0.005 * Volts * Current * Time / 46 2 (46cm = 18&quot;)
+                                    Any questions should be referred to an electrical safety expert."></span>
+                                </h6>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="arc-flash-display-free-space" class="display"></div>
+                                <h6>
+                                    Free Space Arc Flash Boundary for 1.2 cal/cm<sup>2</sup>
+                                    <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Free space threshold distance for 2nd degree burn where the worker is exposed to 1.2 cal/cm^2 (5 J/cm^2)
+                                    utilizing a multiplying factor of 3 * Free Space. Assumes absolute worst case of all energy being converted into radiant heat.
+                                    Calculated from:
+                                    Distance (cm) = sqrt((0.005 / 1.2) * Volts * Current * Time)
+                                    PPE is not required when working at or greater than this distance."></span>
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="row results">
+                            <div class="col-md-6">
+                                <div id="arc-flash-incident-energy" class="display"></div>
+                                <h6>
+                                    Enclosed Box Incident Energy at 18"
+                                    <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Enclosed Box incident energy at a standard working distance of 18&quot;.
+                                    Assumes worst case of all energy being converted into radiant heat.
+                                    Calculated from:
+                                    Incident Energy = 3 * 0.005 * Volts * Current * Time / 46^2 (46cm = 18&quot;)
+                                    A safety factor of 3 * Incident Energy is utilized to account for box energy focusing effects.
+                                    Any questions should be referred to an electrical safety expert."></span>
+                                </h6>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="arc-flash-display-enclosed-space" class="display"></div>
+                                <h6>
+                                    Enclosed Box Arc Flash Boundary for 1.2 cal/cm<sup>2</sup>
+                                    <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Enclosed Box threshold distance for 2nd degree burn where the worker is exposed to 1.2 cal/cm^2 (5 J/cm^2)
+                                    utilizing a multiplying factor of 3 * Free Space. Assumes absolute worst case of all energy being converted into radiant heat.
+                                    Calculated from: Distance (cm) = sqrt((0.005 / 1.2) * 3 * Volts * Current * Time)
+                                    PPE is not required when working at or greater than this distance."></span>
+
+                                </h6>
+                            </div>
+                        </div>
+                    
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 href="#safetyrequirements" data-toggle="collapse">Safety Requirements</h3>
+                    <div id="safetyrequirements" class="row results collapse in">
+                        <div class="col-md-6">
+                            <div id="safety-req-workers-display" class="display"></div><h6>
+                                Workers <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="popover" title="Workers Definitions" data-content="Alone - No other workers required.
+                        Two Person - An additional worker qualified to work on energized circuits, understanding the work activities and the hazards present, and trained to know what to do in case of an electrical accident involving the other worker. Must be within eyesight of the hazardous task.
+                        Safety Watch - The safety watch should be a worker qualified to work on energized circuits who accepts responsibility for monitoring qualified worker(s) performing high-hazard electrical work. Must be actively working with/beside the primary worker and have the same PPE and training."></span>
+                           
+                            </h6>
+                        </div>
+                        <div class="col-md-6">
+                            <div id="safety-req-work-control-display" class="display"></div><h6>
+                                Work Control <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="popover" title="Training Definitions" data-content="EEWP - Energized Electrical Work Permit, higher level signing authority required
+                                 SOP - Standard Operating Procedure"></span>
+                            
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section" id="ppe-requirements">
+                    <h3>Free Space PPE Requirements for Working at a Distance of 18"</h3>
+                    <p>This analysis is based on 2012 NFPA 70E, Table 130.7(C)(15)(a).</p>
+                    <div class="row results arc-flash-ppe">
+                        <div class="col-md-6">
+                            <div id="" class="ppe-display">
+                                <h4>Arc Rated Clothing, Minimum Arc rating of <span id="ppe-cal-rating">4</span> cal/cm<sup>2</sup>:</h4>
+                                <ul id="ppe-low">
+                                    <li>Long sleeve shirt and pants, or coveralls</li>
+                                    <li>Flash suit hood or face shield and balaclava</li>
+                                    <li>Jacket, parka or rainwear (as needed)</li>
+                                </ul>
+                                <ul id="ppe-high">
+                                    <li>Shirt</li>
+                                    <li>Pants</li>
+                                    <li>Coveralls</li>
+                                    <li>Flash suit hood or face shield and balaclava</li>
+                                    <li>Jacket, parka or rainwear (as needed)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row results arc-flash-ppe">
+                        <div class="col-md-6">
+                            <div id="" class="ppe-display">
+                                <h4>Protective Equipment:</h4>
+                                <ul>
+                                    <li>Hard hat</li>
+                                    <li>safety glasses or goggles</li>
+                                    <li>hearing protection</li>
+                                    <li>leather work shoes</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row results">
+                        <div class="col-md-6">
+                            <div id="" class="ppe-display">
+                                <h4>Minimum Class of Dielectric Gloves with Leather Protectors:</h4>
+                                <ul>
+                                    <li id="glove-class-display">Class 0</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section" id="ppe-requirements-voltage-too-high">
+                    <h3>Free Space PPE Requirements for Working at a Distance of 18"</h3>
+                    <div class="row results">
+                        <div class="col-md-6">
+                            <div class="display">No PPE available to protect the worker, therefore the worker can not work at this arc flash hazard level. Methods must be used to reduce to risk of arc flash by reducing the probability of creating an arc flash to near zero.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section" id="enclosed-ppe-requirements">
+                    <h3>Enclosed Space PPE Requirements for Working at a Distance of 18"</h3>
+                    <p>This analysis is based on 2012 NFPA 70E, Table 130.7(C)(15)(a).</p>
+                    <div class="row results enclosed-arc-flash-ppe">
+                        <div class="col-md-6">
+                            <div id="" class="ppe-display">
+                                <h4>Arc Rated Clothing, Minimum Arc rating of <span id="enclosed-ppe-cal-rating">4</span> cal/cm<sup>2</sup>:</h4>
+                                <ul id="enclosed-ppe-low">
+                                    <li>Long sleeve shirt and pants, or coveralls</li>
+                                    <li>Flash suit hood or face shield and balaclava</li>
+                                    <li>Jacket, parka or rainwear (as needed)</li>
+                                </ul>
+                                <ul id="enclosed-ppe-high">
+                                    <li>Shirt</li>
+                                    <li>Pants</li>
+                                    <li>Coveralls</li>
+                                    <li>Flash suit hood or face shield and balaclava</li>
+                                    <li>Jacket, parka or rainwear (as needed)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row results enclosed-arc-flash-ppe">
+                        <div class="col-md-6">
+                            <div id="" class="ppe-display">
+                                <h4>Protective Equipment:</h4>
+                                <ul>
+                                    <li>Hard hat</li>
+                                    <li>safety glasses or goggles</li>
+                                    <li>hearing protection</li>
+                                    <li>leather work shoes</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row results">
+                        <div class="col-md-6">
+                            <div id="" class="ppe-display">
+                                <h4>Minimum Class of Dielectric Gloves with Leather Protectors:</h4>
+                                <ul>
+                                    <li id="enclosed-glove-class-display">Class 0</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section" id="enclosed-ppe-requirements-voltage-too-high">
+                    <h3>Enclosed Space PPE Requirements for Working at a Distance of 18"</h3>
+                    <div class="row results">
+                        <div class="col-md-6">
+                            <div class="display">No PPE available to protect the worker. Other methods must be used to prevent the worker from arc flash.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3 href="#classes" data-toggle="collapse">Classes</h3>
+                    <div id="classes"class="row results collapse in">
+                        <div class="col-md-6"><img src="~/Content/images/dc-classes.png" /></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="support-warning" class="row">
+            <div class="col-md-12">
+                <div class="alert alert-warning">
+                    <span class="label label-warning">WARNING</span> Your browser/device does not support all of the features
+                    that E-Safe Pro uses. E-Safe Pro may still function to some degree, but you will have the best experience if you
+                    access the app from a more current browser/device.
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 footer">
+                E-Safe Pro&nbsp;&nbsp;&nbsp;Version <span class="label label-inverse">1.2</span>&nbsp;&nbsp;&nbsp;Valid from <span class="label label-inverse">2013</span> through <span class="label label-inverse">2014</span>
+                <br />Contact <a href="mailto:esafe-help@ctc.com">esafe-help@ctc.com</a> for questions or comments.
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="~/Scripts/UserInputs60Hz/js/jquery.textchange.min.js"></script>
+
+    @*<script src="../js/jquery-1.7.2.min.js"></script>
+    <script src="../js/jquery.textchange.min.js"></script>
+    <script src="../bootstrap/js/bootstrap.min.js"></script>*@
+    <!--<script src="../bootstrap/js/bootstrap-tooltip.js"></script> -->
+    <!--<script src="../bootstrap/js/bootstrap-popover.js"></script>-->
+    <script src="~/Scripts/support.js"></script>
+    <script src="~/Scripts/modernizr.js"></script>
+
+    <script src="~/Scripts/training.js"></script>
+    <script src="~/Scripts/tree.js"></script>
+    <script src="~/Scripts/safetyreqs.js"></script>
+    <script src="~/Scripts/boundaries.js"></script>
+
+    <script src="~/Scripts/UserInputsDC/js/classifications.js"></script>
+    <script src="~/Scripts/UserInputsDC/js/boundaries.js"></script>
+    <script src="~/Scripts/UserInputsDC/js/safetyreqs.js"></script>
+    <script src="~/Scripts/UserInputsDC/js/ui.js"></script>
+</body>
+</html>

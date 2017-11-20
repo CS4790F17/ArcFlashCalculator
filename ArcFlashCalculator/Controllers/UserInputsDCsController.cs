@@ -17,7 +17,7 @@ namespace ArcFlashCalculator.Controllers
         // GET: UserInputsDCs
         public ActionResult Index()
         {
-            return View(db.userInputsDC.ToList());
+            return View(/*db.userInputsDC.ToList()*/);
         }
 
         // GET: UserInputsDCs/Details/5
