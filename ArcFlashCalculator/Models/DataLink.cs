@@ -90,6 +90,16 @@ namespace ArcFlashCalculator.Models
             db.Entry(u).State = Modified;
             db.SaveChanges();
         }
+
+        public static List<string> GetAllIP()
+        {
+            ArcCalculatorDbContext db = new ArcCalculatorDbContext();
+            List<string> ipList = new List<string>();
+
+            
+
+            return ipList;
+        }
     }
 
     [Table("UserInputs60Hz")]
