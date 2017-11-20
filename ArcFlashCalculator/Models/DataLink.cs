@@ -92,14 +92,6 @@ namespace ArcFlashCalculator.Models
         }
     }
 
-    [Table("Errors")]
-    public class Errors
-    {
-        [Key]
-        public int Id { get; set; }
-        public string Error { get; set; }
-    }
-
     [Table("UserInputs60Hz")]
     public class UserInputs60Hz
     {
@@ -174,7 +166,7 @@ namespace ArcFlashCalculator.Models
 
         public DateTime LastLogin { get; set; }
 
-        public int bitAdmin { get; set; }
+        public int AdminBit { get; set; }
     }
 
     public class ArcCalculatorDbContext : DbContext
