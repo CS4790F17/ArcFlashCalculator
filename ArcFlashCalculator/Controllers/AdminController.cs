@@ -15,6 +15,28 @@ namespace ArcFlashCalculator.Controllers
             return View();
         }
 
+        //GET: Admin/Delete
+        public ActionResult Delete()
+        {
+            List<Users> userList = ViewModels.GetAllUsers();
+            return View(userList);
+        }
+
+        //POST: Admin/Delete
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(List<Users> userList)
+        {
+            if (ModelState.IsValid)
+            {
+                foreach (Users user in userList)
+                {
+                    ViewModels.DeleteUser(user.Id);
+                }
+            }
+            return View();
+        }
+
         //GET: Admin/Login
         public ActionResult Login()
         {
@@ -37,6 +59,18 @@ namespace ArcFlashCalculator.Controllers
             return View(cp);
         }
 
+        //POST: Admin/Password
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Password(ChangePassword changedPassword)
+        {
+            if (ModelState.IsValid)
+            {
+             
+            }
+            return View();
+        }
+
         //GET: Admin/Report60Hz
         public ActionResult Report60Hz()
         {
@@ -57,8 +91,24 @@ namespace ArcFlashCalculator.Controllers
             List<string> report = ViewModels.GetAllIP();
             return View(report);
         }
-        //List of routes
-        //IpReport
-        //ReportHome
+
+        //GET: Admin/Create
+        public ActionResult Create()
+        {
+            Users newUser = new Users();
+            return View(newUser);
+        }
+
+        //POST: Admin/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Users newUser)
+        {
+            if (ModelState.IsValid)
+            {
+                ViewModels.CreateUser(newUser);
+            }
+            return View();
+        }
     }
 }

@@ -69,7 +69,8 @@ namespace ArcFlashCalculator.Models
         }
     }
 
-    public class Power60Hz {
+    public class Power60Hz
+    {
         public Power60Hz()
         {
             //Assign defaults to each list
@@ -196,15 +197,16 @@ namespace ArcFlashCalculator.Models
         public string WorkMode { get; set; }
     }
 
-    public class ChangePassword {
+    public class ChangePassword
+    {
         public ChangePassword()
         {
 
         }
 
-        public string Email { get; set; }
-        public string OldPassword { get; set; }
-        public string NewPassword { get; set; }
-        public string ConfirmPassword { get; set; }
+        string email { get; set; }
+        string oldPassword { get; set; }
+        string newPassword { get; set; }
+        string confirmPassword { get; set; }
     }
 }
