@@ -150,13 +150,18 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BatteryController.cs" />
+    <Compile Include="Controllers\CapacitorController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SubRFController.cs" />
     <Compile Include="Controllers\UserInputs60HzController.cs" />
     <Compile Include="Controllers\UserInputsDCsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DataLink.cs" />
+    <Compile Include="Models\ReturnResult.cs" />
     <Compile Include="Models\ViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -189,6 +194,8 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\images\Thumbs.db" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
+    <Content Include="Images\boundaries.png" />
+    <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\boundaries.js" />
@@ -250,6 +257,15 @@
     <Content Include="Views\UserInputsDCs\Details.cshtml" />
     <Content Include="Views\UserInputsDCs\Edit.cshtml" />
     <Content Include="Views\UserInputsDCs\Index.cshtml" />
+    <Content Include="Views\SubRF\Index.cshtml" />
+    <Content Include="Views\Battery\Index.cshtml" />
+    <Content Include="Views\Capacitor\Index.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\SubRF\CalcSubRF.cshtml" />
+    <Content Include="Views\UserInputs60Hz\Calc60Hz.cshtml" />
+    <Content Include="Views\Capacitor\CalcCap.cshtml" />
+    <Content Include="Views\Battery\CalcBat.cshtml" />
+    <Content Include="Views\UserInputsDCs\CalcDC.cshtml" />
     <Content Include="Views\Home\text.cshtml" />
   </ItemGroup>
   <ItemGroup>

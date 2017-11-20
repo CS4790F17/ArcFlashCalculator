@@ -2,30 +2,99 @@
     ViewBag.Title = "Home Page";
 }
 
+<link href="~/Scripts/main.css" rel="stylesheet" /> 
+
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <h1>Arc Flash Calculator</h1>
+    <h3>Instructions</h3>
+    <p class="lead">To use this application select one of the below energy sources. Upon selection you will enter information about the electrical system.</p>
+    <ul class="nav">
+        <li><a class="btn btn-default" href="~/Views/UserInputs60Hz/Calc60Hz.cshtml">60 Hz Power &raquo;</a></li>
+        <li><a class="btn btn-default" href="~/Views/UserInputsDCs/CalcDC.cshtml"> DC &raquo;</a></li>
+        <li><a class="btn btn-default" href="~/Views/Capacitor/CalcCap.cshtml"> Capacitor &raquo;</a></li>
+        <li><a class="btn btn-default" href="~/Views/Battery/CalcBat.cshtml"> Battery &raquo;</a></li>
+        <li><a class="btn btn-default" href="~/Views/SubRF/CalcSubRF.cshtml"> Sub RF (1Hz - 3kHz) &raquo;</a></li>
+    </ul>
+    </br> 
+    <p class="lead">The sources below are not covered by this application. Refer any questions to your organization’s Electrical Safety Subject Matter Expert.</p>
+    <div>
+        <ul class="list">
+            <li>RF Circuits (3kHz - 100MHz)</li>
+            <li>Inductors (future class, coming soon)</li>
+            <li>Photovoltaic Cells (future class, coming soon)</li>
+        </ul>
+    </div>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
+<div>
+    <h3>About the Arc Flash Calculator</h3>
+    <p>This application was modeled after E-Safe Pro which was created by the US Army Research Laboratory and DoD's Defense Safety Oversight Council Electrical Safety Working Group.</p>
+    <p>This version of the application was developed by students at Weber State University</p>
+    <p>This application is intended to be utilized by <strong>TRAINED</strong> and <strong>QUALIFIED</strong> personnel who must design, repair, troubleshoot or install potentially hazardous electrical equipment in the performance of their duties. It is not intended as a stand-alone electrical safety guide, rather as a single part in a larger overall safety analysis. Additional training may be required as deemed adequate by supervisory staff.</p>
+    <p>As determined by your Command's Electrical Safety Office, training may include:</p>
+     
+    <dl class="training-list">
+        <dt>ES100</dt>
+        <dd>Electrical Hazards in R&amp;D Labs</dd>
+        <dt>ES200</dt>
+        <dd>Working with Electrical Equipment</dd>
+        <dt>ES301</dt>
+        <dd>Battery Safety</dd>
+        <dt>ES400</dt>
+        <dd>Electrical Safety for High Voltage, High Current and High Power R&amp;D</dd>
+        <dt>ES600</dt>
+        <dd>Use a Digital Multi-meter Safely</dd>
+        <dt>ES601</dt>
+        <dd>Repair / Replace Power Cords &amp; Plugs</dd>
+        <dt>ES602</dt>
+        <dd>Selection, Care, Use, and Testing of Electrical PPE</dd>
+        <dt>ES603</dt>
+        <dd>Selection, Inspection, and use of Personnel Safety Ground</dd>
+        <dt>ES604</dt>
+        <dd>Lock Out Tag Out - LOTO</dd>
+        <dt>ES630</dt>
+        <dd>Design and Inspection of Electrical Equipment for Electrical Safety</dd>
+        <dt>ES700</dt>
+        <dd>Task Specific Selection of PPE</dd>
+    </dl>
+
+    <p>Information presented is organized using the Electrical Hazard Classification Tool, 2012 edition. The Tool is a graphic representation of electrical hazards as determined by possible injury, and provides the recommended controls for mitigation of the hazard for the various Modes of Work on Electrical Equipment. This classification tool is not to be confused with the hazard risk categories for personal protective equipment defined in NFPA 70E. Work Controls are based on, as applicable, the NFPA-70E Standard for Electrical Safety in the Workplace, 2012 edition, and PPE is taken from the NFPA task table 130.7.</p>
+    </br>
+    <p>This application assumes that equipment has been properly maintained and used as intended.</p>
+    </br> 
+    <p>All calculations and recommendations must be reviewed and approved by your organization’s Electrical Safety Subject Matter Expert.</p>
 </div>
+
+<div>
+    <h3>Additional Information</h3>
+
+    <p class="">The boundary definitions that are used by this application are depicted in the image below:</p>
+
+    <p style="text-align: center;"><img src="~/Images/boundaries.png" /></p>
+
+    <p class="">Shock and arc flash boundary analysis shall be completed before a person approaches nearer than a safe distance from an electrical hazard.</p>
+
+    <p class="">Specialized system knowledge and methods may be necessary to calculate the shock and arc flash boundaries for some non-typical electrical equipment found in the workplace, such as DC or capacitor systems, as methods are not available in existing codes and standards.</p>
+
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        var dialog = bootbox.dialog({
+            title: 'Please Read',
+            message: "Personal Protective Equipment (PPE) presented in this app is based on the task tables from NFPA-70E 2012, NEC and IEEE Refereed Articles. For Tri-Services (US Army Corps of Engineers, Navy-Marines & Air Force) facilities electrical (VAC) work, consult your AHJ to determine if the principal reference for shock and arc flash boundary analysis is the UFC 3-560-01 dated May 2012.",
+            buttons: {
+                confirm: {
+                    label: "Accept",
+                    className: 'btn-success',
+                    callback: function () {
+                        console.log('accept clicked');
+                    }
+                }
+            },
+            closeButton: false,
+            onEscape: false
+        });
+    </script>
+}

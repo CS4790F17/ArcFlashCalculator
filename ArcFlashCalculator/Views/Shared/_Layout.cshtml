@@ -9,21 +9,38 @@
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
+        <div class="container-fluid">
+            <div class="navbar-header navbar-collapse collapse">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    Arc Flash Calculator 
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Home</a></li>
+                                    <li><a href="#">60 Hz Power</a></li>
+                                    <li><a href="#">DC</a></li>
+                                    <li><a href="#">Capacitor</a></li>
+                                    <li><a href="#">Battery</a></li>
+                                    <li><a href="#">Sub RF (1Hz-3kHz)</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>                  
+                </div>
+                          
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
@@ -31,13 +48,14 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Arc Flash Calculator - Developed by Prof Hilton's CS 4790 class</p>
         </footer>
     </div>
 
     @*@Scripts.Render("~/bundles/jquery")*@
     @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-
+    @Scripts.Render("~/Scripts/bootbox.min.js")
+    @RenderSection("scripts", required: false)    
+    
 </body>
 </html>

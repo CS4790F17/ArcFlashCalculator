@@ -17,8 +17,30 @@ namespace ArcFlashCalculator.Controllers
         // GET: UserInputsDCs
         public ActionResult Index()
         {
-            return View(/*db.userInputsDC.ToList()*/);
+            Models.PowerDC PowerDC = new Models.PowerDC();
+            return View(PowerDC);
         }
+
+        // ------------------------------- These are the important actionresults//
+        // GET: UserInputsDC/CalcDC
+        public ActionResult CalcDC()
+        {
+            Models.PowerDC PowerDC = new Models.PowerDC();
+            return View(PowerDC);
+        }
+
+        // POST: UserInputs60Hz/Calc60Hz
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CalcDC(PowerDC powerDC)
+        {
+            if (ModelState.IsValid)
+            {
+                ViewModels.CreateUserInputsDC(powerDC.Inputs);
+            }
+            return View();
+        }
+        // ------------------------------- These are the important actionresults//
 
         // GET: UserInputsDCs/Details/5
         public ActionResult Details(int? id)
@@ -58,6 +80,7 @@ namespace ArcFlashCalculator.Controllers
             return View(userInputsDC);
         }
 
+        // GET RID OF THIS METHOD AND IT'S VIEW ///
         // GET: UserInputsDCs/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -73,6 +96,8 @@ namespace ArcFlashCalculator.Controllers
             return View(userInputsDC);
         }
 
+
+        // GET RID OF THIS METHOD AND IT'S VIEWS ///
         // POST: UserInputsDCs/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
