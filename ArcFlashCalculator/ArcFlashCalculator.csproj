@@ -197,6 +197,7 @@
     <Content Include="Scripts\jquery-3.2.1.slim.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.textchange.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -219,6 +220,10 @@
     <Content Include="Scripts\UserInputs60Hz\js\jquery.textchange.min.js" />
     <Content Include="Scripts\UserInputs60Hz\js\safetyreqs.js" />
     <Content Include="Scripts\UserInputs60Hz\js\ui.js" />
+    <Content Include="Scripts\UserInputsDC\js\boundaries.js" />
+    <Content Include="Scripts\UserInputsDC\js\classifications.js" />
+    <Content Include="Scripts\UserInputsDC\js\safetyreqs.js" />
+    <Content Include="Scripts\UserInputsDC\js\ui.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
