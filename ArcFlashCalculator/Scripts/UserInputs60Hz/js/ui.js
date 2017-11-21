@@ -313,4 +313,39 @@ $(function () {
 
     $('[data-toggle="popover"]').popover();
 
+    $("#voltage-input").keyup(function () {
+        var value = $("#voltage-input").val();
+        if (value > 600 || value < 0) {
+            $("#voltage-range-warning").removeClass("hidden").addClass("visible");
+            //$("#voltage-input").val("");
+        }
+    });
+
+    $("#transformer-size-input").keyup(function () {
+        var value = $("#transformer-size-input").val();
+        if (value > 20000 || value < 0.5) {
+            $("#trans-range-warning").removeClass("hidden").addClass("visible");
+            //$("#transformer-size-input").val("");
+        }
+    });
+
+    $("#short-circuit-current-input").keyup(function () {
+        var value = $("#short-circuit-current-input").val();
+        if (value > 500 || value < 1) {
+            $("#scc-range-warning").removeClass("hidden").addClass("visible");
+            //$("#short-circuit-current-input").val("");
+        }
+    });
+
+    $("#fault-clearing-time-input").keyup(function () {
+        var value = $("#fault-clearing-time-input").val();
+        if (value > 2 || value < 0.003) {
+            $("#fault-clearing-time-range-warning").removeClass("hidden").addClass("visible");
+            //$("#fault-clearing-time-input").val("");
+        }
+    });
+
+
+    
+
 });

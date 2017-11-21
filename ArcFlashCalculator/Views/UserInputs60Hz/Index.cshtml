@@ -27,9 +27,17 @@
                     will automatically display as data is entered.
                 </p>
 
+                <div class="alert-danger hidden" id="voltage-range-warning" role="alert">
+                    Voltage values must be a number between 1 and 999
+                </div>
+
                 <div class="form-group">
                     <label>Voltage (Vrms) <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="The phase-to-phase voltage or phase-to-neutral * &radic;3 of the exposed conductor."></span>:</label>
-                    <input class="form-control" id="voltage-input" type="number" min="0" max="500000" />
+                    <input class="form-control" id="voltage-input" type="number" />
+                </div>
+
+                <div class="alert-danger hidden" id="trans-range-warning" role="alert">
+                    Transformer Size (kVA) values must be a number between 0.5 - 20,000
                 </div>
 
                 <div class="form-group" id="transformer-size-field">
@@ -50,9 +58,17 @@
                     </select>
                 </div>
 
+                <div class="alert-danger hidden" id="scc-range-warning" role="alert">
+                    Short Circuit Current (kA) values must be a number between 1 - 500
+                </div>
+
                 <div class="form-group" id="short-circuit-current-field">
                     <label>Short Circuit Current (kA) <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Refer to upstream Circuit Breaker specifications."></span>:</label>
                     <input class="form-control" id="short-circuit-current-input" type="number" />
+                </div>
+
+                <div class="alert-danger hidden" id="fault-clearing-time-range-warning" role="alert">
+                    Fault Clearing Time (Seconds) values must be a number between 0.003 - 2.0
                 </div>
 
                 <div class="form-group" id="fault-clearning-time-field">
