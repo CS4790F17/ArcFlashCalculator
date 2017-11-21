@@ -1,69 +1,823 @@
 ﻿@model IEnumerable<ArcFlashCalculator.Models.UserInputs60Hz>
 
-@{
-    ViewBag.Title = "Index";
-}
+<style>
+    body {
+        padding-top: 60px;
+        padding-bottom: 70px;
+    }
+</style>
 
-<h2>Index</h2>
+<link href="~/Content/css/main.css" rel="stylesheet" />
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.TransSize)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Impedance)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SCC)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FaultClearing)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Voltage)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.OEInFreshAir)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IPAddress)
-        </th>
-        <th></th>
-    </tr>
+<nav id="navBtm" class="navbar navbar-default navbar-fixed-bottom hidden">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a id="backToTop" href="#">Back to top</a></li>
+        </ul>
+    </div>
+</nav>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TransSize)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Impedance)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SCC)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FaultClearing)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Voltage)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OEInFreshAir)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IPAddress)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+<div class="container">
+    <div class="row">
+        <div id="system-information" class="col-md-4 col-md-offset-4">
+            <form class="well">
+                <h2>System Information</h2>
+                <p id="instructions">
+                    Please provide data for all of the fields in the System Information form. Safety information
+                    will automatically display as data is entered.
+                </p>
 
-</table>
+                <div class="alert-danger hidden" id="voltage-range-warning" role="alert">
+                    Voltage values must be a number between 1 and 999
+                </div>
+
+                <div class="form-group">
+                    <label>Voltage (Vrms) <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="The phase-to-phase voltage or phase-to-neutral * &radic;3 of the exposed conductor."></span>:</label>
+                    <input class="form-control" id="voltage-input" type="number" />
+                </div>
+
+                <div class="alert-danger hidden" id="trans-range-warning" role="alert">
+                    Transformer Size (kVA) values must be a number between 0.5 - 20,000
+                </div>
+
+                <div class="form-group" id="transformer-size-field">
+                    <label>Transformer Size (kVA):</label>
+                    <input class="form-control" id="transformer-size-input" type="number" />
+                </div>
+
+                <div class="form-group" id="equipment-type-field">
+                    <label>Equipment Type:</label>
+                    <select class="form-control" id="equipment-type-input">
+                        <option value="">Select a type</option>
+                        <!-- <option value="panelboards-240">Panelboards or Other Equipment Rated 240V and Below</option> -->
+                        <option value="panelboards-240-600">Panelboards or Other Equipment Rated > 240V and up to 600V</option>
+                        <option value="mcc-65">600 V Class Motor Control Centers (max of 65kA short circuit current available, maximum 0.03 seconds fault clearing time)</option>
+                        <option value="mcc-42">600 V Class Motor Control Centers (max of 42kA short circuit current available, maximum 0.33 seconds fault clearing time)</option>
+                        <option value="switchgear">600 V Class Switchgear (with power circuit breakers or fused switches) and 600 V Class Switchboards</option>
+                        <option value="other">Other 600 V Class (277 V through 600 V, nominal) Equipment</option>
+                    </select>
+                </div>
+
+                <div class="alert-danger hidden" id="scc-range-warning" role="alert">
+                    Short Circuit Current (kA) values must be a number between 1 - 500
+                </div>
+
+                <div class="form-group" id="short-circuit-current-field">
+                    <label>Short Circuit Current (kA) <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Refer to upstream Circuit Breaker specifications."></span>:</label>
+                    <input class="form-control" id="short-circuit-current-input" type="number" />
+                </div>
+
+                <div class="alert-danger hidden" id="fault-clearing-time-range-warning" role="alert">
+                    Fault Clearing Time (Seconds) values must be a number between 0.003 - 2.0
+                </div>
+
+                <div class="form-group" id="fault-clearning-time-field">
+                    <label>Fault Clearing Time (seconds) <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Refer to upstream Circuit Breaker specifications."></span>:</label>
+                    <input class="form-control" id="fault-clearing-time-input" type="number" />
+                </div>
+
+                <div class="form-group">
+                    <label>Work Mode:</label>
+                    <select class="form-control" id="work-mode-input">
+                        <option value="">Select a mode</option>
+                        <option value="0">Mode 0 - Electrically safe work condition</option>
+                        <option value="1">Mode 1 - De-energize and verify a safe work condition exists</option>
+                        <option value="2">Mode 2 - Testing, troubleshoot, tune and adjust</option>
+                        <option value="3">Mode 3 - Energized, Energized Electrical Work Permit (EEWP) to modify, repair or adjust</option>
+                    </select>
+                </div>
+                @*<button type="button" id="calculate" class="btn btn-primary pull-right">Calculate</button>*@
+                <div id="form-actions">
+                    <hr /><a id="reset-button" href="#" class="btn">Reset</a>
+                </div>
+            </form>
+
+            <!--<div class="dropdown">-->
+            <!--<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Other Sections-->
+            <!--<span class="caret"></span></button>-->
+            <!--<ul class="dropdown-menu">-->
+            <!--<li><a href="#">Home/Instructions</a></li>-->
+            <!--<li><a href="#">60 Hz Power</a></li>-->
+            <!--<li><a href="#">DC</a></li>-->
+            <!--<li><a href="#">Battery</a></li>-->
+            <!--<li><a href="#">Sub RF (1Hz - 3kHz)</a></li>-->
+            <!--</ul>-->
+            <!--</div>-->
+
+        </div>
+        <div id="results-wrapper" class="col-md-12">
+            <div class="section">
+                <div id="not-enough-data" class="classification">
+                    Please provide data for all of the fields in this form. Safety information
+                    will automatically display as valid data is entered.
+                </div>
+                <div id="class-0" class="classification">Classification <span class="classification-display"></span> - No hazard. No engineering or administrative controls are needed.</div>
+                <div id="class-1" class="classification">Classification <span class="classification-display"></span> - Little to no hazards. Few or no engineering or administrative controls are needed.</div>
+                <div id="class-2" class="classification">
+                    Classification <span class="classification-display"></span> - Injury or death could occur by close proximity or contact;
+                    often the hazard is shock or contact burn; engineering controls are necessary for operation (e.g., listing or equipment approval),
+                    and administrative controls are necessary for electrical work in this classification.
+                </div>
+                <div id="class-3" class="classification">
+                    Classification <span class="classification-display"></span> - Injury or death could occur by proximity or contact; often the hazard is shock, contact burn,
+                    or arc-flash burn; engineering controls are necessary for operation (e.g., listing or equipment approval),
+                    and administrative controls are necessary for electrical work in this classification.
+                </div>
+                <div id="class-4" class="classification">
+                    Classification <span class="classification-display"></span> - Highest level of risk. Significant engineering and administrative controls are
+                    necessary to manage the hazard in this classification.
+                </div>
+                <div id="class-5" class="classification">
+                    Classification <span class="classification-display"></span> - Highest level of risk. Significant engineering and administrative controls are
+                    necessary to manage the hazard in this classification.
+                </div>
+            </div>
+
+            <p class="important">
+                This category is intended to be utilized for zero energy verification of end use
+                equipment   (i.e. Thermal chambers, O'Scopes, Communication systems and other
+                pieces of AC powered hardware) which has been unplugged or locked out prior
+                to maintenance.
+            </p>
+
+            <div class="section">
+                <h3 href="#shockboundaries" data-toggle="collapse">Shock Boundaries</h3>
+                <div id="shockboundaries" class="row results collapse in">
+                    <div class="col-md-4">
+                        <div id="restricted-approach-display" class="display"></div>
+                        <h6>
+                            Restricted Approach
+                            <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Distance from an exposed conductor within which there is an increased risk of shock
+            due to electrical arc over combined with inadvertent movement. PPE required."></span>
+                        </h6>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="prohibited-approach-display" class="display"></div>
+                        <h6>
+                            Prohibited Approach
+                            <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Distance from an exposed conductor within which work is considered the same as making contact with the electrical conductor or circuit part."></span>
+                        </h6>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="limited-approach-fixed-circuit-display" class="display"></div>
+                        <h6>
+                            Limited Approach Fixed Circuit Part
+                            <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Distance from an exposed conductor within which a shock hazard exists. Training or escort required."></span>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3 href="#safetyrequirements" data-toggle="collapse">Safety Requirements</h3>
+                <div id="safetyrequirements"class="row results collapse in">
+                    <div class="col-md-6">
+                        <div id="safety-req-workers-display" class="display"></div><h6>
+                            Workers <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="popover" title="Workers Definitions" data-content="Alone - No other workers required.
+                        Two Person - An additional worker qualified to work on energized circuits, understanding the work activities and the hazards present, and trained to know what to do in case of an electrical accident involving the other worker. Must be within eyesight of the hazardous task.
+                        Safety Watch - The safety watch should be a worker qualified to work on energized circuits who accepts responsibility for monitoring qualified worker(s) performing high-hazard electrical work. Must be actively working with/beside the primary worker and have the same PPE and training."></span>
+                        </h6>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="safety-req-work-control-display" class="display"></div><h6>
+                            Work Control <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="popover" title="Training Definitions" data-content="EEWP - Energized Electrical Work Permit, higher level signing authority required
+                        SOP - Standard Operating Procedure"></span>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" id="arc-flash-boundaries">
+                <h3 href="#arcflashboundaries" data-toggle="collapse">Arc Flash Boundaries</h3>
+                <!-- <p>This analysis is based on 2012 NFPA 70E, Table 130.7(C)(15)(a).</p> -->
+                <div id="arcflashboundaries" class="row results collapse in" id="arc-flash-boundary-display-container">
+                    <div class="col-md-4">
+                        <div id="arc-flash-boundary-display" class="display">Xmm (Y")</div><h6>Enclosed Box Arc Flash Boundary</h6>
+                    </div>
+                </div>
+                <p id="arc-flash-voltage-too-high" class="ahj-notice">This system exceeds the limitations set by the NFPA 70E task tables. Please contact your AHJ (Authority Having Jurisdiction) for PPE direction.</p>
+            </div>
+
+            <div class="section" id="safety-tables">
+                <h3>Tasks Performed on Energized Equipment</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <table id="panelboards-240-table" class="text-table table-130">
+                            <thead>
+                                <tr>
+                                    <th>Tasks Performed on Energized Equipment</th>
+                                    <th>Hazard/Risk Category</th>
+                                    <th>Rubber Insulating Gloves</th>
+                                    <th>Insulated and Insulating Hand Tools</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Perform infrared thermography and other non-contact inspections outside the restricted approach boundary</td>
+                                    <td>0</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Circuit breaker (CB) or fused switch operation with covers on</td>
+                                    <td>0</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>CB or fused switch operation with covers off</td>
+                                    <td>0</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Work on energized electrical conductors and circuit parts, including voltage testing</td>
+                                    <td>1</td>
+                                    <td>Yes</td>
+                                    <td>Yes</td>
+                                </tr>
+                                <tr>
+                                    <td>Remove/install CBs or fused switches</td>
+                                    <td>1</td>
+                                    <td>Yes</td>
+                                    <td>Yes</td>
+                                </tr>
+                                <tr>
+                                    <td>Removal of bolted covers (to expose bare, energized electrical conductors and circuit parts)</td>
+                                    <td>1</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Opening hinged covers (to expose bare, energized electrical conductors and circuit parts)</td>
+                                    <td>0</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Work on energized electrical conductors and circuit parts of utilization equipment fed directly by a branch circuit of the panelboard</td>
+                                    <td>1</td>
+                                    <td>Yes</td>
+                                    <td>Yes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table id="panelboards-240-600-table" class="text-table table-130">
+                            <thead>
+                                <tr>
+                                    <th>Tasks Performed on Energized Equipment</th>
+                                    <th>Hazard/Risk Category</th>
+                                    <th>Rubber Insulating Gloves</th>
+                                    <th>Insulated and Insulating Hand Tools</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Perform infrared thermography and other non-contact inspections outside the restricted approach boundary</td>
+                                    <td>1</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Circuit breaker (CB) or fused switch operation with covers on</td>
+                                    <td>0</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>CB or fused switch operation with covers off</td>
+                                    <td>1</td>
+                                    <td>Yes</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Work on energized electrical conductors and circuit parts, including voltage testing</td>
+                                    <td>2</td>
+                                    <td>Yes</td>
+                                    <td>Yes</td>
+                                </tr>
+                                <tr>
+                                    <td>Remove/install CBs or fused switches</td>
+                                    <td>2</td>
+                                    <td>Yes</td>
+                                    <td>Yes</td>
+                                </tr>
+                                <tr>
+                                    <td>Removal of bolted covers (to expose bare, energized electrical conductors and circuit parts)</td>
+                                    <td>1</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Opening hinged covers (to expose bare, energized electrical conductors and circuit parts)</td>
+                                    <td>0</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Work on energized electrical conductors and circuit parts of utilization equipment fed directly by a branch circuit of the panelboard</td>
+                                    <td>2</td>
+                                    <td>Yes</td>
+                                    <td>Yes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table id="mcc-table-65" class="text-table table-130">
+                            <thead>
+                                <tr>
+                                    <th>Tasks Performed on Energized Equipment</th>
+                                    <th>Hazard/Risk Category</th>
+                                    <th>Rubber Insulating Gloves</th>
+                                    <th>Insulated and Insulating Hand Tools</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Perform infrared thermography and other non-contact inspections outside the restricted approach boundary</td>
+                                    <td>1</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>CB or fused switch or starter operation with enclosure doors closed</td>
+                                    <td>0</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Reading a panel meter while operating a meter switch</td>
+                                    <td>0</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>CB or fused switch or starter operation with enclosure doors open</td>
+                                    <td>1</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Work on energized electrical conductors and circuit parts, including voltage testing</td>
+                                    <td>2</td>
+                                    <td>Yes</td>
+                                    <td>Yes</td>
+                                </tr>
+                                <tr>
+                                    <td>Work on control circuits with energized electrical conductors and circuit parts 120 V or below, exposed</td>
+                                    <td>0</td>
+                                    <td>Yes</td>
+                                    <td>Yes</td>
+                                </tr>
+                                <tr>
+                                    <td>Work on control circuits with energized electrical conductors and circuit parts >120 V, exposed</td>
+                                    <td>2</td>
+                                    <td>Yes</td>
+                                    <td>Yes</td>
+                                </tr>
+                                <tr>
+                                    <td>Application of temporary protective grounding equipment, after voltage test</td>
+                                    <td>2</td>
+                                    <td>Yes</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Work on energized electrical conductors and circuit parts of utilization equipment fed directly by a branch circuit of the motor control center</td>
+                                    <td>2</td>
+                                    <td>Yes</td>
+                                    <td>Yes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table id="mcc-table-42" class="text-table table-130">
+                            <thead>
+                                <tr>
+                                    <th>Tasks Performed on Energized Equipment</th>
+                                    <th>Hazard/Risk Category</th>
+                                    <th>Rubber Insulating Gloves</th>
+                                    <th>Insulated and Insulating Hand Tools</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Insertion or removal of individual starter "buckets" from MCC</td>
+                                    <td>4</td>
+                                    <td>Yes</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Removal of bolted covers (to expose bare, energized electrical conductors and circuit parts)</td>
+                                    <td>4</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Opening hinged covers (to expose bare, energized electrical conductors and circuit parts)</td>
+                                    <td>1</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table id="switchgear-table" class="text-table table-130">
+                            <thead>
+                                <tr>
+                                    <th>Tasks Performed on Energized Equipment</th>
+                                    <th>Hazard/Risk Category</th>
+                                    <th>Rubber Insulating Gloves</th>
+                                    <th>Insulated and Insulating Hand Tools</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Perform infrared thermography and other non-contact inspections outside the restricted approach boundary</td>
+                                    <td>2</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>CB or fused switch operation with enclosure doors closed</td>
+                                    <td>0</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Reading a panel meter while operating a meter switch</td>
+                                    <td>0</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>CB or fused switch operation with enclosure doors open</td>
+                                    <td>1</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Work on energized electrical conductors and circuit parts, including voltage testing</td>
+                                    <td>2</td>
+                                    <td>Yes</td>
+                                    <td>Yes</td>
+                                </tr>
+                                <tr>
+                                    <td>Work on control circuits with energized electrical conductors and circuit parts 120 V or below, exposed</td>
+                                    <td>0</td>
+                                    <td>Yes</td>
+                                    <td>Yes</td>
+                                </tr>
+                                <tr>
+                                    <td>Work on control circuits with energized electrical conductors and circuit parts >120 V, exposed</td>
+                                    <td>2</td>
+                                    <td>Yes</td>
+                                    <td>Yes</td>
+                                </tr>
+                                <tr>
+                                    <td>Insertion or removal (racking) of CBs from cubicles, doors open or closed</td>
+                                    <td>4</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Application of temporary protective grounding equipment after voltage test</td>
+                                    <td>2</td>
+                                    <td>Yes</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Removal of bolted covers (to expose bare, energized electrical conductors and circuit parts)</td>
+                                    <td>4</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Opening hinged covers (to expose bare, energized electrical conductors and circuit parts)</td>
+                                    <td>2</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table id="other-table" class="text-table table-130">
+                            <thead>
+                                <tr>
+                                    <th>Tasks Performed on Energized Equipment</th>
+                                    <th>Hazard/Risk Category</th>
+                                    <th>Rubber Insulating Gloves</th>
+                                    <th>Insulated and Insulating Hand Tools</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Lighting or small power transformers (600 V, maximum) - Removal of bolted covers (to expose bare, energized electrical conductors and circuit parts)</td>
+                                    <td>2</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Lighting or small power transformers (600 V, maximum) - Opening hinged covers (to expose bare, energized electrical conductors and circuit parts)</td>
+                                    <td>1</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Lighting or small power transformers (600 V, maximum) - Work on energized electrical conductors and circuit parts, including voltage testing</td>
+                                    <td>2</td>
+                                    <td>Yes</td>
+                                    <td>Yes</td>
+                                </tr>
+                                <tr>
+                                    <td>Lighting or small power transformers (600 V, maximum) - Application of temporary protective grounding equipment, after voltage test</td>
+                                    <td>2</td>
+                                    <td>Yes</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Revenue meters (kW-hour, at primary voltage and current) — insertion or removal</td>
+                                    <td>2</td>
+                                    <td>Yes</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Cable trough or tray cover removal or installation</td>
+                                    <td>1</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Miscellaneous equipment cover removal or installation</td>
+                                    <td>1</td>
+                                    <td>No</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Work on energized electrical conductors and circuit parts, including voltage testing</td>
+                                    <td>2</td>
+                                    <td>Yes</td>
+                                    <td>Yes</td>
+                                </tr>
+                                <tr>
+                                    <td>Application of temporary protective grounding equipment, after voltage test</td>
+                                    <td>2</td>
+                                    <td>Yes</td>
+                                    <td>No</td>
+                                </tr>
+                                <tr>
+                                    <td>Insertion or removal of plug-in devices into or from busways</td>
+                                    <td>2</td>
+                                    <td>Yes</td>
+                                    <td>No</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p id="contact-ahj-table" class="table-130 ahj-notice">This system exceeds the limitations set by the NFPA 70E task tables. Please contact your AHJ (Authority Having Jurisdiction) for PPE direction.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" id="ppe-requirements">
+                <h3>Protective Clothing and PPE</h3>
+                <div class="row results">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div id="" class="ppe-display">
+                            <h4>Minimum Class of Dielectric Gloves with Leather Protectors:</h4>
+                            <ul>
+                                <li id="glove-class-display">Class 0</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        <table class="text-table">
+                            <thead>
+                                <tr>
+                                    <th>Hazard/Risk Category</th>
+                                    <th>Protective Clothing and PPE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>0</td>
+                                    <td>
+                                        <p>Protective Clothing, Non-melting or Untreated Natural Fiber (i.e., untreated cotton, wool, rayon, or silk, or blends of these materials) with a Fabric Weight of at Least 4.5 oz/yd<sup>2</sup></p>
+                                        <ul><li>Shirt (long sleeve)</li><li>Pants (long)</li></ul>
+                                        <p>Protective Equipment</p>
+                                        <ul><li>Safety glasses or safety goggles (SR)</li><li>Hearing protection (ear canal inserts)</li><li>Heavy duty leather gloves (AN)</li></ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>
+                                        <p>Arc-Rated Clothing, Minimum Arc Rating of 4 cal/cm<sup>2</sup></p>
+                                        <ul>
+                                            <li>Arc-rated long-sleeve shirt and pants or arc-rated coverall</li>
+                                            <li>Arc-rated face shield or arc flash suit hood</li>
+                                            <li>Arc-rated jacket, parka, rainwear, or hard hat liner</li>
+                                        </ul>
+                                        <p>Protective Equipment</p>
+                                        <ul>
+                                            <li>Hard hat</li>
+                                            <li>Safety glasses or safety goggles (SR)</li>
+                                            <li>Hearing protection (ear canal inserts)</li>
+                                            <li>Heavy duty leather gloves</li>
+                                            <li>Leather work shoes (AN)</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>
+                                        <p>Arc-rated Clothing, Minimum Arc Rating of 8 cal/cm<sup>2</sup></p>
+                                        <ul>
+                                            <li>Arc-rated long-sleeve shirt and pants or arc-rated coverall</li>
+                                            <li>Arc-rated flash suit hood or arc-rated face shield and arc-rated balaclava</li>
+                                            <li>Arc-rated jacket, parka, rainwear, or hard hat liner (AN)</li>
+                                        </ul>
+                                        <p>Protective Equipment</p>
+                                        <ul>
+                                            <li>Hard hat</li>
+                                            <li>Safety glasses or safety goggles (SR)</li>
+                                            <li>Hearing protection (ear canal inserts)</li>
+                                            <li>Heavy duty leather gloves</li>
+                                            <li>Leather work shoes</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>
+                                        <p>Arc-Rated Clothing Selected so that the System Arc Rating Meets the Required Minimum Arc Rating of 25 cal/cm<sup>2</sup></p>
+                                        <ul>
+                                            <li>Arc-rated long-sleeve shirt (AR)</li>
+                                            <li>Arc-rated pants (AR)</li>
+                                            <li>Arc-rated coverall (AR)</li>
+                                            <li>Arc-rated arc flash suit jacket (AR)</li>
+                                            <li>Arc-rated arc flash suit pants (AR)</li>
+                                            <li>Arc-rated arc flash suit hood</li>
+                                            <li>Arc-rated gloves</li>
+                                            <li>Arc-rated jacket, parka, rainwear, or hard hat liner (AN)</li>
+                                        </ul>
+                                        <p>Protective Equipment</p>
+                                        <ul>
+                                            <li>Hard hat</li>
+                                            <li>Safety glasses or safety goggles (SR)</li>
+                                            <li>Hearing protection (ear canal inserts)</li>
+                                            <li>Leather work shoes</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>
+                                        <p>Arc-Rated Clothing Selected so that the System Arc Rating Meets the Required Minimum Arc Rating of 40 cal/cm<sup>2</sup></p>
+                                        <ul>
+                                            <li>Arc-rated long-sleeve shirt (AR)</li>
+                                            <li>Arc-rated pants (AR)</li>
+                                            <li>Arc-rated coverall (AR)</li>
+                                            <li>Arc-rated arc flash suit jacket (AR)</li>
+                                            <li>Arc-rated arc flash suit pants (AR)</li>
+                                            <li>Arc-rated arc flash suit hood</li>
+                                            <li>Arc-rated gloves</li>
+                                            <li>Arc-rated jacket, parka, rainwear, or hard hat liner (AN)</li>
+                                        </ul>
+                                        <p>Protective Equipment</p>
+                                        <ul>
+                                            <li>Hard hat</li>
+                                            <li>Safety glasses or safety goggles (SR)</li>
+                                            <li>Hearing protection (ear canal inserts)</li>
+                                            <li>Leather work shoes</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+            <!--
+                    <div class="section">
+                        <h3>Meter Information</h3>
+                        <p>Measurement categories. IEC 61010 applies to low-voltage (&lt; 1000 V) test equipment. From <a href="http://support.fluke.com/educators/Download/Asset/2096653_6003_ENG_D_W.PDF">http://support.fluke.com/educators/Download/Asset/2096653_6003_ENG_D_W.PDF</a></p>
+                        <table id="meter-table" class="text-table">
+                            <thead>
+                                <tr>
+                                <th>Measurement Category</th>
+                                <th>In Brief</th>
+                                <th>Examples</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                <td>CAT IV</td>
+                                <td>Three-phase at utility connection, any outdoor conductors.</td>
+                                <td>
+                                    <ul>
+                                        <li>Refers to the "origin of installation," i.e., where low-voltage conneciton is made to utility power</li>
+                                        <li>Electricity meters, primary overcurrent protection equipment</li>
+                                        <li>Outside and service entrance, service drop from pole to building, run between meter and panel</li>
+                                        <li>Overhead line to detached building, underground line to well pump</li>
+                                    </ul>
+                                </td>
+                                </tr>
+                                <tr>
+                                <td>CAT III</td>
+                                <td>Three-phase distribution, including single-phase commercial lighting</td>
+                                <td>
+                                    <ul>
+                                        <li>Equipment in fixed installations, such as switchgear and polyphase motors</li>
+                                        <li>Bus and feeder in industrial plants</li>
+                                        <li>Feeders and short branch circuits, distribution panel devices</li>
+                                        <li>Lighting systems in larger buildings</li>
+                                        <li>Appliance outlets with short connections to service entrance</li>
+                                    </ul>
+                                </td>
+                                </tr>
+                                <tr>
+                                <td>CAT II</td>
+                                <td>Single-phase receptacle connected loads</td>
+                                <td>
+                                    <ul>
+                                        <li>Appliance, portable tools, and other household and similar loads</li>
+                                        <li>Outlet and long branch circuits
+                                            <ul><li>Outlets at more than 10 meters (30 feet) from CAT III source</li>
+                                            <li>Outlets at more than 20 meters (60 feet) from CAT IV source</li></ul>
+                                        </li>
+                                    </ul>
+                                </td>
+                                </tr>
+                                <tr>
+                                <td>CAT I</td>
+                                <td>Electronic</td>
+                                <td>
+                                    <ul>
+                                        <li>Protected electronic equipment</li>
+                                        <li>Equipment connected to (source) circuits in which measures are taken to limit transient overvoltages to an appropriately low level</li>
+                                        <li>Any high-voltage, low-energy source derived from a high-winding resistance transformer, such as the high-voltage section of a copier</li>
+                                    </ul>
+                                </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <figure>
+                            <img src="../images/meter-cats.png" />
+                        </figure>
+                    </div>
+        -->
+
+            @*<div class="container">
+            <h2>Simple Collapsible</h2>
+            <a href="#demo" class="btn btn-info" data-toggle="collapse">Simple collapsible</a>
+            <div id="demo"  ">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            </div>
+            </div>*@
+
+            <div class="section">
+                <h3 href="#classes" data-toggle="collapse">Classes</h3>
+                <div id="classes" class="row results collapse in">
+                    <div class="col-md-12"><img style="width:100%" src="~/Content/images/60hz-classes.png" /></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="support-warning" class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="alert alert-warning">
+                    <span class="label label-warning">WARNING</span> Your browser/device does not support all of the features
+                    that E-Safe Pro uses. E-Safe Pro may still function to some degree, but you will have the best experience if you
+                    access the app from a more current browser/device.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="~/Scripts/UserInputs60Hz/js/jquery.textchange.min.js"></script>
+
+    @*<script src="~/Scripts/UserInputs60Hz/js/jquery-1.7.2.min.js"></script>*@
+    @*<script src="~/Scripts/UserInputs60Hz/js/bootstrap.min.js"></script>*@
+    <!--<script src="../bootstrap/js/bootstrap-tooltip.js"></script> -->
+    <!--<script src="../bootstrap/js/bootstrap-popover.js"></script>-->
+    <script src="~/Scripts/support.js"></script>
+    <script src="~/Scripts/modernizr.js"></script>
+
+    <script src="~/Scripts/training.js"></script>
+    <script src="~/Scripts/tree.js"></script>
+    <script src="~/Scripts/safetyreqs.js"></script>
+    <script src="~/Scripts/boundaries.js"></script>
+                
+    <script src="~/Scripts/UserInputs60Hz/js/classifications.js"></script>
+    <script src="~/Scripts/UserInputs60Hz/js/safetyreqs.js"></script>
+    <script src="~/Scripts/UserInputs60Hz/js/boundaries.js"></script>
+    <script src="~/Scripts/UserInputs60Hz/js/ui.js"></script>
+
