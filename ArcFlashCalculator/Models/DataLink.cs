@@ -15,7 +15,7 @@ namespace ArcFlashCalculator.Models
         {
             ArcCalculatorDbContext db = new ArcCalculatorDbContext();
             List<UserInputs60Hz> uiList = db.userInputs60Hz.ToList();
-            return uiList;            
+            return uiList;
         }
 
         public static void CreateUserInputs60Hz(UserInputs60Hz ui)
@@ -89,6 +89,16 @@ namespace ArcFlashCalculator.Models
             ArcCalculatorDbContext db = new ArcCalculatorDbContext();
             db.Entry(u).State = Modified;
             db.SaveChanges();
+        }
+
+        public static List<string> GetAllIP()
+        {
+            ArcCalculatorDbContext db = new ArcCalculatorDbContext();
+            List<string> ipList = new List<string>();
+
+
+
+            return ipList;
         }
     }
 

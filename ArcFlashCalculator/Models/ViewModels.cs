@@ -62,9 +62,15 @@ namespace ArcFlashCalculator.Models
         {
             DataLink.UpdateUser(u, Modified);
         }
+
+        public static List<string> GetAllIP()
+        {
+            return DataLink.GetAllIP();
+        }
     }
 
-    public class Power60Hz {
+    public class Power60Hz
+    {
         public Power60Hz()
         {
             //Assign defaults to each list
@@ -191,13 +197,16 @@ namespace ArcFlashCalculator.Models
         public string WorkMode { get; set; }
     }
 
-    public class Login
+    public class ChangePassword
     {
-        public Login()
+        public ChangePassword()
         {
 
         }
 
-        public Users User { get; set; }
+        string email { get; set; }
+        string oldPassword { get; set; }
+        string newPassword { get; set; }
+        string confirmPassword { get; set; }
     }
 }
