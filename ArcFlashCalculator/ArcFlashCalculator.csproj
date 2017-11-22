@@ -240,6 +240,7 @@
     <Content Include="Scripts\UserInputsDC\js\classifications.js" />
     <Content Include="Scripts\UserInputsDC\js\safetyreqs.js" />
     <Content Include="Scripts\UserInputsDC\js\ui.js" />
+    <Content Include="Scripts\main.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
