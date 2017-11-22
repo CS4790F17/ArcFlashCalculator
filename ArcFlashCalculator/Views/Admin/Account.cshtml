@@ -2,15 +2,15 @@
     Layout = "~/Views/Shared/_AdminNavbarPartial.cshtml";
 }
 @{
-    ViewBag.Title = "Add Account";
+    ViewBag.Title = "Accounts";
 }
 
 
 <div class="container-fluid mx-auto buttons">
     <div class="list-group">
         <div class="list-group-item col-md-3">
-            <button class="btn btn-success" id="btnadd" data-toggle="collapse" data-target="#addform">Add Account</button>&nbsp;
-            <button class="btn btn-danger" id="btndelete" data-toggle="collapse" data-target="#delete">Delete Account</button>
+            <button class="btn btn-success bttn" id="btnadd" data-toggle="collapse" data-target="#addform">Add Account</button>&nbsp;
+            <button class="btn btn-danger bttn" id="btndelete" data-toggle="collapse" data-target="#delete">Delete Account</button>
         </div>
     </div>
 </div>
@@ -46,6 +46,8 @@
 </div>
 
 <div id="delete" class="container-fluid mx-auto collapse">
+    <h2>Delete Account</h2>
+    <hr />
     <table class="mt-4 mb-4">
         <tr>
             <th>Email</th>
@@ -100,3 +102,12 @@
         background-color: #dddddd;
     }
 </style>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.bttn').on('click', function () {
+            $('.collapse').collapse('hide');
+        });
+    });
+</script>

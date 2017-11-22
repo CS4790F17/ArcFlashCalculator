@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using ArcFlashCalculator.Models;
 
 namespace ArcFlashCalculator.Controllers
 {
@@ -110,23 +109,6 @@ namespace ArcFlashCalculator.Controllers
                 ViewModels.CreateUser(newUser);
             }
             return View();
-        }
-
-        public ActionResult Login()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login([Bind(Include = "Email, Password")] Users user)
-        {
-            if (ModelState.IsValid)
-            {
-                // check user info here
-            }
-
-            return View(user);
         }
 
         public ActionResult ChangePassword()
