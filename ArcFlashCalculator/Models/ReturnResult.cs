@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace ArcFlashCalculator.Models
 {
@@ -10,7 +11,7 @@ namespace ArcFlashCalculator.Models
     /// same thing (this class) but set an error code and message if anything goes wrong. 
     /// Otherwise, you can access whatever data you need in the data property below.
     /// </summary>
-    public class ReturnResult
+    public class ReturnResult : ViewResult
     {
         /// <summary>
         /// The error code produced (if any).
