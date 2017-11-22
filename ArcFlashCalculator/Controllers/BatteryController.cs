@@ -15,7 +15,7 @@ namespace ArcFlashCalculator.Controllers
         }
 
         // GET: Battery/CalcBat
-        public ActionResult CalcBat()
+        public ActionResult Index()
         {
             Battery battery = new Battery();
             return View(battery);
@@ -24,7 +24,7 @@ namespace ArcFlashCalculator.Controllers
         // POST: Battery/CalcBat
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CalcBat(Battery battery)
+        public ActionResult Index(Battery battery)
         {
             if (ModelState.IsValid)
             {

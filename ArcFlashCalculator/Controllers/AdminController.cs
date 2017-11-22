@@ -9,12 +9,6 @@ namespace ArcFlashCalculator.Controllers
 {
     public class AdminController : Controller
     {
-        // GET: Admin
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         //GET: Admin/Delete
         public ActionResult Delete()
         {
@@ -25,16 +19,14 @@ namespace ArcFlashCalculator.Controllers
         //POST: Admin/Delete
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(List<Users> userList)
+        public ActionResult Delete(Users user)
         {
             if (ModelState.IsValid)
             {
-                foreach (Users user in userList)
-                {
-                    ViewModels.DeleteUser(user.Id);
-                }
+                ViewModels.DeleteUser(user.Id);
+
             }
-            return View();
+            return RedirectToAction("Delete");
         }
 
         //GET: Admin/Login
@@ -66,7 +58,7 @@ namespace ArcFlashCalculator.Controllers
         {
             if (ModelState.IsValid)
             {
-             
+
             }
             return View();
         }
@@ -74,22 +66,19 @@ namespace ArcFlashCalculator.Controllers
         //GET: Admin/Report60Hz
         public ActionResult Report60Hz()
         {
-            List<UserInputs60Hz> report = ViewModels.GetAllUserInputs60Hz();
-            return View(report);
+            return View();
         }
 
         //GET: Admin/ReportDC
         public ActionResult ReportDC()
         {
-            List<UserInputsDC> report = ViewModels.GetAllUserInputsDC();
-            return View(report);
+            return View();
         }
 
         //GET: Admin/ReportIP
         public ActionResult ReportIp()
         {
-            List<string> report = ViewModels.GetAllIP();
-            return View(report);
+            return View();
         }
 
         //GET: Admin/Create

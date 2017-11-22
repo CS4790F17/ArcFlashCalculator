@@ -15,7 +15,7 @@ namespace ArcFlashCalculator.Controllers
         }
 
         // GET: SubRF/CalcSubRF
-        public ActionResult CalcSubRF()
+        public ActionResult Index()
         {
             SubRF powerSubRF = new SubRF();
             return View(powerSubRF);
@@ -24,7 +24,7 @@ namespace ArcFlashCalculator.Controllers
         // POST: SubRF/CalcSubRF
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CalcSubRF(SubRF subRF)
+        public ActionResult Index(SubRF subRF)
         {
             if (ModelState.IsValid)
             {

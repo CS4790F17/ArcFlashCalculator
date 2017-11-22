@@ -13,17 +13,9 @@ namespace ArcFlashCalculator.Controllers
     public class UserInputs60HzController : Controller
     {
         private ArcCalculatorDbContext db = new ArcCalculatorDbContext();
-
-        // GET: UserInputs60Hz
-        public ActionResult Index()
-        {
-            Models.Power60Hz power60Hz = new Models.Power60Hz();
-            return View(power60Hz);
-        }
-
         // ------------------------------- These are the important actionresults//
         // GET: UserInputs60Hz/Calc60Hz
-        public ActionResult Calc60Hz()
+        public ActionResult Index()
         {
             Models.Power60Hz power60Hz = new Models.Power60Hz();
             return View(power60Hz);
@@ -32,7 +24,7 @@ namespace ArcFlashCalculator.Controllers
         // POST: UserInputs60Hz/Calc60Hz
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Calc60Hz(Power60Hz power60Hz)
+        public ActionResult Index(Power60Hz power60Hz)
         {
             if (ModelState.IsValid)
             {
