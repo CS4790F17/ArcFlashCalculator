@@ -1,7 +1,268 @@
-﻿
-@{
-    ViewBag.Title = "Index";
-}
+﻿<style>
+    body {
+        padding-bottom: 70px;
+    }
+</style>
 
-<h2>Index</h2>
+<link href="~/Content/css/main.css" rel="stylesheet" />    
 
+<nav id="navBtm" class="navbar navbar-default navbar-fixed-bottom hidden">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav navbar-right">
+            <li><a id="backToTop" href="#">Back to top</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div id="system-information" class="col-md-4 col-md-offset-4">
+            <form class="well">
+                <h2>System Information</h2>
+                <p id="instructions">
+                    Please provide data for all of the fields in the System Information form. Safety information
+                    will automatically display as data is entered.
+                </p>
+
+                <div class="form-group">
+                    <label>Capacitor Value (microfarads):</label>
+                    <input class="form-control" id="capacitance-input" type="number" />
+                </div>
+
+                <div class="form-group">
+                    <label>Voltage (AC rms or DCV):</label>
+                    <input class="form-control" id="voltage-input" type="number" />
+                </div>
+
+                <div class="form-group">
+                    <label>Work Mode:</label>
+                    <select class="form-control" id="work-mode-input">
+                        <option value="">Select a mode</option>
+                        <option value="0">Mode 0 - Electrically safe work condition</option>
+                        <option value="1">Mode 1 - De-energize and verify a safe work condition exists</option>
+                        <option value="2">Mode 2 - Testing, troubleshoot, tune and adjust</option>
+                        <option value="3">Mode 3 - Energized, Energized Electrical Work Permit (EEWP) to modify, repair or adjust</option>
+                    </select>
+                </div>
+
+                <div id="form-actions">
+                    <hr /><a id="reset-button" href="#" class="btn">Reset</a>
+                </div>
+            </form>
+
+        </div>
+        <div id="results-wrapper" class="col-md-12">
+            <div class="section">
+                <div id="not-enough-data" class="classification">
+                    Please provide data for all of the fields in this form. Safety information
+                    will automatically display as valid data is entered.
+                </div>
+                <div id="class-0" class="classification">Classification <span class="classification-display"></span> - No hazard. No engineering or administrative controls are needed.</div>
+                <div id="class-1" class="classification">Classification <span class="classification-display"></span> - Little to no hazards. Few or no engineering or administrative controls are needed.</div>
+                <div id="class-2" class="classification">
+                    Classification <span class="classification-display"></span> - Injury or death could occur by close proximity or contact;
+                    often the hazard is shock or contact burn; engineering controls are necessary for operation (e.g., listing or equipment approval),
+                    and administrative controls are necessary for electrical work in this classification.
+                </div>
+                <div id="class-3" class="classification">
+                    Classification <span class="classification-display"></span> - Injury or death could occur by proximity or contact; often the hazard is shock, contact burn,
+                    or arc-flash burn; engineering controls are necessary for operation (e.g., listing or equipment approval),
+                    and administrative controls are necessary for electrical work in this classification.
+                </div>
+                <div id="class-4" class="classification">
+                    Classification <span class="classification-display"></span> - Highest level of risk. Significant engineering and administrative controls are
+                    necessary to manage the hazard in this classification.
+                </div>
+                <div id="class-5" class="classification">
+                    Classification <span class="classification-display"></span> - Highest level of risk. Significant engineering and administrative controls are
+                    necessary to manage the hazard in this classification.
+                </div>
+            </div>
+
+            <div class="section">
+                <p id="note-3-x-a" class="note">The hazards for less than 100 V, Classes 3.2a, 3.3a, 3.4a, are high current through a short circuit, such as tools and jewelry.</p>
+                <p id="note-3-x-b" class="note">The hazards for 100 – 400 V, Classes 3.2b, 3.3b, 3.4b, are high current through a short circuit, and a shock hazard.</p>
+                <p id="note-3-4-b" class="note">Class 3.4b has an added hazard of mechanical damage due to high currents and strong pulsed magnetic forces during a short circuit.</p>
+                <p id="note-3-3-d" class="note">Do NOT do this mode of work.</p>
+            </div>
+
+            <div class="section">
+                <h3>General</h3>
+                <div class="row results">
+                    <div class="col-md-4">
+                        <div id="joules-display" class="display"></div><h6>
+                            DC Energy
+                            <i class="icon-question-sign help-tooltip" data-title="Energy = 0.5 CV<sup>2</sup>"></i>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Shock Boundaries</h3>
+                <div class="row results">
+                    <div class="col-md-4">
+                        <div id="limited-approach-fixed-circuit-display" class="display"></div>
+                        <h6>
+                            Limited Approach Fixed Circuit Part
+                            <i id="limited-approach-help" class="icon-question-sign help-tooltip"
+                                data-title="Distance from an exposed conductor within which a shock hazard exists. Training or escort required."></i>
+                        </h6>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="restricted-approach-display" class="display"></div>
+                        <h6>
+                            Restricted Approach
+                            <i id="restricted-approach-help" class="icon-question-sign help-tooltip"
+                                data-title="Distance from an exposed conductor within which there is an increased risk of shock
+                    due to electrical arc over combined with inadvertent movement. PPE required."></i>
+                        </h6>
+                    </div>
+                </div>
+                <div class="row results">
+                    <div class="col-md-4">
+                        <div id="prohibited-approach-display" class="display"></div>
+                        <h6>
+                            Prohibited Approach
+                            <i id="prohibited-approach-help" class="icon-question-sign help-tooltip"
+                                data-title="Distance from an exposed conductor within which work is considered the same as making contact with the electrical conductor or circuit part."></i>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Arc Flash Boundaries (Applicable at >100V and >10kJ)</h3>
+                <p class="important">The calculated Arc Flash boundary does not account for hearing or lung damage or potential flying debris which may be present during a failure mode event.</p>
+                <p>Lung damage may occur if you are within the Enclosed Box Arc Flash boundary.</p>
+                <div class="row results">
+                    <div class="col-md-4">
+                        <div id="arc-flash-display" class="display"></div>
+                        <h6>
+                            Enclosed Box Arc Flash Boundary for 1.2 cal/cm<sup>2</sup>
+                            <i id="arc-flash-help" class="icon-question-sign help-tooltip"
+                                data-title="<p>Threshold distance for 2<sup>nd</sup> degree burn where the worker is exposed to 1.2 cal/cm<sup>2</sup> (5 J/cm<sup>2</sup>).
+                                Assumes absolute worst case of all energy being converted into radiant heat.</p>
+                                <p>Calculated from:<br/>Distance (cm) = sqrt(0.05 * Energy)</p>"></i>
+                        </h6>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="distances-table-wrapper">
+                            <table id="distances-table" class="text-table">
+                                <thead>
+                                    <tr>
+                                        <th>Distance</th>
+                                        <th>cal/cm<sup>2</sup></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            <h6>
+                                Distance vs cal/cm<sup>2</sup> <i id="arc-flash-help" class="icon-question-sign help-tooltip"
+                                                                    data-title="<p>The Distance vs. Calorie table presented includes a safety factor of 3 to account for potential focusing factors from a non omni-directional release of energy. It is presented for informational purposes and should only to be utilized during emergency situations. It does not account for hearing or lung damage or potential flying debris which may be present during a failure mode event.</p>
+                        <p>Energy (J) at a distance (cm) = 3 x Energy / (4 * PI * R^2)<br/>Energy (cal) at a distance (cm) = (Energy (J) at a distance (cm)) / 4.184</p>"></i>
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Safety Requirements</h3>
+                <div class="row results">
+                    <div class="col-md-4">
+                        <div id="safety-req-workers-display" class="display"></div><h6>
+                            Workers <i class="icon-question-sign help-popover"
+                                        data-title="Workers Definitions"
+                                        data-content="<strong>Alone</strong> - No other workers required.<br/>
+                                <strong>Two Person</strong> - An additional worker qualified to work on energized circuits, understanding the work activities and the hazards present, and trained to know what to do in case of an electrical accident involving the other worker. Must be within eyesight of the hazardous task.<br/>
+                                <strong>Safety Watch</strong> - The safety watch should be a worker qualified to work on energized circuits who accepts responsibility for monitoring qualified worker(s) performing high-hazard electrical work. Must be actively working with/beside the primary worker and have the same PPE and training."></i>
+                        </h6>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="safety-req-work-control-display" class="display"></div><h6>
+                            Work Control <i class="icon-question-sign help-popover"
+                                            data-title="Training Definitions"
+                                            data-content="<strong>EEWP</strong> - Energized Electrical Work Permit, higher level signing authority required<br/>
+                                <strong>SOP</strong> - Standard Operating Procedure"></i>
+                        </h6>
+                    </div>
+                </div>
+                <div class="row results">
+                    <div class="col-md-4">
+                        <div id="safety-req-energy-removal-display" class="display"></div><h6>
+                            Discharge Method <i class="icon-question-sign help-tooltip"
+                                                data-title="Discharge stick must be approved by the agency AHJ. A Hard ground hook will apply a short circuit to the capacitor return
+                            point. A Soft ground hook will utilize a properly specified resistor to control the discharge of
+                            energy from the capacitor. When not in use  capacitors should have a shorting strap placed
+                            between the positive and negative connections."></i>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" id="ppe-requirements">
+                <h3>PPE Requirements</h3>
+                <div class="row results">
+                    <div class="col-md-6">
+                        <div id="" class="ppe-display">
+                            <h4>Minimum Class of Dielectric Gloves with Leather Protectors:</h4>
+                            <ul>
+                                <li id="glove-class-display">Class 0</li>
+                            </ul>
+                            <p>If required due to working conditions. Discharge methods should be designed to keep the operator outside either the Enclosed Box Arc Flash Boundary or the Restricted Shock Boundary, whichever is greater.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section" id="ppe-requirements-voltage-too-high">
+                <h3>PPE Requirements</h3>
+                <div class="row results">
+                    <div class="col-md-6">
+                        <div class="display">No PPE available to protect the worker, therefore the worker can not work at this arc flash hazard level. Methods must be used to reduce to risk of arc flash by reducing the probability of creating an arc flash to near zero.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3>Classes</h3>
+                <div class="row results">
+                    <div class="col-md-6"><img style="width: 100%;" src="~/Content/images/capacitor-classes.png"/></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="support-warning" class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="alert alert-warning">
+                <span class="label label-warning">WARNING</span> Your browser/device does not support all of the features
+                that E-Safe Pro uses. E-Safe Pro may still function to some degree, but you will have the best experience if you
+                access the app from a more current browser/device.
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="~/Scripts/UserInputs60Hz/js/jquery.textchange.min.js"></script>
+
+@*<script src="../js/jquery-1.7.2.min.js"></script>
+<script src="../js/jquery.textchange.min.js"></script>
+<script src="../bootstrap/js/bootstrap.min.js"></script>*@
+<!--<script src="../bootstrap/js/bootstrap-tooltip.js"></script> -->
+<!--<script src="../bootstrap/js/bootstrap-popover.js"></script>-->
+<script src="~/Scripts/support.js"></script>
+<script src="~/Scripts/modernizr.js"></script>
+
+<script src="~/Scripts/training.js"></script>
+<script src="~/Scripts/tree.js"></script>
+<script src="~/Scripts/safetyreqs.js"></script>
+<script src="~/Scripts/boundaries.js"></script>
+
+<script src="~/Scripts/Capacitor/js/classifications.js"></script>
+<script src="~/Scripts/Capacitor/js/safetyreqs.js"></script>
+<!-- using DC boundaries -->
+<script src="~/Scripts/UserInputsDC/js/boundaries.js"></script>
+<script src="~/Scripts/Capacitor/js/ui.js"></script>
