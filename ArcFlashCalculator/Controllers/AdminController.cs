@@ -65,22 +65,19 @@ namespace ArcFlashCalculator.Controllers
         //GET: Admin/Report60Hz
         public ActionResult Report60Hz()
         {
-            List<UserInputs60Hz> report = ViewModels.GetAllUserInputs60Hz();
-            return View(report);
+            return View();
         }
 
         //GET: Admin/ReportDC
         public ActionResult ReportDC()
         {
-            List<UserInputsDC> report = ViewModels.GetAllUserInputsDC();
-            return View(report);
+            return View();
         }
 
         //GET: Admin/ReportIP
         public ActionResult ReportIp()
         {
-            List<string> report = ViewModels.GetAllIP();
-            return View(report);
+            return View();
         }
 
         //GET: Admin/Create
