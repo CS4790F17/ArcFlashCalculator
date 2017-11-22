@@ -195,10 +195,16 @@
     <Content Include="Content\images\Thumbs.db" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Images\boundaries.png" />
+    <Content Include="Scripts\Battery\js\classifications.js" />
+    <Content Include="Scripts\Battery\js\safetyreqs.js" />
+    <Content Include="Scripts\Battery\js\ui.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\boundaries.js" />
+    <Content Include="Scripts\Capacitor\js\classifications.js" />
+    <Content Include="Scripts\Capacitor\js\safetyreqs.js" />
+    <Content Include="Scripts\Capacitor\js\ui.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.js" />
@@ -216,6 +222,9 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\safetyreqs.js" />
+    <Content Include="Scripts\SubRF\js\classifications.js" />
+    <Content Include="Scripts\SubRF\js\safetyreqs.js" />
+    <Content Include="Scripts\SubRF\js\ui.js" />
     <Content Include="Scripts\support.js" />
     <Content Include="Scripts\training.js" />
     <Content Include="Scripts\tree.js" />

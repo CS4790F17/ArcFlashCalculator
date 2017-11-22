@@ -313,4 +313,11 @@ $(function () {
 
     $('[data-toggle="popover"]').popover();
 
+
+
+    $("#togglelineimpedance").click(function () {
+        alert("working");
+        //$("p").toggle();
+    });
+
 });

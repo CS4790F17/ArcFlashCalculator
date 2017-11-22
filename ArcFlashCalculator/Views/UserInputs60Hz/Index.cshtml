@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ArcFlashCalculator.Models.UserInputs60Hz>
+﻿@*@model IEnumerable<ArcFlashCalculator.Models.UserInputs60Hz>*@
 
 <style>
     body {
@@ -48,6 +48,15 @@
                         <option value="switchgear">600 V Class Switchgear (with power circuit breakers or fused switches) and 600 V Class Switchboards</option>
                         <option value="other">Other 600 V Class (277 V through 600 V, nominal) Equipment</option>
                     </select>
+                </div>
+
+                @*<div class="form-check">
+                    <label class="form-check-label">Line Impedance:<input type="checkbox" class="form-check-input">
+                    </label>
+                </div>*@
+
+                <div id="togglelineimpedance">
+                    Enter Line Impedance Manually?
                 </div>
 
                 <div class="form-group" id="short-circuit-current-field">
