@@ -1,9 +1,9 @@
-﻿using System;
+﻿using ArcFlashCalculator.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using ArcFlashCalculator.Models;
 
 namespace ArcFlashCalculator.Controllers
 {
@@ -108,6 +108,16 @@ namespace ArcFlashCalculator.Controllers
             {
                 ViewModels.CreateUser(newUser);
             }
+            return View();
+        }
+
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        public ActionResult Account()
+        {
             return View();
         }
     }
