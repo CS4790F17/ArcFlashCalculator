@@ -1,0 +1,38 @@
+﻿@model ArcFlashCalculator.Models.Login
+@{
+    Layout = "~/Views/Shared/_AdminNavbarPartial.cshtml";
+}
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="container-fluid mx-auto">
+    <h2>Login</h2>
+
+    @using (@Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <label for="email" class="control-label">Email</label><br />
+                    <input id="email" type="email" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <label for="pass" class="control-label">Password</label><br />
+                    <input id="pass" type="password" class="form-control" />
+                </div>
+            </div>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Login" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
