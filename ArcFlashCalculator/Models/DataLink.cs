@@ -15,7 +15,7 @@ namespace ArcFlashCalculator.Models
         {
             ArcCalculatorDbContext db = new ArcCalculatorDbContext();
             List<UserInputs60Hz> uiList = db.userInputs60Hz.ToList();
-            return uiList;            
+            return uiList;
         }
 
         public static void CreateUserInputs60Hz(UserInputs60Hz ui)
@@ -92,6 +92,14 @@ namespace ArcFlashCalculator.Models
         }
     }
 
+    [Table("Errors")]
+    public class Errors
+    {
+        [Key]
+        public int Id { get; set; }
+        public string Error { get; set; }
+    }
+
     [Table("UserInputs60Hz")]
     public class UserInputs60Hz
     {
@@ -123,6 +131,8 @@ namespace ArcFlashCalculator.Models
         public decimal OEInFreshAir { get; set; }
 
         public string IPAddress { get; set; }
+
+        public DateTime date { get; set; }
     }
 
     [Table("UserInputsDC")]
@@ -144,6 +154,8 @@ namespace ArcFlashCalculator.Models
         public decimal Duration { get; set; }
 
         public string IPAddress { get; set; }
+
+        public DateTime date { get; set; }
     }
 
     [Table("Users")]
@@ -159,6 +171,10 @@ namespace ArcFlashCalculator.Models
         [DisplayName("Password")]
         [Required(ErrorMessage = "A Password is required")]
         public string Password { get; set; }
+
+        public DateTime LastLogin { get; set; }
+
+        public int bitAdmin { get; set; }
     }
 
     public class ArcCalculatorDbContext : DbContext

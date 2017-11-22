@@ -1,0 +1,113 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminNavbarPartial.cshtml";
+}
+@{
+    ViewBag.Title = "Accounts";
+}
+
+
+<div class="container-fluid mx-auto buttons">
+    <div class="list-group">
+        <div class="list-group-item col-md-3">
+            <button class="btn btn-success bttn" id="btnadd" data-toggle="collapse" data-target="#addform">Add Account</button>&nbsp;
+            <button class="btn btn-danger bttn" id="btndelete" data-toggle="collapse" data-target="#delete">Delete Account</button>
+        </div>
+    </div>
+</div>
+<div class="container-fluid mx-auto collapse" id="addform">
+    <h2>Add Account</h2>
+
+    @using (@Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <label for="email" class="control-label mb-2">Email</label><br />
+                    <input id="email" type="email" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <label for="pass" class="control-label mb-2">Password</label><br />
+                    <input id="pass" type="password" class="form-control mb-4" />
+                </div>
+            </div>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Submit" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div id="delete" class="container-fluid mx-auto collapse">
+    <h2>Delete Account</h2>
+    <hr />
+    <table class="mt-4 mb-4">
+        <tr>
+            <th>Email</th>
+            <th>Date Added</th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>test@gmail.com</td>
+            <td>1/1/2017</td>
+            <td><a href="">Change Password</a>&nbsp;|&nbsp;<a href="">Delete Account</a></td>
+        </tr>
+        <tr>
+            <td>test@mail.com</td>
+            <td>2/2/2017</td>
+            <td><a href="">Change Password</a>&nbsp;|&nbsp;<a href="">Delete Account</a></td>
+        </tr>
+        <tr>
+            <td>test@hotmail.com</td>
+            <td>3/3/2017</td>
+            <td><a href="">Change Password</a>&nbsp;|&nbsp;<a href="">Delete Account</a></td>
+        </tr>
+    </table>
+
+</div>
+
+<style>
+    #form .mb-2 {
+        margin-bottom: .75rem;
+    }
+
+    #delete .mb-4, #form .mb-4 {
+        margin-bottom: 1.5rem;
+    }
+
+    #delete .mt-4 {
+        margin-top: 1.5rem;
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.bttn').on('click', function () {
+            $('.collapse').collapse('hide');
+        });
+    });
+</script>
