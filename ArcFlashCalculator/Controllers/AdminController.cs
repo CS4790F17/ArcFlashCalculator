@@ -12,7 +12,8 @@ namespace ArcFlashCalculator.Controllers
         //GET: Admin/Delete
         public ActionResult Delete()
         {
-            return View();
+            List<Users> userList = ViewModels.GetAllUsers();
+            return View(userList);
         }
 
         //POST: Admin/Delete
@@ -25,7 +26,7 @@ namespace ArcFlashCalculator.Controllers
                 ViewModels.DeleteUser(user.Id);
 
             }
-            return View();
+            return RedirectToAction("Delete");
         }
 
         //GET: Admin/Login
