@@ -9,30 +9,21 @@ namespace ArcFlashCalculator.Controllers
 {
     public class AdminController : Controller
     {
-        // GET: Admin
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         //GET: Admin/Delete
         public ActionResult Delete()
         {
-            List<Users> userList = ViewModels.GetAllUsers();
-            return View(userList);
+            return View();
         }
 
         //POST: Admin/Delete
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(List<Users> userList)
+        public ActionResult Delete(Users user)
         {
             if (ModelState.IsValid)
             {
-                foreach (Users user in userList)
-                {
-                    ViewModels.DeleteUser(user.Id);
-                }
+                ViewModels.DeleteUser(user.Id);
+
             }
             return View();
         }
@@ -66,7 +57,7 @@ namespace ArcFlashCalculator.Controllers
         {
             if (ModelState.IsValid)
             {
-             
+
             }
             return View();
         }
