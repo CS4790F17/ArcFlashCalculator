@@ -90,19 +90,6 @@ namespace ArcFlashCalculator.Models
             db.Entry(u).State = Modified;
             db.SaveChanges();
         }
-
-        public static List<string> GetAllIP()
-        {
-            ArcCalculatorDbContext db = new ArcCalculatorDbContext();
-            List<string> temp = new List<string>();
-
-            string SQL = "SELECT IPAddress FROM UserInputs60Hz";
-            var ipList60Hz = db.Database.SqlQuery<UserInputs60Hz>(SQL).ToList();
-
-            SQL = "SELECT IPAddress FROM UserInputsDC";
-            var ipListDC = db.Database.SqlQuery<UserInputsDC>(SQL).ToList();
-            return temp;
-        }
     }
 
     [Table("Errors")]

@@ -62,11 +62,6 @@ namespace ArcFlashCalculator.Models
         {
             DataLink.UpdateUser(u, Modified);
         }
-
-        public static List<string> GetAllIP()
-        {
-            return DataLink.GetAllIP();
-        }
     }
 
     public class Power60Hz
@@ -209,4 +204,6 @@ namespace ArcFlashCalculator.Models
         string newPassword { get; set; }
         string confirmPassword { get; set; }
     }
+
+
 }

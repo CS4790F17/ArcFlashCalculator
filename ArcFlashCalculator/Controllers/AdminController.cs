@@ -12,7 +12,8 @@ namespace ArcFlashCalculator.Controllers
         //GET: Admin/Delete
         public ActionResult Delete()
         {
-            return View();
+            List<Users> userList = ViewModels.GetAllUsers();
+            return View(userList);
         }
 
         //POST: Admin/Delete
@@ -25,7 +26,7 @@ namespace ArcFlashCalculator.Controllers
                 ViewModels.DeleteUser(user.Id);
 
             }
-            return View();
+            return RedirectToAction("Delete");
         }
 
         //GET: Admin/Login
@@ -65,22 +66,19 @@ namespace ArcFlashCalculator.Controllers
         //GET: Admin/Report60Hz
         public ActionResult Report60Hz()
         {
-            List<UserInputs60Hz> report = ViewModels.GetAllUserInputs60Hz();
-            return View(report);
+            return View();
         }
 
         //GET: Admin/ReportDC
         public ActionResult ReportDC()
         {
-            List<UserInputsDC> report = ViewModels.GetAllUserInputsDC();
-            return View(report);
+            return View();
         }
 
         //GET: Admin/ReportIP
         public ActionResult ReportIp()
         {
-            List<string> report = ViewModels.GetAllIP();
-            return View(report);
+            return View();
         }
 
         //GET: Admin/Create
