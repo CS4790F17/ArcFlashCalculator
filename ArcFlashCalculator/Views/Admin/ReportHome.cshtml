@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Administrative Reports";
+    Layout = "~/Views/Shared/_AdminNavbarPartial.cshtml";
+}
+
+<div class="center-block">
+    <h2>Administrative Reports</h2>
+</div>
+
+<table class="table">
+    <tr>
+        <th>Report Type</th>
+        <th>Description</th>
+        <th></th>
+    </tr>
+
+        <tr>
+            <td>60Hz Inputs</td>
+            <td>Retrieves all 60Hz user inputs</td>
+            <td>
+                @Html.ActionLink("Run Report", "Report60Hz")
+            </td>
+        </tr>
+
+    <tr>
+        <td>60Hz Inputs</td>
+        <td>Retrieves all DC user inputs</td>
+        <td>
+            @Html.ActionLink("Run Report", "ReportDC")
+        </td>
+    </tr>
+
+    <tr>
+        <td>User IPs</td>
+        <td>Retrieves all User IPs</td>
+        <td>
+            @Html.ActionLink("Run Report", "ReportIP")
+        </td>
+    </tr>
+
+</table>
