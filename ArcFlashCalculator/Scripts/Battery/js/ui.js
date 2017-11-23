@@ -290,4 +290,28 @@ $(function() {
     $('[data-toggle="tooltip"]').tooltip();
 
     $('[data-toggle="popover"]').popover();
+
+    $("#volts-input").keyup(function () {
+        var value = $("#volts-input").val();
+        if (value > 999 || value < 0) {
+            $("#voltage-range-warning").removeClass("hidden").addClass("visible");
+            //$("#fault-clearing-time-input").val("");
+        }
+    });
+
+    $("#amps-input").keyup(function () {
+        var value = $("#amps-input").val();
+        if (value > 500000 || value < 0) {
+            $("#scc-range-warning").removeClass("hidden").addClass("visible");
+            //$("#fault-clearing-time-input").val("");
+        }
+    });
+
+    $("#duration-input").keyup(function () {
+        var value = $("#duration-input").val();
+        if (value > 2 || value < 0.003) {
+            $("#duration-range-warning").removeClass("hidden").addClass("visible");
+            //$("#fault-clearing-time-input").val("");
+        }
+    });
 });

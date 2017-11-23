@@ -262,4 +262,25 @@ $(function() {
    $('[data-toggle="tooltip"]').tooltip();
 
    $('[data-toggle="popover"]').popover();
+
+   $("#maximum-exposed-input").keyup(function () {
+       var value = $("#maximum-exposed-input").val();
+       if (value > 999 || value < 0) {
+           $("#PotMaxExp-range-warning").removeClass("hidden").addClass("visible");
+       }
+   });
+
+   $("#available-current-input").keyup(function () {
+       var value = $("#available-current-input").val();
+       if (value > 500000 || value < 0) {
+           $("#scc-range-warning").removeClass("hidden").addClass("visible");
+       }
+   });
+
+   $("#duration-input").keyup(function () {
+       var value = $("#duration-input").val();
+       if (value > 2 || value < 0.003) {
+           $("#duration-warning").removeClass("hidden").addClass("visible");
+       }
+   });
 });
