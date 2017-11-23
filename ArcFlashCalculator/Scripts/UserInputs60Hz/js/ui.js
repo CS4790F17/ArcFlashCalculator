@@ -307,22 +307,16 @@ $(function () {
     $("#toggle-impedance").hide();
 
     $("#toggle-impedance").click(function () {
-        //alert("value of manual impedance: " + manualImpedance);
-        //$("#manualShortCircuitCurrent").show();
-        //$("#short-circuit-current-field").hide();
-
+        
         if (manualImpedance) {
             manualImpedance = false;
             $("#manualShortCircuitCurrent").show();
             $("#short-circuit-current-field").hide();
-            alert("hey");
 
         } else {
             manualImpedance = true;
             $("#short-circuit-current-field").show();
             $("#manualShortCircuitCurrent").hide();
-            //alert("value of manual impedance: " + manualImpedance);
-            alert("hey now");
 
         }
     });
