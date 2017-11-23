@@ -259,4 +259,11 @@ $(function() {
    $('[data-toggle="tooltip"]').tooltip();
 
    $('[data-toggle="popover"]').popover();
+
+   $("#duration-input").keyup(function () {
+       var value = $("#duration-input").val();
+       if (value > 2 || value < 0.003) {
+           $("#duration-warning").removeClass("hidden").addClass("visible");
+       }
+   });
 });

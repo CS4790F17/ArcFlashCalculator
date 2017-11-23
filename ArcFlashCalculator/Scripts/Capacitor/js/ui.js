@@ -239,4 +239,11 @@ $(function() {
    // help popovers
     $('[data-toggle="tooltip"]').tooltip();
     $('[data-toggle="popover"]').popover();
+
+    $("#voltage-input").keyup(function () {
+        var value = $("#voltage-input").val();
+        if (value > 999 || value < 0) {
+            $("#voltage-range-warning").removeClass("hidden").addClass("visible");
+        }
+    });
 });
