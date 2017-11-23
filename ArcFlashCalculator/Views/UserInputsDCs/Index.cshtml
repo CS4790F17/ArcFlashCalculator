@@ -28,9 +28,17 @@
                         will automatically display as data is entered.
                     </p>
 
+                    <div class="alert-danger hidden" id="PotMaxExp-range-warning" role="alert">
+                        Potential Maximum Exposure values must be a number between 0 and 999
+                    </div>
+
                     <div class="form-group">
                         <label>Potential Maximum Exposed DC (VDC):</label>
                         <input class="form-control" id="maximum-exposed-input" type="number" />
+                    </div>
+
+                    <div class="alert-danger hidden" id="scc-range-warning" role="alert">
+                        Available Short Circuit Current values must be a number between 1 and 500,000
                     </div>
 
                     <div class="form-group">
@@ -38,6 +46,10 @@
                             Available (Bolted Fault) Short Circuit Current (Amps) <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Some power supplies are power limited therefore the maximum current available may be different for a specific voltage setting.."></span>:
                         </label>
                         <input class="form-control" id="available-current-input" type="number" />
+                    </div>
+
+                    <div class="alert-danger hidden" id="duration-warning" role="alert">
+                        Duration of Exposure values must be a number between 0.003 and 2
                     </div>
 
                     <div class="form-group">
