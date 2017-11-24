@@ -24,10 +24,13 @@ var UI = {
         if (input.shouldShowAdditionalFields) {
             $('#short-circuit-current-field').show();
             $('#fault-clearning-time-field').show();
+            $("#toggle-impedance").show();
+
         }
         else {
             $('#short-circuit-current-field').hide();
             $('#fault-clearning-time-field').hide();
+            $("#toggle-impedance").hide();
         }
 
         if (input.isComplete) {
@@ -296,6 +299,25 @@ $(function () {
         var top_offset = $(window).scrollTop();
         if (top_offset == 0) {
             $('#navBtm').addClass('hidden');
+        }
+    });
+
+    var manualImpedance = true;
+    $("#manualShortCircuitCurrent").hide();
+    $("#toggle-impedance").hide();
+
+    $("#toggle-impedance").click(function () {
+        
+        if (manualImpedance) {
+            manualImpedance = false;
+            $("#manualShortCircuitCurrent").show();
+            $("#short-circuit-current-field").hide();
+
+        } else {
+            manualImpedance = true;
+            $("#short-circuit-current-field").show();
+            $("#manualShortCircuitCurrent").hide();
+
         }
     });
 

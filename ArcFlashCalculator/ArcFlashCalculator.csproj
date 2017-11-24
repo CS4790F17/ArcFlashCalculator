@@ -171,6 +171,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\ArcCalculator.mdf" />
+    <Content Include="App_Data\ArcCalculator_log.ldf">
+      <DependentUpon>ArcCalculator.mdf</DependentUpon>
+    </Content>
     <Content Include="bin\Antlr3.Runtime.dll" />
     <Content Include="bin\Antlr3.Runtime.pdb" />
     <Content Include="bin\ArcFlashCalculator.dll" />
@@ -292,14 +296,8 @@
     <Content Include="bin\roslyn\vbc.exe.config" />
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
-    <Content Include="obj\Debug\ArcFlashCalculator.csprojResolveAssemblyReference.cache" />
-    <Content Include="obj\Debug\CoreCompileInputs.cache" />
-    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Images\boundaries.png" />
-    <Content Include="obj\Debug\ArcFlashCalculator.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Debug\ArcFlashCalculator.dll" />
-    <Content Include="obj\Debug\ArcFlashCalculator.pdb" />
     <Content Include="Scripts\Battery\js\classifications.js" />
     <Content Include="Scripts\Battery\js\safetyreqs.js" />
     <Content Include="Scripts\Battery\js\ui.js" />
@@ -331,6 +329,7 @@
     <Content Include="Scripts\SubRF\js\safetyreqs.js" />
     <Content Include="Scripts\SubRF\js\ui.js" />
     <Content Include="Scripts\support.js" />
+    <Content Include="Scripts\Tables\js\AltCurrentResistTable.js" />
     <Content Include="Scripts\training.js" />
     <Content Include="Scripts\tree.js" />
     <Content Include="Scripts\UserInputs60Hz\js\boundaries.js" />
@@ -377,17 +376,13 @@
     <Content Include="Views\Capacitor\Index.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\text.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Shared\_AdminNavbarPartial.cshtml" />
     <Content Include="Views\Admin\Login.cshtml" />
     <Content Include="Views\Admin\ChangePassword.cshtml" />
     <Content Include="Views\Admin\Account.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="obj\Debug\TempPE\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.map" />
