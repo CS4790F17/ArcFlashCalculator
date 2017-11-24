@@ -220,7 +220,7 @@ namespace ArcFlashCalculator.Models
 
         public string IPAddress { get; set; }
 
-        public DateTime date { get; set; }
+        public DateTime? date { get; set; }
     }
 
     [Table("UserInputsDC")]
@@ -243,7 +243,7 @@ namespace ArcFlashCalculator.Models
 
         public string IPAddress { get; set; }
 
-        public DateTime date { get; set; }
+        public DateTime? date { get; set; }
     }
 
     [Table("Users")]
