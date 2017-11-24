@@ -48,6 +48,11 @@ namespace ArcFlashCalculator.Models
             return DataLink.GetUser(id);
         }
 
+        public static Users GetUser(string username)
+        {
+            return DataLink.GetUser(username);
+        }
+
         public static void CreateUser(Users u)
         {
             DataLink.CreateUser(u);
@@ -199,11 +204,22 @@ namespace ArcFlashCalculator.Models
 
         }
 
-        string email { get; set; }
-        string oldPassword { get; set; }
-        string newPassword { get; set; }
-        string confirmPassword { get; set; }
+        public string email { get; set; }
+        public string oldPassword { get; set; }
+        public string newPassword { get; set; }
+        public string confirmPassword { get; set; }
+        public bool confirmError { get; set; }
+        public bool UserOrPasswordError { get; set; }
     }
 
+    public class User
+    {
+        public User()
+        {
 
+        }
+
+        public Users user { get; set; }
+        public bool error { get; set; }
+    }
 }
