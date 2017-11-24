@@ -63,6 +63,11 @@ namespace ArcFlashCalculator.Controllers
             return View();
         }
 
+        //GET: Admin/ReportHome
+        public ActionResult ReportHome() {
+            return View();
+        }
+
         //GET: Admin/Report60Hz
         public ActionResult Report60Hz()
         {

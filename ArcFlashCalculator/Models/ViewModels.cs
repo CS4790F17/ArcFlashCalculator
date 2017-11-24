@@ -205,5 +205,15 @@ namespace ArcFlashCalculator.Models
         string confirmPassword { get; set; }
     }
 
+    public class UserIPs
+    {
+        public UserIPs()
+        {
+
+        }
+
+        public string IPAddress { get; set; }
+        public DateTime? DateAdded { get; set; }
+    }
 
 }
