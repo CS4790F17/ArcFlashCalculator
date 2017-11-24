@@ -8,6 +8,7 @@ using ArcFlashCalculator.Security;
 
 namespace ArcFlashCalculator.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         //GET: Admin/Delete
@@ -32,6 +33,7 @@ namespace ArcFlashCalculator.Controllers
         }
 
         //GET: Admin/Login
+        [AllowAnonymous]
         public ActionResult Login()
         {
             User user = new User();
@@ -42,6 +44,7 @@ namespace ArcFlashCalculator.Controllers
         //POST: Admin/Login
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public ActionResult Login(User user)
         {
             //A user has been returned. Pull out the username that is specified. Has the user's password and compare it to the hash in the database.
