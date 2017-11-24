@@ -14,7 +14,6 @@ namespace ArcFlashCalculator.Controllers
         //GET: Admin/Delete
         public ActionResult Delete()
         {
-            //TODO: Check the cookie
             List<Users> userList = ViewModels.GetAllUsers();
             return View(userList);
         }
@@ -26,7 +25,6 @@ namespace ArcFlashCalculator.Controllers
         {
             if (ModelState.IsValid)
             {
-                //TODO: Check the cookie
                 ViewModels.DeleteUser(user.Id);
             }
             return RedirectToAction("Delete");
@@ -56,11 +54,8 @@ namespace ArcFlashCalculator.Controllers
                 //Check to the entered password against the saved password
                 if (Encrypter.VerifyHash(user.user.Password, u.Password))
                 {
-                    //TODO: It succeeded to create a timed cookie for the user
-
-
-
-                    //TODO: Return a redirect action to appropriate page
+                    //TODO: Figure out how to set the validation for a user
+                    RedirectToAction("Create");                   
                 } else
                 {
                     //It failed so return the view with the user input
@@ -74,7 +69,6 @@ namespace ArcFlashCalculator.Controllers
         //GET: Admin/Password
         public ActionResult Password()
         {
-            //TODO: Check the cookie
             ChangePassword cp = new ChangePassword();
             cp.UserOrPasswordError = false;
             cp.confirmError = false;
@@ -87,9 +81,7 @@ namespace ArcFlashCalculator.Controllers
         public ActionResult Password(ChangePassword changedPassword)
         {
             if (ModelState.IsValid)
-            {
-                //TODO: Check the cookie
-                
+            {                
                 //Check that the new and confirmed password match
                 if (changedPassword.newPassword.Equals(changedPassword.confirmPassword))
                 {
@@ -100,7 +92,7 @@ namespace ArcFlashCalculator.Controllers
                     if (Encrypter.VerifyHash(changedPassword.oldPassword, user.Username))
                     {
                         user.Password = Encrypter.ComputeHash(changedPassword.newPassword, null);
-                        //TODO: Redirect the user to the appropriate page
+                        RedirectToAction("Create");
                     } else
                     {
                         changedPassword.UserOrPasswordError = true;
@@ -118,28 +110,25 @@ namespace ArcFlashCalculator.Controllers
         //GET: Admin/Report60Hz
         public ActionResult Report60Hz()
         {
-            //TODO: Check the cookie
             return View();
         }
 
         //GET: Admin/ReportDC
         public ActionResult ReportDC()
         {
-            //TODO: Check the cookie
             return View();
         }
 
         //GET: Admin/ReportIP
         public ActionResult ReportIp()
         {
-            //TODO: Check the cookie
+
             return View();
         }
 
         //GET: Admin/Create
         public ActionResult Create()
         {
-            //TODO: Check the cookie
             User newUser = new User();
             newUser.error = false;
             return View(newUser);
