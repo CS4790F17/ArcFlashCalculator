@@ -107,7 +107,9 @@ namespace ArcFlashCalculator.Controllers
 
         public ActionResult Account()
         {
-            return View();
+            List<Users> userList = ViewModels.GetAllUsers();
+            return View(userList);
         }
+        // dummy data function for adding users to db temporarily until Sean is done
     }
 }
