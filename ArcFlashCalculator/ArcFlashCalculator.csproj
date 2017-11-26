@@ -183,6 +183,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\ArcCalculator.mdf" />
+    <Content Include="App_Data\ArcCalculator_log.ldf">
+      <DependentUpon>ArcCalculator.mdf</DependentUpon>
+    </Content>
     <Content Include="bin\Antlr3.Runtime.dll" />
     <Content Include="bin\Antlr3.Runtime.pdb" />
     <Content Include="bin\ArcFlashCalculator.dll" />

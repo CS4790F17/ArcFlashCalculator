@@ -172,6 +172,14 @@ namespace ArcFlashCalculator.Controllers
             List<Users> userList = ViewModels.GetAllUsers();
             return View(userList);
         }
-        // dummy data function for adding users to db temporarily until Sean is done
+
+        
+        public void dummyData(List<User> userList)
+        {
+            foreach(User u in userList)
+            {
+
+            }
+        }
     }
 }
