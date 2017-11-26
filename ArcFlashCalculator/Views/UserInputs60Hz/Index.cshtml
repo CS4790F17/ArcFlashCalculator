@@ -64,7 +64,7 @@
                 </div>*@
 
                 <div id="toggle-impedance">
-                    <a href="#">Enter Line Impedance Manually?</a>
+                    <a href="#">Calculate Short Circuit Current Manually?</a>
                 </div>
 
                 <div class="form-group" id="short-circuit-current-field">
@@ -81,7 +81,30 @@
 
                     <div class="form-group" id="conductor-size">
                         <label>Conductor Size:</label>
-                        <input class="form-control" id="short-circuit-current-input" type="number" />
+                        <select class="form-control" id="short-circuit-current-input">
+                            <option value="">Select a size</option>
+                            <option value="14">14</option>
+                            <option value="12">12</option>
+                            <option value="10">10</option>
+                            <option value="8">8</option>
+                            <option value="6">6</option>
+                            <option value="4">4</option>
+                            <option value="3">3</option>
+                            <option value="2">2</option>
+                            <option value="1">1</option>
+                            <option value="1/0">1/0</option>
+                            <option value="2/0">2/0</option>
+                            <option value="3/0">3/0</option>
+                            <option value="4/0">4/0</option>
+                            <option value="250">250</option>
+                            <option value="300">300</option>
+                            <option value="350">350</option>
+                            <option value="400">400</option>
+                            <option value="500">500</option>
+                            <option value="600">600</option>
+                            <option value="750">750</option>
+                            <option value="1000">1000</option>
+                        </select>
                     </div>
 
                     <div class="form-group" id="num-of-conductor-in-parallel">
@@ -91,12 +114,21 @@
 
                     <div class="form-group" id="conductor-type">
                         <label>Conductor Type:</label>
-                        <input class="form-control" id="short-circuit-current-input" type="number" />
+                        <select class="form-control" id="short-circuit-current-input">
+                            <option value="">Select a type</option>
+                            <option value="unCoatedCopper">Uncoated Copper Wire</option>
+                            <option value="aluminum">Aluminum</option>
+                        </select>
                     </div>
 
-                    <div class="form-group" id="xxxxxx">
-                        <label>Not sure what this lable should be?:</label>
-                        <input class="form-control" id="short-circuit-current-input" type="number" />
+                    <div class="form-group" id="conduit-type">
+                        <label>Conduit Type:</label>
+                        <select class="form-control" id="short-circuit-current-input">
+                            <option value="">Select a type</option>
+                            <option value="PVCConduit">PVC Conduit</option>
+                            <option value="aluminumConduit">Aluminum Conduit</option>
+                            <option value="steelConduit">Steel Conduit</option>
+                        </select>
                     </div>
 
                 </div>
@@ -600,7 +632,7 @@
                                     <td>No</td>
                                 </tr>
                                 <tr>
-                                    <td>Insertion or removal of plug-in devices into or from busways</td>
+                                    <td>Insertion or removal of plug-in devices into or from bus ways</td>
                                     <td>2</td>
                                     <td>Yes</td>
                                     <td>No</td>
