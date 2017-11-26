@@ -76,12 +76,12 @@
 
                     <div class="form-group" id="cable-length">
                         <label>Cable Length:</label>
-                        <input class="form-control" id="short-circuit-current-input" type="number" />
+                        <input class="form-control" id="short-circuit-current-length" type="number" />
                     </div>
 
                     <div class="form-group" id="conductor-size">
                         <label>Conductor Size:</label>
-                        <select class="form-control" id="short-circuit-current-input">
+                        <select class="form-control" id="short-circuit-current-size">
                             <option value="">Select a size</option>
                             <option value="14">14</option>
                             <option value="12">12</option>
@@ -109,12 +109,12 @@
 
                     <div class="form-group" id="num-of-conductor-in-parallel">
                         <label>Number of Conductor In Parallel:</label>
-                        <input class="form-control" id="short-circuit-current-input" type="number" />
+                        <input class="form-control" id="short-circuit-current-number" type="number" />
                     </div>
 
                     <div class="form-group" id="conductor-type">
                         <label>Conductor Type:</label>
-                        <select class="form-control" id="short-circuit-current-input">
+                        <select class="form-control" id="short-circuit-current-conductor">
                             <option value="">Select a type</option>
                             <option value="unCoatedCopper">Uncoated Copper Wire</option>
                             <option value="aluminum">Aluminum</option>
@@ -123,12 +123,16 @@
 
                     <div class="form-group" id="conduit-type">
                         <label>Conduit Type:</label>
-                        <select class="form-control" id="short-circuit-current-input">
+                        <select class="form-control" id="short-circuit-current-conduit">
                             <option value="">Select a type</option>
                             <option value="PVCConduit">PVC Conduit</option>
                             <option value="aluminumConduit">Aluminum Conduit</option>
                             <option value="steelConduit">Steel Conduit</option>
                         </select>
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="button" id="calculate-SCC">Calculate SCC</button>
                     </div>
 
                 </div>
