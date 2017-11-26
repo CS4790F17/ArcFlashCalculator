@@ -74,6 +74,10 @@
 
                 <div id="manualShortCircuitCurrent">
 
+                    <div class="alert-danger hidden" id="length-range-warning" role="alert">
+                        Length values must be a number between 1 and 10,000
+                    </div>
+
                     <div class="form-group" id="cable-length">
                         <label>Cable Length:</label>
                         <input class="form-control" id="short-circuit-current-length" type="number" />
@@ -107,6 +111,10 @@
                         </select>
                     </div>
 
+                    <div class="alert-danger hidden" id="number-range-warning" role="alert">
+                        Voltage values must be a number between 1 and 10
+                    </div>
+
                     <div class="form-group" id="num-of-conductor-in-parallel">
                         <label>Number of Conductor In Parallel:</label>
                         <input class="form-control" id="short-circuit-current-number" type="number" />
@@ -129,6 +137,11 @@
                             <option value="aluminumConduit">Aluminum Conduit</option>
                             <option value="steelConduit">Steel Conduit</option>
                         </select>
+                    </div>
+
+                    <div class="form-group" id="scc-output">
+                        <label>SCC Output</label>
+                        <input class="form-control" id="scc-result" type="number" />
                     </div>
 
                     <div class="form-group">

@@ -339,7 +339,6 @@ $(function () {
         var value = $("#voltage-input").val();
         if (value > 600 || value < 0) {
             $("#voltage-range-warning").removeClass("hidden").addClass("visible");
-            //$("#voltage-input").val("");
         }
     });
 
@@ -347,7 +346,6 @@ $(function () {
         var value = $("#transformer-size-input").val();
         if (value > 20000 || value < 0.5) {
             $("#trans-range-warning").removeClass("hidden").addClass("visible");
-            //$("#transformer-size-input").val("");
         }
     });
 
@@ -355,7 +353,6 @@ $(function () {
         var value = $("#short-circuit-current-input").val();
         if (value > 500 || value < 1) {
             $("#scc-range-warning").removeClass("hidden").addClass("visible");
-            //$("#short-circuit-current-input").val("");
         }
     });
 
@@ -363,8 +360,31 @@ $(function () {
         var value = $("#fault-clearing-time-input").val();
         if (value > 2 || value < 0.003) {
             $("#fault-clearing-time-range-warning").removeClass("hidden").addClass("visible");
-            //$("#fault-clearing-time-input").val("");
         }
+    });
+
+    $("#short-circuit-current-length").keyup(function () {
+        var value = $("#short-circuit-current-length").val();
+        if (value > 10000 || value < 1) {
+            $("#length-range-warning").removeClass("hidden").addClass("visible");
+        }
+    });
+
+    $("#short-circuit-current-number").keyup(function () {
+        var value = $("#short-circuit-current-number").val();
+        if (value < 0 || value < 10) {
+            $("#number-range-warning").removeClass("hidden").addClass("visible");
+        }
+    });
+
+    $("#calculate-SCC").click(function () {
+        var cableLength = $("#short-circuit-current-length").val();
+        var conductorSize = $("#short-circuit-current-size").val();
+        var conductorNumber = $("#short-circuit-current-number").val();
+        var conductorType = $("#short-circuit-current-conductor").val();
+        var conduitType = $("#short-circuit-current-conduit").val();
+
+
     });
 
 
