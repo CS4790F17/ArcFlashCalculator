@@ -1,0 +1,68 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminNavbarPartial.cshtml";
+}
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="container-fluid mx-auto">
+    @Html.ActionLink("Add Acccount", "Create", null, new { @class = "btn btn-primary" })
+</div>
+
+<div class="container-fluid mx-auto" id="delete">
+    <h2>Delete Account</h2>
+    <hr />
+    <table class="mt-4 mb-4">
+        <tr>
+            <th>Email</th>
+            <th>Date Added</th>
+            <th></th>
+        </tr>
+        <tr>
+            <td>test@gmail.com</td>
+            <td>1/1/2017</td>
+            <td><a href="">Change Password</a>&nbsp;|&nbsp;<a href="">Delete Account</a></td>
+        </tr>
+        <tr>
+            <td>test@mail.com</td>
+            <td>2/2/2017</td>
+            <td><a href="">Change Password</a>&nbsp;|&nbsp;<a href="">Delete Account</a></td>
+        </tr>
+        <tr>
+            <td>test@hotmail.com</td>
+            <td>3/3/2017</td>
+            <td><a href="">Change Password</a>&nbsp;|&nbsp;<a href="">Delete Account</a></td>
+        </tr>
+    </table>
+
+</div>
+
+<style>
+    #delete .mb-2 {
+        margin-bottom: .75rem;
+    }
+
+    #delete .mb-4 {
+        margin-bottom: 1.5rem;
+    }
+
+    #delete .mt-4 {
+        margin-top: 1.5rem;
+    }
+
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>

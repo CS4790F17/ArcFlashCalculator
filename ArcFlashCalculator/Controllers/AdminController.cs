@@ -8,7 +8,7 @@ using ArcFlashCalculator.Security;
 
 namespace ArcFlashCalculator.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AdminController : Controller
     {
         //GET: Admin/Delete

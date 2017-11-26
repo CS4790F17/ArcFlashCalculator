@@ -1,0 +1,55 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminNavbarPartial.cshtml";
+}
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="container-fluid mx-auto">
+    @Html.ActionLink("Delete Acccount", "Delete", null, new { @class = "btn btn-primary"})
+</div>
+
+<div class="container-fluid mx-auto" id="form">
+    <h2>Add Account</h2>
+
+    @using (@Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <label for="email" class="control-label mb-2">Email</label><br />
+                    <input id="email" type="email" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <label for="pass" class="control-label mb-2">Password</label><br />
+                    <input id="pass" type="password" class="form-control mb-4" />
+                </div>
+            </div>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Submit" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    #form .mb-2 {
+        margin-bottom: .75rem;
+    }
+
+    #form .mb-4 {
+        margin-bottom: 1.5rem;
+    }
+
+    #form .mt-4 {
+        margin-top: 1.5rem;
+    }
+</style>
