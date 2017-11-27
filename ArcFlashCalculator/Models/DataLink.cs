@@ -365,9 +365,9 @@ namespace ArcFlashCalculator.Models
         [Key]
         public int Id { get; set; }
 
-        [DisplayName("Username")]
-        [Required(ErrorMessage = "A Username is required")]
-        public string Username { get; set; }
+        [DisplayName("Email")]
+        [Required(ErrorMessage = "An Email is required")]
+        public string Email { get; set; }
 
         [DisplayName("Password")]
         [Required(ErrorMessage = "A Password is required")]
