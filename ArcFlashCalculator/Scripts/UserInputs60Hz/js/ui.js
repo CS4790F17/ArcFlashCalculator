@@ -394,8 +394,7 @@ $(function () {
         var conduitType = $("#short-circuit-current-conduit").val();
         var lineImpedance = 0;
         var shortCircuitCurrent = 0;
-
-        alert(lineImpedance); 
+        var i = 0;
 
         //Formula for Short Circuit Current
         //    SCC = TransfomerSize / (Transformer Impedance + Line Impedance)
@@ -403,7 +402,6 @@ $(function () {
         //    LineImpedance = (1/z1) + (1/z2) + (1/z3).... 
 
         //First calculate the line impedance 
-        var i = 0; 
         for (i = 0; i < conductorNumber; i++) {
             lineImpedance += (1 / altCurrentResistTable[conductorSize][conductorType][conduitType]);
         }
