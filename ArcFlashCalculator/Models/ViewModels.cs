@@ -222,4 +222,15 @@ namespace ArcFlashCalculator.Models
         public Users user { get; set; }
         public bool error { get; set; }
     }
+
+    public class UserIP
+    {
+        public UserIP()
+        {
+
+        }
+
+        public string IPAddress { get; set; }
+        public DateTime? DateAdded { get; set; }
+    }
 }
