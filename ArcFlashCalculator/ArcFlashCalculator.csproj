@@ -183,6 +183,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\ArcCalculator.mdf" />
+    <Content Include="App_Data\ArcCalculator_log.ldf">
+      <DependentUpon>ArcCalculator.mdf</DependentUpon>
+    </Content>
     <Content Include="bin\Antlr3.Runtime.dll" />
     <Content Include="bin\Antlr3.Runtime.pdb" />
     <Content Include="bin\ArcFlashCalculator.dll" />
@@ -377,6 +380,9 @@
     <Content Include="Views\Admin\ReportIP.cshtml" />
     <Content Include="Views\Admin\ReportHome.cshtml" />
     <Content Include="Views\Shared\_MVCGridToolbar.cshtml" />
+    <Content Include="Views\Admin\Account.cshtml" />
+    <Content Include="Views\Admin\ChangePassword.cshtml" />
+    <Content Include="Views\Admin\Login.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
