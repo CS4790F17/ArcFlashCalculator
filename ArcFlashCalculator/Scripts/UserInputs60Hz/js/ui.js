@@ -379,20 +379,42 @@ $(function () {
 
     $("#transformer-impedance-input").keyup(function () {
         var value = $("#transformer-impedance-input").val();
-        if (value < 1 || value > 20) {
+        if (value > 20 || value < 1) {
             $("#impedance-range-warning").removeClass("hidden").addClass("visible");
         }
     });
 
     $("#calculate-SCC").click(function () {
+        var transImped = $("#transformer-impedance-input").val(); 
         var transSize = $("#transformer-size-input").val(); 
         var cableLength = $("#short-circuit-current-length").val();
         var conductorSize = $("#short-circuit-current-size").val();
         var conductorNumber = $("#short-circuit-current-number").val();
         var conductorType = $("#short-circuit-current-conductor").val();
         var conduitType = $("#short-circuit-current-conduit").val();
+        var lineImpedance = 0;
+        var shortCircuitCurrent = 0;
 
+        alert(lineImpedance); 
 
+        //Formula for Short Circuit Current
+        //    SCC = TransfomerSize / (Transformer Impedance + Line Impedance)
+        //Formula for Line Impedance
+        //    LineImpedance = (1/z1) + (1/z2) + (1/z3).... 
+
+        //First calculate the line impedance 
+        var i = 0; 
+        for (i = 0; i < conductorNumber; i++) {
+            debugger;
+            lineImpedance += (1 / altCurrentResistTable[conductorSize][conductorType][conduitType]);
+        }
+
+        debugger;
+        //Then calculate the SCC
+        shortCircuitCurrent = transSize / (transImped + lineImpedance); 
+
+        //Display the calculate SCC value, for testing purposes only 
+        $("#scc-result").val(shortCircuitCurrent);
 
     });
 
