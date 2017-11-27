@@ -262,7 +262,7 @@ namespace ArcFlashCalculator.Models
 
         public DateTime DateCreated { get; set; }
 
-        public int AdminBit { get; set; }
+        public bool AdminBit { get; set; }
     }
 
     public class ArcCalculatorDbContext : DbContext

@@ -380,9 +380,10 @@
     <Content Include="Views\Admin\ReportIP.cshtml" />
     <Content Include="Views\Admin\ReportHome.cshtml" />
     <Content Include="Views\Shared\_MVCGridToolbar.cshtml" />
-    <Content Include="Views\Admin\Account.cshtml" />
     <Content Include="Views\Admin\ChangePassword.cshtml" />
     <Content Include="Views\Admin\Login.cshtml" />
+    <Content Include="Views\Admin\Create.cshtml" />
+    <Content Include="Views\Admin\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
