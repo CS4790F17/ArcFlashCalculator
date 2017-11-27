@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<ArcFlashCalculator.Models.Users>
+@{
     Layout = "~/Views/Shared/_AdminNavbarPartial.cshtml";
 }
 @{
@@ -18,21 +19,21 @@
             <th>Date Added</th>
             <th></th>
         </tr>
+       @foreach (var item in Model)
+       {
         <tr>
-            <td>test@gmail.com</td>
-            <td>1/1/2017</td>
-            <td><a href="">Change Password</a>&nbsp;|&nbsp;<a href="">Delete Account</a></td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreated)
+            </td>
+            <td>
+                @Html.ActionLink("Change Password", "ChangePassword", new { id = item.Id }) |
+                @Html.ActionLink("Delete Account", "Delete", new { id = item.Id })
+            </td>
         </tr>
-        <tr>
-            <td>test@mail.com</td>
-            <td>2/2/2017</td>
-            <td><a href="">Change Password</a>&nbsp;|&nbsp;<a href="">Delete Account</a></td>
-        </tr>
-        <tr>
-            <td>test@hotmail.com</td>
-            <td>3/3/2017</td>
-            <td><a href="">Change Password</a>&nbsp;|&nbsp;<a href="">Delete Account</a></td>
-        </tr>
+       }
     </table>
 
 </div>

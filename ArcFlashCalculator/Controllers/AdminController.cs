@@ -74,7 +74,7 @@ namespace ArcFlashCalculator.Controllers
                 if (ModelState.IsValid)
                 {
                     //Get the information for the user they are trying to login as
-                    Users u = ViewModels.GetUser(user.user.Username);
+                    Users u = ViewModels.GetUser(user.user.Email);
 
                     //Check to the entered password against the saved password
                     if (Encrypter.VerifyHash(user.user.Password, u.Password))
@@ -131,7 +131,7 @@ namespace ArcFlashCalculator.Controllers
                         Users user = ViewModels.GetUser(changedPassword.email);
 
                         //Check that the oldpassword matches our password
-                        if (Encrypter.VerifyHash(changedPassword.oldPassword, user.Username))
+                        if (Encrypter.VerifyHash(changedPassword.oldPassword, user.Email))
                         {
                             user.Password = Encrypter.ComputeHash(changedPassword.newPassword, null);
                             RedirectToAction("Create");
@@ -239,7 +239,7 @@ namespace ArcFlashCalculator.Controllers
                 if (ModelState.IsValid)
                 {
                     //TODO: Check the cookie
-                    Users nameCheck = ViewModels.GetUser(newUser.user.Username);
+                    Users nameCheck = ViewModels.GetUser(newUser.user.Email);
                     if (nameCheck == null)
                     {
                         newUser.user.Password = Encrypter.ComputeHash(newUser.user.Password, null);

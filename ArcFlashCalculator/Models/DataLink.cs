@@ -214,7 +214,7 @@ namespace ArcFlashCalculator.Models
                 {
                     if (db.Database.Exists())
                     {
-                        Users ui = db.users.Where(u => u.Username == username).First();
+                        Users ui = db.users.Where(u => u.Email == username).First();
                         return ui;
                     }
                     else

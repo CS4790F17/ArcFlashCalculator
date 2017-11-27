@@ -1,2 +1,2 @@
-INSERT INTO Users (Username, Password, DateCreated, AdminBit)
-VALUES ('AdminRoot', 'pw', GETDATE(), 1);
+﻿INSERT INTO Users (Email, Password, DateCreated, AdminBit)
+VALUES ('Alex', 'shelby', GETDATE(), 1);
