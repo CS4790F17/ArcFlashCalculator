@@ -181,5 +181,15 @@ namespace ArcFlashCalculator.Controllers
 
             }
         }
+            try
+            {
+                return View();
+            }
+            catch(Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
+        }
     }
 }

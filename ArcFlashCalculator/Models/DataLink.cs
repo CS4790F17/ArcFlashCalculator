@@ -11,6 +11,13 @@ namespace ArcFlashCalculator.Models
 {
     public class DataLink
     {
+        public static void LogError(Exception e)
+        {
+            ArcCalculatorDbContext db = new ArcCalculatorDbContext();
+            Error error = new Error();
+            error.Errors = e.ToString();           
+            db.errors.Add(error);                       
+        }
         public static List<UserInputs60Hz> GetAllUserInputs60Hz()
         {
             using (ArcCalculatorDbContext db = new ArcCalculatorDbContext())
@@ -24,6 +31,18 @@ namespace ArcFlashCalculator.Models
                     List<UserInputs60Hz> uiList = new List<UserInputs60Hz>();
                     return uiList;
                 }
+            }
+        }
+            try
+            {
+                ArcCalculatorDbContext db = new ArcCalculatorDbContext();
+                List<UserInputs60Hz> uiList = db.userInputs60Hz.ToList();
+                return uiList;
+            }
+            catch(Exception e)
+            {
+                LogError(e);
+                throw;
             }
         }
 
@@ -188,6 +207,9 @@ namespace ArcFlashCalculator.Models
         public string Error { get; set; }
     }
 
+        public string Errors { get; set; }
+    }
+
     [Table("UserInputs60Hz")]
     public class UserInputs60Hz
     {
@@ -252,9 +274,9 @@ namespace ArcFlashCalculator.Models
         [Key]
         public int Id { get; set; }
 
-        [DisplayName("Username")]
-        [Required(ErrorMessage = "A Username is required")]
-        public string Username { get; set; }
+        [DisplayName("E-mail")]
+        [Required(ErrorMessage = "An E-mail is required")]
+        public string Email { get; set; }
 
         [DisplayName("Password")]
         [Required(ErrorMessage = "A Password is required")]
@@ -270,5 +292,6 @@ namespace ArcFlashCalculator.Models
         public DbSet<UserInputs60Hz> userInputs60Hz { get; set; }
         public DbSet<UserInputsDC> userInputsDC { get; set; }
         public DbSet<Users> users { get; set; }
+        public DbSet<Error> errors { get; set; }
     }
 }

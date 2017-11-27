@@ -17,8 +17,16 @@ namespace ArcFlashCalculator.Controllers
         // GET: Capacitor/CalcCap
         public ActionResult Index()
         {
-            Capacitors capacitor = new Capacitors();
-            return View(capacitor);
+            try
+            {
+                Capacitors capacitor = new Capacitors();
+                return View(capacitor);
+            }
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
         }
 
         // POST: Capacitor/CalcCap
@@ -26,11 +34,19 @@ namespace ArcFlashCalculator.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(Capacitors capacitor)
         {
-            if (ModelState.IsValid)
+            try
             {
-                //Do stuff here
+                if (ModelState.IsValid)
+                {
+                    //Do stuff here
+                }
+                return View();
             }
-            return View();
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
         }
 
 

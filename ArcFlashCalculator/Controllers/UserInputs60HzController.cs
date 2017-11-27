@@ -12,6 +12,7 @@ namespace ArcFlashCalculator.Controllers
 {
     public class UserInputs60HzController : Controller
     {
+        
         private ArcCalculatorDbContext db = new ArcCalculatorDbContext();
         // ------------------------------- These are the important actionresults//
         // GET: UserInputs60Hz/Calc60Hz
@@ -39,22 +40,38 @@ namespace ArcFlashCalculator.Controllers
         // GET: UserInputs60Hz/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                UserInputs60Hz userInputs60Hz = db.userInputs60Hz.Find(id);
+                if (userInputs60Hz == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(userInputs60Hz);
             }
-            UserInputs60Hz userInputs60Hz = db.userInputs60Hz.Find(id);
-            if (userInputs60Hz == null)
+            catch (Exception e)
             {
-                return HttpNotFound();
+                DataLink.LogError(e);
+                throw;
             }
-            return View(userInputs60Hz);
         }
 
         // GET: UserInputs60Hz/Create
         public ActionResult Create()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
         }
 
         // POST: UserInputs60Hz/Create
@@ -64,29 +81,45 @@ namespace ArcFlashCalculator.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,TransSize,Impedance,SCC,FaultClearing,Voltage,OEInFreshAir,IPAddress")] UserInputs60Hz userInputs60Hz)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.userInputs60Hz.Add(userInputs60Hz);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    db.userInputs60Hz.Add(userInputs60Hz);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
-            return View(userInputs60Hz);
+                return View(userInputs60Hz);
+            }
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
         }
 
         // GET: UserInputs60Hz/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                UserInputs60Hz userInputs60Hz = db.userInputs60Hz.Find(id);
+                if (userInputs60Hz == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(userInputs60Hz);
             }
-            UserInputs60Hz userInputs60Hz = db.userInputs60Hz.Find(id);
-            if (userInputs60Hz == null)
+            catch (Exception e)
             {
-                return HttpNotFound();
+                DataLink.LogError(e);
+                throw;
             }
-            return View(userInputs60Hz);
         }
 
         // POST: UserInputs60Hz/Edit/5
@@ -96,28 +129,44 @@ namespace ArcFlashCalculator.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,TransSize,Impedance,SCC,FaultClearing,Voltage,OEInFreshAir,IPAddress")] UserInputs60Hz userInputs60Hz)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(userInputs60Hz).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(userInputs60Hz).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(userInputs60Hz);
             }
-            return View(userInputs60Hz);
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
         }
 
         // GET: UserInputs60Hz/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                UserInputs60Hz userInputs60Hz = db.userInputs60Hz.Find(id);
+                if (userInputs60Hz == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(userInputs60Hz);
             }
-            UserInputs60Hz userInputs60Hz = db.userInputs60Hz.Find(id);
-            if (userInputs60Hz == null)
+            catch (Exception e)
             {
-                return HttpNotFound();
+                DataLink.LogError(e);
+                throw;
             }
-            return View(userInputs60Hz);
         }
 
         // POST: UserInputs60Hz/Delete/5
@@ -125,19 +174,35 @@ namespace ArcFlashCalculator.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            UserInputs60Hz userInputs60Hz = db.userInputs60Hz.Find(id);
-            db.userInputs60Hz.Remove(userInputs60Hz);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                UserInputs60Hz userInputs60Hz = db.userInputs60Hz.Find(id);
+                db.userInputs60Hz.Remove(userInputs60Hz);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            try
             {
-                db.Dispose();
+                if (disposing)
+                {
+                    db.Dispose();
+                }
+                base.Dispose(disposing);
             }
-            base.Dispose(disposing);
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
         }
     }
 }
