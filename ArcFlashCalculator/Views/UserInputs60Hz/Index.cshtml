@@ -36,15 +36,6 @@
                     <input class="form-control" id="voltage-input" type="number" />
                 </div>
 
-                <div class="alert-danger hidden" id="trans-range-warning" role="alert">
-                    Transformer Size (kVA) values must be a number between 0.5 - 20,000
-                </div>
-
-                <div class="form-group" id="transformer-size-field">
-                    <label>Transformer Size (kVA):</label>
-                    <input class="form-control" id="transformer-size-input" type="number" />
-                </div>
-
                 <div class="alert-danger hidden" id="impedance-range-warning" role="alert">
                     Transformer Impedance values must be a number between 1 - 20
                 </div>
@@ -71,6 +62,17 @@
                     <label class="form-check-label">Line Impedance:<input type="checkbox" class="form-check-input">
                     </label>
                 </div>*@
+
+
+                <div class="alert-danger hidden" id="trans-range-warning" role="alert">
+                    Transformer Size (kVA) values must be a number between 0.5 - 20,000
+                </div>
+
+                <div class="form-group" id="transformer-size-field">
+                    <label>Transformer Size (kVA):</label>
+                    <input class="form-control" id="transformer-size-input" type="number" />
+                </div>
+
 
                 <div id="toggle-impedance">
                     <a href="#">Calculate Short Circuit Current Manually?</a>
@@ -148,10 +150,10 @@
                         </select>
                     </div>
                     @*Test purposes only*@
-                    @*<div class="form-group" id="scc-output">
+                    <div class="form-group" id="scc-output">
                         <label>SCC Output</label>
                         <input class="form-control" id="scc-result" type="number" />
-                    </div>*@
+                    </div>
 
                     <div class="form-group">
                         <button class="btn btn-primary" type="button" id="calculate-SCC">Calculate SCC</button>
@@ -167,6 +169,9 @@
                     <label>Fault Clearing Time (seconds) <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Refer to upstream Circuit Breaker specifications."></span>:</label>
                     <input class="form-control" id="fault-clearing-time-input" type="number" />
                 </div>
+
+
+
 
                 <div class="form-group">
                     <label>Work Mode:</label>

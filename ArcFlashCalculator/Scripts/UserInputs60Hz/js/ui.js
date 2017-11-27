@@ -4,7 +4,7 @@ var UI = {
         var input = UI.processInput($('#voltage-input').val(), $('#transformer-size-input').val(), $('#equipment-type-input').val(),
            $('#short-circuit-current-input').val(), $('#fault-clearing-time-input').val(), $('#work-mode-input').val());
 
-        // show/hide transofmer field
+        // show/hide transformer field
         if (input.shouldShowTransformerField) {
             $('#transformer-size-field').show();
         }
@@ -410,7 +410,7 @@ $(function () {
         shortCircuitCurrent = transSize / (transImped + lineImpedance); 
 
         //Display the calculate SCC value, for testing purposes only 
-        //$("#scc-result").val(shortCircuitCurrent);
+        $("#scc-result").val(shortCircuitCurrent);
 
         //Set the SCC variable to the calculated value
         $("#short-circuit-current-input").val(shortCircuitCurrent); 
