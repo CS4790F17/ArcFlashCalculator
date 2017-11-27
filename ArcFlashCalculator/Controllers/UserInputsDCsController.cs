@@ -14,22 +14,6 @@ namespace ArcFlashCalculator.Controllers
     {
         private ArcCalculatorDbContext db = new ArcCalculatorDbContext();
 
-        // GET: UserInputsDCs
-        public ActionResult Index()
-        {
-            try
-            {
-                Models.PowerDC PowerDC = new Models.PowerDC();
-                return View(PowerDC);
-            }
-            catch (Exception e)
-            {
-                DataLink.LogError(e);
-                throw;
-            }
-        }
-
-        // ------------------------------- These are the important actionresults//
         // GET: UserInputsDC/CalcDC
         public ActionResult Index()
         {

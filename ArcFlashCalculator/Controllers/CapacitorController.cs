@@ -9,11 +9,6 @@ namespace ArcFlashCalculator.Controllers
 {
     public class CapacitorController : Controller
     {
-        //public ActionResult index()
-        //{
-        //    return View();
-        //}
-
         // GET: Capacitor/CalcCap
         public ActionResult Index()
         {
