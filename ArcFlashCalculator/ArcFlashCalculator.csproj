@@ -353,15 +353,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\UserInputs60Hz\Create.cshtml" />
-    <Content Include="Views\UserInputs60Hz\Delete.cshtml" />
-    <Content Include="Views\UserInputs60Hz\Details.cshtml" />
-    <Content Include="Views\UserInputs60Hz\Edit.cshtml" />
     <Content Include="Views\UserInputs60Hz\Index.cshtml" />
-    <Content Include="Views\UserInputsDCs\Create.cshtml" />
-    <Content Include="Views\UserInputsDCs\Delete.cshtml" />
-    <Content Include="Views\UserInputsDCs\Details.cshtml" />
-    <Content Include="Views\UserInputsDCs\Edit.cshtml" />
     <Content Include="Views\UserInputsDCs\Index.cshtml" />
     <Content Include="Views\SubRF\Index.cshtml" />
     <Content Include="Views\Battery\Index.cshtml" />
