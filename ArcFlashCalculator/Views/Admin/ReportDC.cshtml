@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "DC Input History";
+    Layout = "~/Views/Shared/_AdminNavbarPartial.cshtml";
+}
+<div class="center-block">
+    <h2>DC Input History</h2>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+
+        @Html.Partial("_MVCGridToolbar", new ArcFlashCalculator.Models.MVCGridToolbarModel()
+    {
+        MVCGridName = "UserInputsDC",
+        PageSize = true,
+        ColumnVisibility = true,
+        Export = true,
+        GlobalSearch = true
+    })
+         @*@Html.MVCGrid("UserInputsDC")*@
+    </div>
+</div>

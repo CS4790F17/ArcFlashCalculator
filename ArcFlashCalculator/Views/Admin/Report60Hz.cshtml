@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "Report60Hz";
+    Layout = "~/Views/Shared/_AdminNavbarPartial.cshtml";
+}
+
+<div class="center-block">
+    <h2>60Hz Input History</h2>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+
+        @Html.Partial("_MVCGridToolbar", new ArcFlashCalculator.Models.MVCGridToolbarModel()
+   {
+       MVCGridName = "UserInputs60HzReport",
+       PageSize = true,
+       ColumnVisibility = true,
+       Export = true,
+       GlobalSearch = true
+   })
+        @*@Html.MVCGrid("UserInputs60HzReport")*@
+    </div>
+</div>
