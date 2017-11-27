@@ -12,11 +12,10 @@ namespace ArcFlashCalculator.Models
     {
         public IEnumerable<UserInputs60Hz> GetData(out int totalRecords, string globalSearch, int? limitOffset, int? limitRowCount, string orderBy, bool desc)
         {
-            using (var db = new ArcCalculatorDbContext())
-            {
-                var query = db.userInputs60Hz.AsQueryable();
 
-                if (!String.IsNullOrWhiteSpace(globalSearch))
+            var query = DataLink.GetAllUserInputs60Hz().AsQueryable();
+
+            if (!String.IsNullOrWhiteSpace(globalSearch))
                 {
                     query = query.Where(p => (p.TransSize.ToString() + " " + p.Impedance.ToString() + " " + p.SCC.ToString() + " "
                                                 + p.FaultClearing.ToString() + " " + p.Voltage.ToString() + " " + p.OEInFreshAir.ToString() + " "
@@ -87,12 +86,7 @@ namespace ArcFlashCalculator.Models
                 }
 
                 return query.ToList();
-            }
-        }
-
-        public IEnumerable<UserInputs60Hz> GetData(out int totalRecords, int? limitOffset, int? limitRowCount, string orderBy, bool desc)
-        {
-            return GetData(out totalRecords, null, limitOffset, limitRowCount, orderBy, desc);
+            
         }
     }
 }
