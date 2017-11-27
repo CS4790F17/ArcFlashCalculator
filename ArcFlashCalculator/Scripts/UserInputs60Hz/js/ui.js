@@ -372,17 +372,26 @@ $(function () {
 
     $("#short-circuit-current-number").keyup(function () {
         var value = $("#short-circuit-current-number").val();
-        if (value < 0 || value < 10) {
+        if (value < 0 || value > 10) {
             $("#number-range-warning").removeClass("hidden").addClass("visible");
         }
     });
 
+    $("#transformer-impedance-input").keyup(function () {
+        var value = $("#transformer-impedance-input").val();
+        if (value < 1 || value > 20) {
+            $("#impedance-range-warning").removeClass("hidden").addClass("visible");
+        }
+    });
+
     $("#calculate-SCC").click(function () {
+        var transSize = $("#transformer-size-input").val(); 
         var cableLength = $("#short-circuit-current-length").val();
         var conductorSize = $("#short-circuit-current-size").val();
         var conductorNumber = $("#short-circuit-current-number").val();
         var conductorType = $("#short-circuit-current-conductor").val();
         var conduitType = $("#short-circuit-current-conduit").val();
+
 
 
     });
