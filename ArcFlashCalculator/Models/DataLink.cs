@@ -206,7 +206,7 @@ namespace ArcFlashCalculator.Models
             }
         }
 
-        public static Users GetUser(string username)
+        public static Users GetUser(string email)
         {
             try
             {
@@ -214,7 +214,7 @@ namespace ArcFlashCalculator.Models
                 {
                     if (db.Database.Exists())
                     {
-                        Users ui = db.users.Where(u => u.Username == username).First();
+                        Users ui = db.users.Where(u => u.Email == email).First();
                         return ui;
                     }
                     else
