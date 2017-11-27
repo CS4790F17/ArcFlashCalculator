@@ -70,7 +70,7 @@ namespace ArcFlashCalculator.Controllers
         {
             try
             {
-                //A user has been returned. Pull out the username that is specified. Has the user's password and compare it to the hash in the database.
+                //A user has been returned. Pull out the email that is specified. Has the user's password and compare it to the hash in the database.
                 if (ModelState.IsValid)
                 {
                     //Get the information for the user they are trying to login as
@@ -127,7 +127,7 @@ namespace ArcFlashCalculator.Controllers
                     //Check that the new and confirmed password match
                     if (changedPassword.newPassword.Equals(changedPassword.confirmPassword))
                     {
-                        //Email is our username
+                        //Email is our email
                         Users user = ViewModels.GetUser(changedPassword.email);
 
                         //Check that the oldpassword matches our password

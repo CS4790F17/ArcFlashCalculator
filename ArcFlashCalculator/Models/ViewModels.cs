@@ -48,9 +48,9 @@ namespace ArcFlashCalculator.Models
             return DataLink.GetUser(id);
         }
 
-        public static Users GetUser(string username)
+        public static Users GetUser(string email)
         {
-            return DataLink.GetUser(username);
+            return DataLink.GetUser(email);
         }
 
         public static void CreateUser(Users u)
