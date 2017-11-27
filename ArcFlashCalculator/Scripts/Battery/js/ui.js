@@ -1,77 +1,91 @@
 var UI = {
    evaluate : function(evt) {
       "use strict";
-      var volts = parseFloat($('#maximum-exposed-input').val()),
-          amps = parseFloat($('#available-current-input').val()),
-          seconds = parseFloat($('#duration-input').val()),
-          mode = $('#work-mode-input').val(),
+      var batteryType = $('#battery-type-input').val(),
+          volts = parseFloat($('#volts-input').val()),
+          amps = parseFloat($('#amps-input').val()),
+          duration = parseFloat($('#duration-input').val()),
           watts = volts * amps,
-          joules,
-          classification;
+          mode,
+          classification,
+          joules;
 
-      if (volts <= 100) {
-         classification = DCData.lookup(volts, watts); 
-      }
-      else {
-         classification = DCData.lookup(volts, amps * 1000);
-      }
-
-      if (volts && amps && seconds && mode !== '') {
-         //$('#system-information').removeClass('span4').removeClass('offset4').addClass('span3');
-         //$('#system-information').removeClass('system-information-side').addClass('system-information-centered');
-         $('#form-actions').css({'opacity': '1', 'height':'auto'});
-         
-         $('#results-wrapper').removeClass('results-wrapper-hidden').addClass('results-wrapper-visible');
-         $('#results-wrapper').css('opacity', '1');
-         $('#results-wrapper').css('display', 'block');
-
-
-
-         $('#navBtm').removeClass('hidden');
-
-          // scroll to results
-          // target element
-         var $id = $("#results-wrapper");
-
-          // top position relative to the document
-         var pos = $id.offset().top - 60;
-
-          // animated top scrolling
-         $('body, html').animate({ scrollTop: pos });
-
-
-
-         if (seconds <= 2) {
-            $('.section').show();
-            $('#exposure-duration-warning').hide();
-
-            joules = volts * amps * seconds;
-            
-            UI.showSummary(classification);
-            $('#watts-display').text(Boundaries.toDisplayKilo(watts, 'Watts', 'kilowatts'));
-            $('#joules-display').text(Boundaries.toDisplayKilo(joules, 'Watt-seconds (Joules)', 'kilowatt-seconds (kilojoules)'));
-            UI.showSafetyRequirements(classification, mode);
-            UI.showBoundaries(volts);
-            UI.showArcFlash(volts, amps, seconds);
-            UI.showPPEFreeSpace(mode, volts, amps, seconds, classification);
-            UI.showPPEEnclosed(mode, volts, amps, seconds, classification);
+      UI.setWorkModeOptions(batteryType);
+      // get the mode here just incase setWorkModeOptions changed the selected value
+      mode = $('#work-mode-input').val();
+      
+      if (batteryType !== '' && volts && amps && duration && mode !== '') {
+         if (batteryType === 'leadacid') {
+            classification = Classifications.lookup(watts);
          }
          else {
-            $('.section').hide();
-            $('#exposure-duration-warning').show();
+            classification = Classifications.lookup(batteryType);
          }
+
+         if (duration > 2.0) {
+            duration = 2.0;
+         }
+
+         joules = volts * amps * duration;
+
+         // $('#system-information').removeClass('span4').removeClass('offset4').addClass('span3');
+         // $('#system-information').removeClass('system-information-side').addClass('system-information-centered');
+         UI.show('#form-actions');
+         
+         $('#results-wrapper').removeClass('results-wrapper-hidden').addClass('results-wrapper-visible');
+         $('#results-wrapper').css('display', 'block');
+         $('#results-wrapper').css('opacity', '1');
+         UI.show('#results-wrapper');
+
+          $('#navBtm').removeClass('hidden');
+         
+         UI.showSummary(classification);
+         UI.showNotes(batteryType);
+         $('#watts-display').text(Boundaries.toDisplayKilo(watts, 'Watts', 'kilowatts'));
+         $('#joules-display').text(Boundaries.toDisplayKilo(joules, 'Watt-seconds (Joules)', 'kilowatt-seconds (kilojoules)'));
+         UI.showSafetyRequirements(classification, mode);
+         UI.showBoundaries(volts);
+         UI.showArcFlash(volts, amps, duration);
+         UI.showPPEFreeSpace(mode, volts, amps, duration, classification);
+         UI.showPPEEnclosed(mode, volts, amps, duration, classification);
+
+         // scroll to results
+         // target element
+         var $id = $("#results-wrapper");
+
+         // top position relative to the document
+         var pos = $id.offset().top - 60;
+
+         // animated top scrolling
+         $('body, html').animate({ scrollTop: pos });
       }
       else {
-         //$('#system-information').removeClass('span3').addClass('span4').addClass('offset4');
-         //$('#system-information').removeClass('system-information-centered').addClass('system-information-side');
-         $('#form-actions').css({'opacity': '0', 'height': '0'});
+         // $('#system-information').removeClass('span3').addClass('span4').addClass('offset4');
+         // $('#system-information').removeClass('system-information-centered').addClass('system-information-side');
+         UI.hide('#form-actions');
          
          $('#results-wrapper').removeClass('results-wrapper-visible').addClass('results-wrapper-hidden');
-         $('#results-wrapper').css('opacity', '0');
+         UI.hide('#results-wrapper');
          $('#results-wrapper').css('display', 'none');
+         $('#results-wrapper').css('opacity', '0');
       }
    }, 
-   
+
+   setWorkModeOptions : function(batteryType) {
+      var sel = $('#work-mode-input');
+      
+      if ('leadacid' === batteryType && !sel.hasClass('lead-acid-options')) {
+         sel.empty().append($('<option>').attr('value', '').text('Select a mode'));
+         sel.removeClass('li-ion-options').addClass('lead-acid-options');
+         sel.append($('<option>').attr('value', '2').text('Mode 2 - Testing, troubleshoot, tune and adjust')).append($('<option>').attr('value', '3').text('Mode 3 - Energized, Energized Electrical Work Permit (EEWP) to modify, repair or adjust'));
+      }
+      else if (('liionsinglecell' === batteryType || 'liionmulticell' === batteryType || batteryType ==='liioncommercial') && !sel.hasClass('li-ion-options')) {
+         sel.empty().append($('<option>').attr('value', '').text('Select a mode'));
+         sel.addClass('li-ion-options').removeClass('lead-acid-options');
+         sel.append($('<option>').attr('value', 'whilecharging').text('While Charging'));
+      }
+   },
+
    showSummary : function(classification) {
       "use strict";
       $('.classification').hide();
@@ -81,14 +95,24 @@ var UI = {
          $('#class-' + subclass).show();
       }
    },
+
+   showNotes : function(batteryType) {
+      $('.lead-acid-note, .lithium-ion-non-commercial-note').hide();
+      if ('leadacid' === batteryType) {
+         $('.lead-acid-note').show();
+      }
+      else if ('liionsinglecell' === batteryType || 'liionmulticell' === batteryType) {
+         $('.lithium-ion-non-commercial-note').show();
+      }
+   },
    
    showSafetyRequirements : function(classification, mode) {
       "use strict";
-      var reqs = DCSafetyRequirements.lookup(classification, mode);
+      var reqs = SafetyRequirements.lookup(classification, mode);
       if (reqs) {
          $('#safety-req-workers-display').text(reqs.qualifiedWorkers);
          $('#safety-req-work-control-display').text(reqs.workControl);
-         //$('#safety-req-ppe-display').text(reqs.ppe);
+         $('#safety-req-ppe-display').text(reqs.ppe);
       }
    },
    
@@ -123,12 +147,12 @@ var UI = {
       }
    },
 
-   isHazard : function(mode, classification, volts) {
-      return volts < 100 || mode === '0' || classification === '2.0' || classification === '2.1' || classification === '2.2a' || classification === '2.2b';
+   riskOfArcFlash : function(mode, volts) {
+      return volts < 100 || mode === '0';
    },
 
    showPPEFreeSpace : function(mode, volts, amps, seconds, classification) {
-      if (UI.isHazard(mode, classification, volts)) {
+      if (UI.riskOfArcFlash(mode, volts)) {
          $('#ppe-requirements').hide();
          $('#ppe-requirements-voltage-too-high').hide();
       }
@@ -170,7 +194,7 @@ var UI = {
    },
 
    showPPEEnclosed : function(mode, volts, amps, seconds, classification) {
-      if (UI.isHazard(mode, classification, volts)) {
+      if (UI.riskOfArcFlash(mode, volts)) {
          $('#enclosed-ppe-requirements').hide();
          $('#enclosed-ppe-requirements-voltage-too-high').hide();
       }
@@ -210,14 +234,21 @@ var UI = {
          }
       }
    },
+
+   show2 : function(selector) {
+      $(selector).show();
+      return UI;
+   },
+
+   hide2 : function(selector) {
+      $(selector).hide();
+      return UI;
+   },
    
    reset : function(evt) {
       "use strict";
       evt.preventDefault();
-      $('#maximum-exposed-input').val('');
-      $('#available-current-input').val('');
-      $('#duration-input').val('');
-      $('#work-mode-input').val('');
+      $('#volts-input, #amps-input, #battery-type-input, #work-mode-input, #duration-input').val('');
       UI.evaluate();
    },
 
@@ -236,51 +267,51 @@ $(function() {
    UI.evaluate();
    
    // bind form fields
-   $('#maximum-exposed-input, #available-current-input, #duration-input').bind('textchange', UI.evaluate);
-   $('#work-mode-input').bind('change', UI.evaluate);
+   $('#volts-input, #amps-input, #duration-input').bind('textchange', UI.evaluate);
+   $('#battery-type-input, #work-mode-input').bind('change', UI.evaluate);
    
    // set button actions
    $('#reset-button').bind('click', UI.reset);
 
     // when back to top link is pressed send user back to the top
-   $('#backToTop').click(function () {
-       $('#navBtm').addClass('hidden');
-   });
+    $('#backToTop').click(function () {
+        $('#navBtm').addClass('hidden');
+    });
 
     //when user scrolls to top hide nav bar
-   $(window).scroll(function () {
-       var top_offset = $(window).scrollTop();
-       if (top_offset == 0) {
-           $('#navBtm').addClass('hidden');
-       }
-   });
+    $(window).scroll(function () {
+        var top_offset = $(window).scrollTop();
+        if (top_offset == 0) {
+            $('#navBtm').addClass('hidden');
+        }
+    });
    
    // help popovers
-   //$('.help-popover').popover({html: true});
-   //$('.help-tooltip').tooltip();
+    $('[data-toggle="tooltip"]').tooltip();
 
-   $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').popover();
 
-   $('[data-toggle="popover"]').popover();
+    $("#volts-input").keyup(function () {
+        var value = $("#volts-input").val();
+        if (value > 999 || value < 0) {
+            $("#voltage-range-warning").removeClass("hidden").addClass("visible");
+            //$("#fault-clearing-time-input").val("");
+        }
+    });
 
-   $("#maximum-exposed-input").keyup(function () {
-       var value = $("#maximum-exposed-input").val();
-       if (value > 999 || value < 0) {
-           $("#PotMaxExp-range-warning").removeClass("hidden").addClass("visible");
-       }
-   });
+    $("#amps-input").keyup(function () {
+        var value = $("#amps-input").val();
+        if (value > 500000 || value < 0) {
+            $("#scc-range-warning").removeClass("hidden").addClass("visible");
+            //$("#fault-clearing-time-input").val("");
+        }
+    });
 
-   $("#available-current-input").keyup(function () {
-       var value = $("#available-current-input").val();
-       if (value > 500000 || value < 0) {
-           $("#scc-range-warning").removeClass("hidden").addClass("visible");
-       }
-   });
-
-   $("#duration-input").keyup(function () {
-       var value = $("#duration-input").val();
-       if (value > 2 || value < 0.003) {
-           $("#duration-warning").removeClass("hidden").addClass("visible");
-       }
-   });
+    $("#duration-input").keyup(function () {
+        var value = $("#duration-input").val();
+        if (value > 2 || value < 0.003) {
+            $("#duration-range-warning").removeClass("hidden").addClass("visible");
+            //$("#fault-clearing-time-input").val("");
+        }
+    });
 });

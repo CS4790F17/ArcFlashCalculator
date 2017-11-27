@@ -9,61 +9,53 @@ var UI = {
           joules,
           classification;
 
-      if (volts <= 100) {
-         classification = DCData.lookup(volts, watts); 
+      if (volts < 50) {
+         classification = Classifications.lookup(volts, watts); 
       }
       else {
-         classification = DCData.lookup(volts, amps * 1000);
+         classification = Classifications.lookup(volts, amps * 1000);
       }
 
       if (volts && amps && seconds && mode !== '') {
-         //$('#system-information').removeClass('span4').removeClass('offset4').addClass('span3');
-         //$('#system-information').removeClass('system-information-side').addClass('system-information-centered');
+         if (seconds > 2) {
+            seconds = 2;
+         }
+
+         joules = volts * amps * seconds;
+
+         // $('#system-information').removeClass('span4').removeClass('offset4').addClass('span3');
+         // $('#system-information').removeClass('system-information-side').addClass('system-information-centered');
          $('#form-actions').css({'opacity': '1', 'height':'auto'});
          
          $('#results-wrapper').removeClass('results-wrapper-hidden').addClass('results-wrapper-visible');
          $('#results-wrapper').css('opacity', '1');
          $('#results-wrapper').css('display', 'block');
 
-
-
          $('#navBtm').removeClass('hidden');
+         
+         UI.showSummary(classification);
+         $('#watts-display').text(Boundaries.toDisplayKilo(watts, 'Watts', 'kilowatts'));
+         $('#joules-display').text(Boundaries.toDisplayKilo(joules, 'Watt-seconds (Joules)', 'kilowatt-seconds (kilojoules)'));
+         UI.showSafetyRequirements(classification, mode);
+         UI.showBoundaries(volts);
+         UI.showArcFlash(volts, amps, seconds);
+         UI.showPPEFreeSpace(mode, volts, amps, seconds, classification);
+         UI.showPPEEnclosed(mode, volts, amps, seconds, classification);
 
-          // scroll to results
-          // target element
+         // scroll to results
+         // target element
          var $id = $("#results-wrapper");
 
-          // top position relative to the document
+         // top position relative to the document
          var pos = $id.offset().top - 60;
 
-          // animated top scrolling
+         // animated top scrolling
          $('body, html').animate({ scrollTop: pos });
 
-
-
-         if (seconds <= 2) {
-            $('.section').show();
-            $('#exposure-duration-warning').hide();
-
-            joules = volts * amps * seconds;
-            
-            UI.showSummary(classification);
-            $('#watts-display').text(Boundaries.toDisplayKilo(watts, 'Watts', 'kilowatts'));
-            $('#joules-display').text(Boundaries.toDisplayKilo(joules, 'Watt-seconds (Joules)', 'kilowatt-seconds (kilojoules)'));
-            UI.showSafetyRequirements(classification, mode);
-            UI.showBoundaries(volts);
-            UI.showArcFlash(volts, amps, seconds);
-            UI.showPPEFreeSpace(mode, volts, amps, seconds, classification);
-            UI.showPPEEnclosed(mode, volts, amps, seconds, classification);
-         }
-         else {
-            $('.section').hide();
-            $('#exposure-duration-warning').show();
-         }
       }
       else {
-         //$('#system-information').removeClass('span3').addClass('span4').addClass('offset4');
-         //$('#system-information').removeClass('system-information-centered').addClass('system-information-side');
+         // $('#system-information').removeClass('span3').addClass('span4').addClass('offset4');
+         // $('#system-information').removeClass('system-information-centered').addClass('system-information-side');
          $('#form-actions').css({'opacity': '0', 'height': '0'});
          
          $('#results-wrapper').removeClass('results-wrapper-visible').addClass('results-wrapper-hidden');
@@ -84,18 +76,19 @@ var UI = {
    
    showSafetyRequirements : function(classification, mode) {
       "use strict";
-      var reqs = DCSafetyRequirements.lookup(classification, mode);
+      var reqs = SubRFSafetyRequirements.lookup(classification, mode);
       if (reqs) {
          $('#safety-req-workers-display').text(reqs.qualifiedWorkers);
          $('#safety-req-work-control-display').text(reqs.workControl);
-         //$('#safety-req-ppe-display').text(reqs.ppe);
+         $('#safety-req-ppe-display').text(reqs.ppe);
       }
    },
    
    showBoundaries : function(volts) {
       "use strict";
-      var boundaries = DCShockBoundaries.lookup(volts);
+      var boundaries = Boundaries60hz.lookup(volts);
       if (boundaries) {
+         $('#limited-approach-movable-conductor-display').text(boundaries.limitedApproachMovableConductor);
          $('#limited-approach-fixed-circuit-display').text(boundaries.limitedApproachFixedCircuitPart);
          $('#restricted-approach-display').text(boundaries.restrictedApproach);
          $('#prohibited-approach-display').text(boundaries.prohibitedApproach);
@@ -104,7 +97,7 @@ var UI = {
    
    showArcFlash : function(volts, amps, seconds) {
       "use strict";
-      if ((volts > 100) && (amps > 500)) {
+      if ((volts > 250) && (amps > 500)) {
          // free space
          var freeSpaceCal = Boundaries.incidentEnergyAt18OpenDisplay(volts, amps, seconds);
          $('#arc-flash-free-space-incident-energy').html(freeSpaceCal + ' cal/cm<sup>2</sup>');
@@ -123,12 +116,12 @@ var UI = {
       }
    },
 
-   isHazard : function(mode, classification, volts) {
-      return volts < 100 || mode === '0' || classification === '2.0' || classification === '2.1' || classification === '2.2a' || classification === '2.2b';
+   hidePPE : function(mode, classification, volts) {
+      return volts < 100 || mode === '0' || classification === '6.1a' || classification === '6.1b' || classification === '6.1c';
    },
 
    showPPEFreeSpace : function(mode, volts, amps, seconds, classification) {
-      if (UI.isHazard(mode, classification, volts)) {
+      if (UI.hidePPE(mode, classification, volts)) {
          $('#ppe-requirements').hide();
          $('#ppe-requirements-voltage-too-high').hide();
       }
@@ -170,7 +163,7 @@ var UI = {
    },
 
    showPPEEnclosed : function(mode, volts, amps, seconds, classification) {
-      if (UI.isHazard(mode, classification, volts)) {
+      if (UI.hidePPE(mode, classification, volts)) {
          $('#enclosed-ppe-requirements').hide();
          $('#enclosed-ppe-requirements-voltage-too-high').hide();
       }
@@ -238,44 +231,34 @@ $(function() {
    // bind form fields
    $('#maximum-exposed-input, #available-current-input, #duration-input').bind('textchange', UI.evaluate);
    $('#work-mode-input').bind('change', UI.evaluate);
+
+   // make sure that the user must re-enter the work mode if they are going to adjust the voltage
+   // this will prevent the form submitting if the use is entering a multi digit number
+   jQuery('#voltage-input').on('input', function () {
+     // do your stuff
+     $('#work-mode-input').val('');
+   });
    
    // set button actions
    $('#reset-button').bind('click', UI.reset);
 
     // when back to top link is pressed send user back to the top
-   $('#backToTop').click(function () {
-       $('#navBtm').addClass('hidden');
-   });
+    $('#backToTop').click(function () {
+        $('#navBtm').addClass('hidden');
+    });
 
     //when user scrolls to top hide nav bar
-   $(window).scroll(function () {
-       var top_offset = $(window).scrollTop();
-       if (top_offset == 0) {
-           $('#navBtm').addClass('hidden');
-       }
-   });
+    $(window).scroll(function () {
+        var top_offset = $(window).scrollTop();
+        if (top_offset == 0) {
+            $('#navBtm').addClass('hidden');
+        }
+    });
    
    // help popovers
-   //$('.help-popover').popover({html: true});
-   //$('.help-tooltip').tooltip();
-
    $('[data-toggle="tooltip"]').tooltip();
 
    $('[data-toggle="popover"]').popover();
-
-   $("#maximum-exposed-input").keyup(function () {
-       var value = $("#maximum-exposed-input").val();
-       if (value > 999 || value < 0) {
-           $("#PotMaxExp-range-warning").removeClass("hidden").addClass("visible");
-       }
-   });
-
-   $("#available-current-input").keyup(function () {
-       var value = $("#available-current-input").val();
-       if (value > 500000 || value < 0) {
-           $("#scc-range-warning").removeClass("hidden").addClass("visible");
-       }
-   });
 
    $("#duration-input").keyup(function () {
        var value = $("#duration-input").val();

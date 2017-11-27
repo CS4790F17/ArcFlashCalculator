@@ -24,10 +24,13 @@ var UI = {
         if (input.shouldShowAdditionalFields) {
             $('#short-circuit-current-field').show();
             $('#fault-clearning-time-field').show();
+            $("#toggle-impedance").show();
+
         }
         else {
             $('#short-circuit-current-field').hide();
             $('#fault-clearning-time-field').hide();
+            $("#toggle-impedance").hide();
         }
 
         if (input.isComplete) {
@@ -299,6 +302,25 @@ $(function () {
         }
     });
 
+    var manualImpedance = true;
+    $("#manualShortCircuitCurrent").hide();
+    $("#toggle-impedance").hide();
+
+    $("#toggle-impedance").click(function () {
+        
+        if (manualImpedance) {
+            manualImpedance = false;
+            $("#manualShortCircuitCurrent").show();
+            $("#short-circuit-current-field").hide();
+
+        } else {
+            manualImpedance = true;
+            $("#short-circuit-current-field").show();
+            $("#manualShortCircuitCurrent").hide();
+
+        }
+    });
+
     //$(document).scroll(function () {
     //    if ($(window).scrollTop() === 0) {
     //        $('#navBtm').addClass('hidden');
@@ -317,7 +339,6 @@ $(function () {
         var value = $("#voltage-input").val();
         if (value > 600 || value < 0) {
             $("#voltage-range-warning").removeClass("hidden").addClass("visible");
-            //$("#voltage-input").val("");
         }
     });
 
@@ -325,7 +346,6 @@ $(function () {
         var value = $("#transformer-size-input").val();
         if (value > 20000 || value < 0.5) {
             $("#trans-range-warning").removeClass("hidden").addClass("visible");
-            //$("#transformer-size-input").val("");
         }
     });
 
@@ -333,7 +353,6 @@ $(function () {
         var value = $("#short-circuit-current-input").val();
         if (value > 500 || value < 1) {
             $("#scc-range-warning").removeClass("hidden").addClass("visible");
-            //$("#short-circuit-current-input").val("");
         }
     });
 
@@ -341,8 +360,61 @@ $(function () {
         var value = $("#fault-clearing-time-input").val();
         if (value > 2 || value < 0.003) {
             $("#fault-clearing-time-range-warning").removeClass("hidden").addClass("visible");
-            //$("#fault-clearing-time-input").val("");
         }
+    });
+
+    $("#short-circuit-current-length").keyup(function () {
+        var value = $("#short-circuit-current-length").val();
+        if (value > 10000 || value < 1) {
+            $("#length-range-warning").removeClass("hidden").addClass("visible");
+        }
+    });
+
+    $("#short-circuit-current-number").keyup(function () {
+        var value = $("#short-circuit-current-number").val();
+        if (value < 0 || value > 10) {
+            $("#number-range-warning").removeClass("hidden").addClass("visible");
+        }
+    });
+
+    $("#transformer-impedance-input").keyup(function () {
+        var value = $("#transformer-impedance-input").val();
+        if (value > 20 || value < 1) {
+            $("#impedance-range-warning").removeClass("hidden").addClass("visible");
+        }
+    });
+
+    $("#calculate-SCC").click(function () {
+        var transImped = $("#transformer-impedance-input").val(); 
+        var transSize = $("#transformer-size-input").val(); 
+        var cableLength = $("#short-circuit-current-length").val();
+        var conductorSize = $("#short-circuit-current-size").val();
+        var conductorNumber = $("#short-circuit-current-number").val();
+        var conductorType = $("#short-circuit-current-conductor").val();
+        var conduitType = $("#short-circuit-current-conduit").val();
+        var lineImpedance = 0;
+        var shortCircuitCurrent = 0;
+        var i = 0;
+
+        //Formula for Short Circuit Current
+        //    SCC = TransfomerSize / (Transformer Impedance + Line Impedance)
+        //Formula for Line Impedance
+        //    LineImpedance = (1/z1) + (1/z2) + (1/z3).... 
+
+        //First calculate the line impedance 
+        for (i = 0; i < conductorNumber; i++) {
+            lineImpedance += (1 / altCurrentResistTable[conductorSize][conductorType][conduitType]);
+        }
+
+        //Then calculate the SCC
+        shortCircuitCurrent = transSize / (transImped + lineImpedance); 
+
+        //Display the calculate SCC value, for testing purposes only 
+        //$("#scc-result").val(shortCircuitCurrent);
+
+        //Set the SCC variable to the calculated value
+        $("#short-circuit-current-input").val(shortCircuitCurrent); 
+
     });
 
 

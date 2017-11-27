@@ -169,7 +169,17 @@ namespace ArcFlashCalculator.Controllers
 
         public ActionResult Account()
         {
-            return View();
+            List<Users> userList = ViewModels.GetAllUsers();
+            return View(userList);
+        }
+
+        
+        public void dummyData(List<User> userList)
+        {
+            foreach(User u in userList)
+            {
+
+            }
         }
     }
 }

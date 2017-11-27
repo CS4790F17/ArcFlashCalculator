@@ -31,6 +31,7 @@ namespace ArcFlashCalculator.Controllers
                 ViewModels.CreateUserInputs60Hz(power60Hz.Inputs);
             }
             return View();
+            return View(/*db.userInputs60Hz.ToList()*/);
         }
 
         // ------------------------------- These are the important actionresults//
