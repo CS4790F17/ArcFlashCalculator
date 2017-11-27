@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ArcFlashCalculator.Models;
 
 namespace ArcFlashCalculator.Controllers
 {
@@ -10,21 +11,45 @@ namespace ArcFlashCalculator.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            try
+            {
+                ViewBag.Message = "Your application description page.";
 
-            return View();
+                return View();
+            }
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            try
+            {
+                ViewBag.Message = "Your contact page.";
 
-            return View();
+                return View();
+            }
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
         }
     }
 }
