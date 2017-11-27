@@ -260,9 +260,9 @@ namespace ArcFlashCalculator.Models
         [Required(ErrorMessage = "A Password is required")]
         public string Password { get; set; }
 
-        public DateTime LastLogin { get; set; }
+        public DateTime DateCreated { get; set; }
 
-        public int bitAdmin { get; set; }
+        public int AdminBit { get; set; }
     }
 
     public class ArcCalculatorDbContext : DbContext
