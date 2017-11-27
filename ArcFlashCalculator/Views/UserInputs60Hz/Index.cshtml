@@ -45,6 +45,15 @@
                     <input class="form-control" id="transformer-size-input" type="number" />
                 </div>
 
+                <div class="alert-danger hidden" id="impedance-range-warning" role="alert">
+                    Transformer Impedance values must be a number between 1 - 20
+                </div>
+
+                <div class="form-group" id="transformer-impedance-field">
+                    <label>Transformer Impedance (%):</label>
+                    <input class="form-control" id="transformer-impedance-input" type="number" />
+                </div>
+
                 <div class="form-group" id="equipment-type-field">
                     <label>Equipment Type:</label>
                     <select class="form-control" id="equipment-type-input">
@@ -58,13 +67,96 @@
                     </select>
                 </div>
 
-                <div class="alert-danger hidden" id="scc-range-warning" role="alert">
-                    Short Circuit Current (kA) values must be a number between 1 - 500
+                @*<div class="form-check">
+                    <label class="form-check-label">Line Impedance:<input type="checkbox" class="form-check-input">
+                    </label>
+                </div>*@
+
+                <div id="toggle-impedance">
+                    <a href="#">Calculate Short Circuit Current Manually?</a>
                 </div>
 
                 <div class="form-group" id="short-circuit-current-field">
                     <label>Short Circuit Current (kA) <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Refer to upstream Circuit Breaker specifications."></span>:</label>
                     <input class="form-control" id="short-circuit-current-input" type="number" />
+                </div>
+
+                <div id="manualShortCircuitCurrent">
+
+                    <div class="alert-danger hidden" id="length-range-warning" role="alert">
+                        Length values must be a number between 1 and 10,000
+                    </div>
+
+                    <div class="form-group" id="cable-length">
+                        <label>Cable Length:</label>
+                        <input class="form-control" id="short-circuit-current-length" type="number" />
+                    </div>
+
+                    <div class="form-group" id="conductor-size">
+                        <label>Conductor Size:</label>
+                        <select class="form-control" id="short-circuit-current-size">
+                            <option value="">Select a size</option>
+                            <option value="14">14</option>
+                            <option value="12">12</option>
+                            <option value="10">10</option>
+                            <option value="8">8</option>
+                            <option value="6">6</option>
+                            <option value="4">4</option>
+                            <option value="3">3</option>
+                            <option value="2">2</option>
+                            <option value="1">1</option>
+                            <option value="1/0">1/0</option>
+                            <option value="2/0">2/0</option>
+                            <option value="3/0">3/0</option>
+                            <option value="4/0">4/0</option>
+                            <option value="250">250</option>
+                            <option value="300">300</option>
+                            <option value="350">350</option>
+                            <option value="400">400</option>
+                            <option value="500">500</option>
+                            <option value="600">600</option>
+                            <option value="750">750</option>
+                            <option value="1000">1000</option>
+                        </select>
+                    </div>
+
+                    <div class="alert-danger hidden" id="number-range-warning" role="alert">
+                        Voltage values must be a number between 1 and 10
+                    </div>
+
+                    <div class="form-group" id="num-of-conductor-in-parallel">
+                        <label>Number of Conductor In Parallel:</label>
+                        <input class="form-control" id="short-circuit-current-number" type="number" />
+                    </div>
+
+                    <div class="form-group" id="conductor-type">
+                        <label>Conductor Type:</label>
+                        <select class="form-control" id="short-circuit-current-conductor">
+                            <option value="">Select a type</option>
+                            <option value="unCoatedCopper">Uncoated Copper Wire</option>
+                            <option value="aluminum">Aluminum</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="conduit-type">
+                        <label>Conduit Type:</label>
+                        <select class="form-control" id="short-circuit-current-conduit">
+                            <option value="">Select a type</option>
+                            <option value="PVCConduit">PVC Conduit</option>
+                            <option value="aluminumConduit">Aluminum Conduit</option>
+                            <option value="steelConduit">Steel Conduit</option>
+                        </select>
+                    </div>
+                    @*Test purposes only*@
+                    @*<div class="form-group" id="scc-output">
+                        <label>SCC Output</label>
+                        <input class="form-control" id="scc-result" type="number" />
+                    </div>*@
+
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="button" id="calculate-SCC">Calculate SCC</button>
+                    </div>
+
                 </div>
 
                 <div class="alert-danger hidden" id="fault-clearing-time-range-warning" role="alert">
@@ -566,7 +658,7 @@
                                     <td>No</td>
                                 </tr>
                                 <tr>
-                                    <td>Insertion or removal of plug-in devices into or from busways</td>
+                                    <td>Insertion or removal of plug-in devices into or from bus ways</td>
                                     <td>2</td>
                                     <td>Yes</td>
                                     <td>No</td>
@@ -800,14 +892,15 @@
         </div>
 
     </div>
+    </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="~/Scripts/UserInputs60Hz/js/jquery.textchange.min.js"></script>
 
-    @*<script src="~/Scripts/UserInputs60Hz/js/jquery-1.7.2.min.js"></script>*@
-    @*<script src="~/Scripts/UserInputs60Hz/js/bootstrap.min.js"></script>*@
-    <!--<script src="../bootstrap/js/bootstrap-tooltip.js"></script> -->
-    <!--<script src="../bootstrap/js/bootstrap-popover.js"></script>-->
+    <script src="~/Scripts/UserInputs60Hz/js/jquery-1.7.2.min.js"></script>
+    <script src="~/Scripts/UserInputs60Hz/js/bootstrap.min.js"></script>
+    <script src="../bootstrap/js/bootstrap-tooltip.js"></script>
+    <script src="../bootstrap/js/bootstrap-popover.js"></script>
     <script src="~/Scripts/support.js"></script>
     <script src="~/Scripts/modernizr.js"></script>
 
@@ -816,6 +909,7 @@
     <script src="~/Scripts/safetyreqs.js"></script>
     <script src="~/Scripts/boundaries.js"></script>
                 
+    <script src="~/Scripts/Tables/js/AltCurrentResistTable.js"></script>
     <script src="~/Scripts/UserInputs60Hz/js/classifications.js"></script>
     <script src="~/Scripts/UserInputs60Hz/js/safetyreqs.js"></script>
     <script src="~/Scripts/UserInputs60Hz/js/boundaries.js"></script>
