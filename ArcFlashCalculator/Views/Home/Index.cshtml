@@ -9,23 +9,13 @@
     <h3>Instructions</h3>
     <p class="lead">To use this application select one of the beorilow energy sources. Upon selection you will enter information about the electrical system.</p>
     <ul class="nav">
-        <li><a class="btn btn-default" href="~/UserInputs60Hz">60 Hz Power &raquo;</a></li>
-        <li><a class="btn btn-default" href="~/UserInputsDCs"> DC &raquo;</a></li>
-        <li><a class="btn btn-default" href="~/Capacitor"> Capacitor &raquo;</a></li>
-        <li><a class="btn btn-default" href="~/Battery"> Battery &raquo;</a></li>
-        <li><a class="btn btn-default" href="~/SubRF/Index"> Sub RF (1Hz - 3kHz) &raquo;</a></li>
-        <li class="btn btn-default"> @Html.ActionLink("60Hz Power", "Index", "UserInputs60Hz", new { @class = "btn btn-default" }, null) </li>
-        <li class="btn btn-default"> @Html.ActionLink("DC", "Index", "UserInputsDCs", new { @class = "btn btn-default" }, null) </li>
-        <li class="btn btn-default"> @Html.ActionLink("Capacitor", "Index", "Capacitor", new { @class = "btn btn-default" }, null) </li>
-        <li class="btn btn-default"> @Html.ActionLink("Battery", "Index", "Battery", new { @class = "btn btn-default" }, null) </li>
-        <li class="btn btn-default"> @Html.ActionLink("Sub-RF (1Hz - 3kHz)", "Index", "SubRF", new { @class = "btn btn-default" }, null) </li>
-
-        @*<li><a class="btn btn-default" href="~/UserInputsDCs/Index"> DC &raquo;</a></li>
-        <li><a class="btn btn-default" href="~/Capacitor/Index"> Capacitor &raquo;</a></li>
-        <li><a class="btn btn-default" href="~/Battery/Index"> Battery &raquo;</a></li>
-        <li><a class="btn btn-default" href="~/SubRF/Index"> Sub RF (1Hz - 3kHz) &raquo;</a></li>*@
+        <li class="btn btn-default"> @Html.ActionLink("60Hz Power", "Index", "UserInputs60Hz", null, null) </li>
+        <li class="btn btn-default"> @Html.ActionLink("DC", "Index", "UserInputsDCs", null, null) </li>
+        <li class="btn btn-default"> @Html.ActionLink("Capacitor", "Index", "Capacitor", null, null) </li>
+        <li class="btn btn-default"> @Html.ActionLink("Battery", "Index", "Battery", null, null) </li>
+        <li class="btn btn-default"> @Html.ActionLink("Sub-RF (1Hz - 3kHz)", "Index", "SubRF", null, null) </li>
     </ul>
-    </br> 
+    <br> 
     <p class="lead">The sources below are not covered by this application. Refer any questions to your organization’s Electrical Safety Subject Matter Expert.</p>
     <div>
         <ul class="list">
@@ -69,9 +59,9 @@
     </dl>
 
     <p>Information presented is organized using the Electrical Hazard Classification Tool, 2012 edition. The Tool is a graphic representation of electrical hazards as determined by possible injury, and provides the recommended controls for mitigation of the hazard for the various Modes of Work on Electrical Equipment. This classification tool is not to be confused with the hazard risk categories for personal protective equipment defined in NFPA 70E. Work Controls are based on, as applicable, the NFPA-70E Standard for Electrical Safety in the Workplace, 2012 edition, and PPE is taken from the NFPA task table 130.7.</p>
-    </br>
+    <br>
     <p>This application assumes that equipment has been properly maintained and used as intended.</p>
-    </br> 
+    <br> 
     <p>All calculations and recommendations must be reviewed and approved by your organization’s Electrical Safety Subject Matter Expert.</p>
 </div>
 
