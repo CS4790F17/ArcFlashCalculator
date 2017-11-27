@@ -405,16 +405,17 @@ $(function () {
         //First calculate the line impedance 
         var i = 0; 
         for (i = 0; i < conductorNumber; i++) {
-            debugger;
             lineImpedance += (1 / altCurrentResistTable[conductorSize][conductorType][conduitType]);
         }
 
-        debugger;
         //Then calculate the SCC
         shortCircuitCurrent = transSize / (transImped + lineImpedance); 
 
         //Display the calculate SCC value, for testing purposes only 
-        $("#scc-result").val(shortCircuitCurrent);
+        //$("#scc-result").val(shortCircuitCurrent);
+
+        //Set the SCC variable to the calculated value
+        $("#short-circuit-current-input").val(shortCircuitCurrent); 
 
     });
 
