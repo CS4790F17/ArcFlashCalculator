@@ -301,6 +301,7 @@
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
+    <Content Include="Images\boundariesOLD.png" />
     <Content Include="Images\boundaries.png" />
     <Content Include="Scripts\Battery\js\classifications.js" />
     <Content Include="Scripts\Battery\js\safetyreqs.js" />
