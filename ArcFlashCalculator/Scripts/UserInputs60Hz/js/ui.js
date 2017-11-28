@@ -393,38 +393,14 @@ $(function () {
         var conductorNumber = $("#short-circuit-current-number").val();
         var conductorType = $("#short-circuit-current-conductor").val();
         var conduitType = $("#short-circuit-current-conduit").val();
-        var lineImpedance = 0;
         var transShortCircuitCurrent = 0; 
         var shortCircuitCurrent = 0;
-        var i = 0;
-        var zTotals = 0;
         var FLACurrent = 0;
         const sqrtThree = 1.732050;
         var FFactor = 0;
         var C = 0;
         var M = 0;
         var bufferedSCC = 0; 
-
-
-
-        //Formula for Short Circuit Current
-        //    SCC = TransfomerSize / (Transformer Impedance + Line Impedance)
-        //Formula for Line Impedance
-        //    1 / LineImpedance = 1/(z1 + z2 +z3...) 
-
-        //FLACurrent = transSize / (voltage * sqrtThree);
-
-
-        //First calculate the line impedance 
-        //for (i = 0; i < conductorNumber; i++) {
-        //    zTotals += (1 / altCurrentResistTable[conductorSize][conductorType][conduitType]);
-        //    //zTotals += altCurrentResistTable[conductorSize][conductorType][conduitType];
-        //}
-        
-        //lineImpedance = 1 / zTotals;
-
-
-
 
         C = 1 / (altCurrentResistTable[conductorSize][conductorType][conduitType] / 1000);
 
@@ -439,11 +415,11 @@ $(function () {
 
         shortCircuitCurrent = transShortCircuitCurrent * M;
 
+        //Then calculate the SCC
         //Add on a conservatively high estimate for a safety buffer
         bufferedSCC = 1.053 * shortCircuitCurrent; 
 
-        //Then calculate the SCC
-        //shortCircuitCurrent = transSize / (transImped + lineImpedance); 
+
 
         //Display the calculate SCC value, for testing purposes only 
         $("#scc-result").val(bufferedSCC);
