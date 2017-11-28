@@ -34,10 +34,14 @@ var UI = {
         }
 
         if (input.isComplete) {
+
             //$('#system-information').removeClass('span4').removeClass('offset4').addClass('span3');
             //$('#system-information').removeClass('system-information-side').addClass('system-information-centered');
 
             // scroll user down to results
+            var amps = $("#scc-output").val(); 
+            var mode = $('#work-mode-input').val();
+            var seconds = parseFloat($('#fault-clearning-time-field').val());
 
             // show reset button
             UI.show('#form-actions');
@@ -53,7 +57,10 @@ var UI = {
             UI.showBoundaries(input.volts);
             UI.showArcFlashBoundaries(input.mode, input.volts, input.equipmentType, input.classification);
             UI.showTables(input.volts, input.classification, input.safetyTableId);
-
+            UI.showArcFlash(input.volts, amps, input.faultClearingTime);
+            UI.showPPEFreeSpace(input.mode, input.volts, amps, input.faultClearingTime, input.classification);
+            UI.showPPEEnclosed(input.mode, input.volts, amps, input.faultClearingTime, input.classification);
+            
             // scroll to results
             // target element
             var $id = $("#results-wrapper");
@@ -179,6 +186,115 @@ var UI = {
             $('#limited-approach-fixed-circuit-display').text(boundaries.limitedApproachFixedCircuitPart);
             $('#restricted-approach-display').text(boundaries.restrictedApproach);
             $('#prohibited-approach-display').text(boundaries.prohibitedApproach);
+        }
+    },
+
+    isHazard: function (mode, classification, volts) {
+        return volts < 100 || mode === '0' || classification === '2.0' || classification === '2.1' || classification === '2.2a' || classification === '2.2b';
+    },
+
+    showPPEFreeSpace: function (mode, volts, amps, seconds, classification) {
+        if (UI.isHazard(mode, classification, volts)) {
+            $('#ppe-requirements').hide();
+            $('#ppe-requirements-voltage-too-high').hide();
+        }
+        else {
+            var ie = Boundaries.incidentEnergyAt18(volts, amps, seconds);
+            if (volts <= 54000 && ie <= 40) {
+
+                $('#ppe-requirements').show();
+                $('#ppe-requirements-voltage-too-high').hide();
+
+                $('#glove-class-display').text(SafetyReqs.gloveClassDC(volts));
+
+                if ((volts > 100) && (amps > 500)) {
+                    $('.arc-flash-ppe').show();
+
+                    if (ie <= 8) {
+                        $('#ppe-low').show();
+                        $('#ppe-high').hide();
+                    }
+                    else {
+                        $('#ppe-low').hide();
+                        $('#ppe-high').show();
+                    }
+
+                    var ppeCalRating = SafetyReqs.ppeCalRating(ie);
+                    if (ppeCalRating) {
+                        $('#ppe-cal-rating').text(ppeCalRating);
+                    }
+                }
+                else {
+                    $('.arc-flash-ppe').hide();
+                }
+            }
+            else {
+                $('#ppe-requirements').hide();
+                $('#ppe-requirements-voltage-too-high').show();
+            }
+        }
+    },
+
+    showPPEEnclosed: function (mode, volts, amps, seconds, classification) {
+        if (UI.isHazard(mode, classification, volts)) {
+            $('#enclosed-ppe-requirements').hide();
+            $('#enclosed-ppe-requirements-voltage-too-high').hide();
+        }
+        else {
+            var ie = 3 * Boundaries.incidentEnergyAt18(volts, amps, seconds);
+            if (volts <= 54000 && ie <= 40) {
+
+                $('#enclosed-ppe-requirements').show();
+                $('#enclosed-ppe-requirements-voltage-too-high').hide();
+
+                $('#enclosed-glove-class-display').text(SafetyReqs.gloveClassDC(volts));
+
+                if ((volts > 100) && (amps > 500)) {
+                    $('.enclosed-arc-flash-ppe').show();
+
+                    if (ie <= 8) {
+                        $('#enclosed-ppe-low').show();
+                        $('#enclosed-ppe-high').hide();
+                    }
+                    else {
+                        $('#enclosed-ppe-low').hide();
+                        $('#enclosed-ppe-high').show();
+                    }
+
+                    var ppeCalRating = SafetyReqs.ppeCalRating(ie);
+                    if (ppeCalRating) {
+                        $('#enclosed-ppe-cal-rating').text(ppeCalRating);
+                    }
+                }
+                else {
+                    $('.enclosed-arc-flash-ppe').hide();
+                }
+            }
+            else {
+                $('#enclosed-ppe-requirements').hide();
+                $('#enclosed-ppe-requirements-voltage-too-high').show();
+            }
+        }
+    },
+
+    showArcFlash: function (volts, amps, seconds) {
+        "use strict";
+        if ((volts > 100) && (amps > 500)) {
+            // free space
+            var freeSpaceCal = Boundaries.incidentEnergyAt18OpenDisplay(volts, amps, seconds);
+            $('#arc-flash-free-space-incident-energy').html(freeSpaceCal + ' cal/cm<sup>2</sup>');
+            $('#arc-flash-display-free-space').text(Boundaries.arcFlashOpen(volts, amps, seconds));
+
+            // enclused space
+            var cal = Boundaries.incidentEnergyAt18Display(volts, amps, seconds);
+            $('#arc-flash-incident-energy').html(cal + ' cal/cm<sup>2</sup>');
+            $('#arc-flash-display-enclosed-space').text(Boundaries.arcFlashEnclosed(volts, amps, seconds));
+        }
+        else {
+            $('#arc-flash-incident-energy').text('Not applicable');
+            $('#arc-flash-display-enclosed-space').text('Not applicable');
+            $('#arc-flash-free-space-incident-energy').text('Not applicable');
+            $('#arc-flash-display-free-space').text('Not applicable');
         }
     },
 
