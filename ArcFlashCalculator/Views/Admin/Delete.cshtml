@@ -29,8 +29,12 @@
                 @Html.DisplayFor(modelItem => item.DateCreated)
             </td>
             <td>
-                @Html.ActionLink("Change Password", "ChangePassword", new { id = item.Id }) |
-                @Html.ActionLink("Delete Account", "Delete", new { id = item.Id })
+                @using (Ajax.BeginForm("Delete", "Admin", new { id = item.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "function(){alert('success')}", OnFailure = "function(){alert('epic fail')}" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ActionLink("Change Password", "ChangePassword", new { id = item.Id }, new { @class = "btn btn-primary" })
+                    <input type="submit" value="Delete Account" class="btn btn-danger" />
+                }
             </td>
         </tr>
        }

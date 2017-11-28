@@ -28,13 +28,13 @@ namespace ArcFlashCalculator.Controllers
         //POST: Admin/Delete
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Users user)
+        public ActionResult Delete(int id)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    ViewModels.DeleteUser(user.Id);
+                    ViewModels.DeleteUser(id);
                 }
                 return RedirectToAction("Delete");
             }
@@ -285,15 +285,6 @@ namespace ArcFlashCalculator.Controllers
             {
                 DataLink.LogError(e);
                 throw;
-            }
-        }
-
-
-        public void dummyData(List<User> userList)
-        {
-            foreach (User u in userList)
-            {
-
             }
         }
     }
