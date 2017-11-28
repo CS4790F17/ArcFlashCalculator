@@ -404,12 +404,9 @@ $(function () {
 
         C = 1 / (altCurrentResistTable[conductorSize][conductorType][conduitType] / 1000);
 
-
         FLACurrent = (transSize * 1000) / (voltage * sqrtThree);
         transShortCircuitCurrent = FLACurrent * (100 / transImped);
-        //FFactor = (sqrtThree * cableLength * FLACurrent) / (conductorNumber * C * voltage);
         FFactor = (sqrtThree * cableLength * transShortCircuitCurrent) / (conductorNumber * C * voltage);
-
 
         M = 1 / (1 + FFactor);
 
@@ -418,8 +415,6 @@ $(function () {
         //Then calculate the SCC
         //Add on a conservatively high estimate for a safety buffer
         bufferedSCC = 1.053 * shortCircuitCurrent; 
-
-
 
         //Display the calculate SCC value, for testing purposes only 
         $("#scc-result").val(bufferedSCC);
