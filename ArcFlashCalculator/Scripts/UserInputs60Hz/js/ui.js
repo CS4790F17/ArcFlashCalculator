@@ -474,7 +474,7 @@ $(function () {
 
     $("#fault-clearing-time-input").keyup(function () {
         var value = $("#fault-clearing-time-input").val();
-        if (value > 2 || value < 0.003) {
+        if (value < 0 || value > 2) {
             $("#fault-clearing-time-range-warning").removeClass("hidden").addClass("visible");
         }
     });
