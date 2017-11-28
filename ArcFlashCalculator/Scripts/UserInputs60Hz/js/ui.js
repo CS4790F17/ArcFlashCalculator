@@ -385,6 +385,7 @@ $(function () {
     });
 
     $("#calculate-SCC").click(function () {
+        var voltage = $("#voltage-input").val(); 
         var transImped = $("#transformer-impedance-input").val(); 
         var transSize = $("#transformer-size-input").val(); 
         var cableLength = $("#short-circuit-current-length").val();
@@ -393,21 +394,55 @@ $(function () {
         var conductorType = $("#short-circuit-current-conductor").val();
         var conduitType = $("#short-circuit-current-conduit").val();
         var lineImpedance = 0;
+        var transShortCircuitCurrent = 0; 
         var shortCircuitCurrent = 0;
         var i = 0;
+        var zTotals = 0;
+        var FLACurrent = 0;
+        const sqrtThree = 1.732050;
+        var FFactor = 0;
+        var C = 0;
+        var M = 0; 
+
+
 
         //Formula for Short Circuit Current
         //    SCC = TransfomerSize / (Transformer Impedance + Line Impedance)
         //Formula for Line Impedance
-        //    LineImpedance = (1/z1) + (1/z2) + (1/z3).... 
+        //    1 / LineImpedance = 1/(z1 + z2 +z3...) 
+
+        //FLACurrent = transSize / (voltage * sqrtThree);
+
 
         //First calculate the line impedance 
-        for (i = 0; i < conductorNumber; i++) {
-            lineImpedance += (1 / altCurrentResistTable[conductorSize][conductorType][conduitType]);
-        }
+        //for (i = 0; i < conductorNumber; i++) {
+        //    zTotals += (1 / altCurrentResistTable[conductorSize][conductorType][conduitType]);
+        //    //zTotals += altCurrentResistTable[conductorSize][conductorType][conduitType];
+        //}
+        
+        //lineImpedance = 1 / zTotals;
+
+
+
+
+        C = 1 / (altCurrentResistTable[conductorSize][conductorType][conduitType] / 1000);
+
+
+        FLACurrent = (transSize * 1000) / (voltage * sqrtThree);
+        transShortCircuitCurrent = FLACurrent * (100 / transImped);
+        //FFactor = (sqrtThree * cableLength * FLACurrent) / (conductorNumber * C * voltage);
+        FFactor = (sqrtThree * cableLength * transShortCircuitCurrent) / (conductorNumber * C * voltage);
+
+
+        M = 1 / (1 + FFactor);
+
+        shortCircuitCurrent = transShortCircuitCurrent * M; 
+
+
+        debugger;
 
         //Then calculate the SCC
-        shortCircuitCurrent = transSize / (transImped + lineImpedance); 
+        //shortCircuitCurrent = transSize / (transImped + lineImpedance); 
 
         //Display the calculate SCC value, for testing purposes only 
         $("#scc-result").val(shortCircuitCurrent);
