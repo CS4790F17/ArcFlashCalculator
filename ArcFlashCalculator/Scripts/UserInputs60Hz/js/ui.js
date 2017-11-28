@@ -402,7 +402,8 @@ $(function () {
         const sqrtThree = 1.732050;
         var FFactor = 0;
         var C = 0;
-        var M = 0; 
+        var M = 0;
+        var bufferedSCC = 0; 
 
 
 
@@ -436,16 +437,16 @@ $(function () {
 
         M = 1 / (1 + FFactor);
 
-        shortCircuitCurrent = transShortCircuitCurrent * M; 
+        shortCircuitCurrent = transShortCircuitCurrent * M;
 
-
-        debugger;
+        //Add on a conservatively high estimate for a safety buffer
+        bufferedSCC = 1.053 * shortCircuitCurrent; 
 
         //Then calculate the SCC
         //shortCircuitCurrent = transSize / (transImped + lineImpedance); 
 
         //Display the calculate SCC value, for testing purposes only 
-        $("#scc-result").val(shortCircuitCurrent);
+        $("#scc-result").val(bufferedSCC);
 
         //Set the SCC variable to the calculated value
         $("#short-circuit-current-input").val(shortCircuitCurrent); 
