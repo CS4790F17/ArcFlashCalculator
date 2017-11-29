@@ -306,15 +306,24 @@
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
+    <Content Include="Images\boundariesOLD.png" />
     <Content Include="Images\boundaries.png" />
+    <Content Include="Scripts\Battery\js\classifications.js" />
+    <Content Include="Scripts\Battery\js\safetyreqs.js" />
+    <Content Include="Scripts\Battery\js\ui.js" />
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Capacitor\js\classifications.js" />
+    <Content Include="Scripts\Capacitor\js\safetyreqs.js" />
+    <Content Include="Scripts\Capacitor\js\ui.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -325,6 +334,9 @@
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\safetyreqs.js" />
+    <Content Include="Scripts\SubRF\js\classifications.js" />
+    <Content Include="Scripts\SubRF\js\safetyreqs.js" />
+    <Content Include="Scripts\SubRF\js\ui.js" />
     <Content Include="Scripts\support.js" />
     <Content Include="Scripts\Tables\js\AltCurrentResistTable.js" />
     <Content Include="Scripts\training.js" />
@@ -358,15 +370,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\UserInputs60Hz\Create.cshtml" />
-    <Content Include="Views\UserInputs60Hz\Delete.cshtml" />
-    <Content Include="Views\UserInputs60Hz\Details.cshtml" />
-    <Content Include="Views\UserInputs60Hz\Edit.cshtml" />
     <Content Include="Views\UserInputs60Hz\Index.cshtml" />
-    <Content Include="Views\UserInputsDCs\Create.cshtml" />
-    <Content Include="Views\UserInputsDCs\Delete.cshtml" />
-    <Content Include="Views\UserInputsDCs\Details.cshtml" />
-    <Content Include="Views\UserInputsDCs\Edit.cshtml" />
     <Content Include="Views\UserInputsDCs\Index.cshtml" />
     <Content Include="Views\SubRF\Index.cshtml" />
     <Content Include="Views\Battery\Index.cshtml" />
@@ -389,9 +393,7 @@
     <Content Include="Views\Admin\Login.cshtml" />
     <Content Include="Views\Admin\Create.cshtml" />
     <Content Include="Views\Admin\Delete.cshtml" />
-    <Content Include="Views\Admin\Login.cshtml" />
     <Content Include="Views\Admin\Account.cshtml" />
-    <Content Include="Views\Admin\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
