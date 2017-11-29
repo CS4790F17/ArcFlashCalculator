@@ -2,11 +2,12 @@
 
 namespace ArcFlashCalculator
 {
+
     using MVCGrid.Models;
     using MVCGrid.Web;
     using System.Web.Mvc;
     using Models;
-    public class MVCGridConfig
+    public static class MVCGridConfig
     {
         public static void RegisterGrids()
         {
@@ -31,7 +32,7 @@ namespace ArcFlashCalculator
             MVCGridDefinitionTable.Add("UserInputs60Hz", new MVCGridBuilder<UserInputs60Hz>(colDefaults)
                 .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .WithSorting(sorting: true, defaultSortColumn: "Id", defaultSortDirection: SortDirection.Dsc)
-            //    .WithPaging(paging: true, itemsPerPage: 10, allowChangePageSize: true, maxItemsPerPage: 100)
+                .WithPaging(paging: true, itemsPerPage: 10, allowChangePageSize: true, maxItemsPerPage: 100)
                 .WithAdditionalQueryOptionNames("search")
                 .AddColumns(cols =>
                 {

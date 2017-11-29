@@ -1,25 +1,10 @@
-﻿@using MVCGrid.Web
-@using ArcFlashCalculator.Models
+﻿@model IEnumerable<ArcFlashCalculator.Models.UserInputs60Hz>
+@using MVCGrid.Web
+
 @{
     ViewBag.Title = "Report60Hz";
     Layout = "~/Views/Shared/_AdminNavbarPartial.cshtml";
 }
-
-@section Scripts{
-    <script type="text/javascript">
-        $(function () {
-
-            $('#selPageSize').change(function () {
-                MVCGrid.setPageSize('PageSizeGrid', $('#selPageSize').val());
-            });
-
-            // set value of dropdown to grid setting
-            $('#selPageSize').val(MVCGrid.getPageSize('PageSizeGrid'));
-
-        });
-    </script>
-}
-
 
 
 <div class="center-block">
@@ -28,14 +13,14 @@
 
 <div class="panel panel-default">
     <div class="panel-body">
-        @Html.Partial("_MVCGridToolbar", new MVCGridToolbarModel()
+        @*@Html.Partial("_MVCGridToolbar", new MVCGridToolbarModel()
    {
        MVCGridName = "UserInputs60Hz",
        PageSize = true,
        ColumnVisibility = true,
        Export = true,
        GlobalSearch = true
-   })
+   })*@
         @Html.MVCGrid("UserInputs60Hz")
     </div>
 </div>

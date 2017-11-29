@@ -176,7 +176,7 @@ namespace ArcFlashCalculator.Controllers
         {
             try
             {
-                return View();
+                return View("Report60Hz");
             }
             catch (Exception e)
             {
