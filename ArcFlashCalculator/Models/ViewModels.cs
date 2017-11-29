@@ -219,8 +219,9 @@ namespace ArcFlashCalculator.Models
 
         }
 
-        public Users user { get; set; }
-        public bool error { get; set; }
+        public string Password { get; set; }
+        public string Email { get; set; }
+        public bool Error { get; set; }
     }
 
     public class UserIP

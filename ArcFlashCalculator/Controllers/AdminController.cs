@@ -52,7 +52,8 @@ namespace ArcFlashCalculator.Controllers
             try
             {
                 User user = new User();
-                user.error = false;
+                user.Error = false;
+            
                 return View(user);
             }
             catch (Exception e)
@@ -66,7 +67,7 @@ namespace ArcFlashCalculator.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public ActionResult Login(User user)
+        public ActionResult Login (User user)
         {
             try
             {
@@ -74,10 +75,10 @@ namespace ArcFlashCalculator.Controllers
                 if (ModelState.IsValid)
                 {
                     //Get the information for the user they are trying to login as
-                    Users u = ViewModels.GetUser(user.user.Email);
+                    Users u = ViewModels.GetUser(user.Email);
 
                     //Check to the entered password against the saved password
-                    if (Encrypter.VerifyHash(user.user.Password, u.Password))
+                    if (Encrypter.VerifyHash(user.Password, u.Password))
                     {
                         //TODO: Figure out how to set the validation for a user
                         RedirectToAction("Create");
@@ -85,7 +86,7 @@ namespace ArcFlashCalculator.Controllers
                     else
                     {
                         //It failed so return the view with the user input
-                        user.error = true;
+                        user.Error = true;
                         return View(user);
                     }
                 }
@@ -219,7 +220,7 @@ namespace ArcFlashCalculator.Controllers
             try
             {
                 User newUser = new User();
-                newUser.error = false;
+                newUser.Error = false;
                 return View(newUser);
             }
             catch (Exception e)
@@ -239,16 +240,19 @@ namespace ArcFlashCalculator.Controllers
                 if (ModelState.IsValid)
                 {
                     //TODO: Check the cookie
-                    Users nameCheck = ViewModels.GetUser(newUser.user.Email);
+                    Users nameCheck = ViewModels.GetUser(newUser.Email);
                     if (nameCheck == null)
                     {
-                        newUser.user.Password = Encrypter.ComputeHash(newUser.user.Password, null);
-                        ViewModels.CreateUser(newUser.user);
+                        newUser.Password = Encrypter.ComputeHash(newUser.Password, null);
+                        Users myUser = new Users();
+                        myUser.Email = newUser.Email;
+                        myUser.Password = newUser.Password;
+                        ViewModels.CreateUser(myUser);
                     }
                     else
                     {
                         //The name was already assigned
-                        newUser.error = true;
+                        newUser.Error = true;
                         return View(newUser);
                     }
                 }
