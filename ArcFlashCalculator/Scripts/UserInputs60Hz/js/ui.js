@@ -320,10 +320,11 @@ var UI = {
             arcingCurrentFree = kFreeSpace + (.662 * Math.log($("#short-circuit-current-input").val())) + 0.0966 * volts + 0.000526 * conductorGap + 0.5588 * volts * Math.log($("#short-circuit-current-input").val()) - 0.00304 * conductorGap * Math.log($("#short-circuit-current-input").val());
             arcingCurrentFree = Math.log(arcingCurrentFree); 
            
-            incidentEnergy = k1OpenAir + k2 + 1.081 * arcingCurrentFree + 0.001 * conductorGap;
-            incidentEnergy = Math.log(incidentEnergy);
+            incidentEnergy = k1OpenAir + k2 + 1.081 * Math.log(arcingCurrentFree) + 0.0011  * conductorGap;
+            //incidentEnergy = Math.log(incidentEnergy);
 
-            incidentEnergy = Math.pow(10, incidentEnergy);
+            incidentEnergy = Math.pow(10, Math.log(incidentEnergy));
+
 
             freeSpaceCal = 4.184 * calculationFactor * incidentEnergy * ($("#fault-clearing-time-input").val() / 0.2) * (Math.pow(610, distExponent) / Math.pow(458, distExponent));
 
