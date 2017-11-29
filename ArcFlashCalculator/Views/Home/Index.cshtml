@@ -7,7 +7,7 @@
 <div class="jumbotron">
     <h1>Arc Flash Calculator</h1>
     <h3>Instructions</h3>
-    <p class="lead">To use this application select one of the beorilow energy sources. Upon selection you will enter information about the electrical system.</p>
+    <p class="lead">To use this application select one of the below energy sources. Upon selection you will enter information about the electrical system.</p>
     <ul class="nav">
         <li class="btn btn-default"> @Html.ActionLink("60Hz Power", "Index", "UserInputs60Hz", null, null) </li>
         <li class="btn btn-default"> @Html.ActionLink("DC", "Index", "UserInputsDCs", null, null) </li>
@@ -30,6 +30,7 @@
     <h3>About the Arc Flash Calculator</h3>
     <p>This application was modeled after E-Safe Pro which was created by the US Army Research Laboratory and DoD's Defense Safety Oversight Council Electrical Safety Working Group.</p>
     <p>This version of the application was developed by students at Weber State University</p>
+    <p>This version of the application utilizes the calculation methods and tables in NFPA 70e 2018, based on a PF (power factor) of .85.</p>
     <p>This application is intended to be utilized by <strong>TRAINED</strong> and <strong>QUALIFIED</strong> personnel who must design, repair, troubleshoot or install potentially hazardous electrical equipment in the performance of their duties. It is not intended as a stand-alone electrical safety guide, rather as a single part in a larger overall safety analysis. Additional training may be required as deemed adequate by supervisory staff.</p>
     <p>As determined by your Command's Electrical Safety Office, training may include:</p>
      
@@ -83,7 +84,7 @@
     <script type="text/javascript">
         var dialog = bootbox.dialog({
             title: 'Please Read',
-            message: "Personal Protective Equipment (PPE) presented in this app is based on the task tables from NFPA-70E 2012, NEC and IEEE Refereed Articles. For Tri-Services (US Army Corps of Engineers, Navy-Marines & Air Force) facilities electrical (VAC) work, consult your AHJ to determine if the principal reference for shock and arc flash boundary analysis is the UFC 3-560-01 dated May 2012.",
+            message: "Personal Protective Equipment (PPE) presented in this app is based on the task tables from NFPA-70E 2018, NEC and IEEE Refereed Articles. For Tri-Services (US Army Corps of Engineers, Navy-Marines & Air Force) facilities electrical (VAC) work, consult your AHJ to determine if the principal reference for shock and arc flash boundary analysis is the UFC 3-560-01 dated July 2017.",
             buttons: {
                 confirm: {
                     label: "Accept",

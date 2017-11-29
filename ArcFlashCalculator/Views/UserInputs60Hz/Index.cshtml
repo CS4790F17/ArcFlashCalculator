@@ -36,15 +36,6 @@
                     <input class="form-control" id="voltage-input" type="number" />
                 </div>
 
-                <div class="alert-danger hidden" id="trans-range-warning" role="alert">
-                    Transformer Size (kVA) values must be a number between 0.5 - 20,000
-                </div>
-
-                <div class="form-group" id="transformer-size-field">
-                    <label>Transformer Size (kVA):</label>
-                    <input class="form-control" id="transformer-size-input" type="number" />
-                </div>
-
                 <div class="alert-danger hidden" id="impedance-range-warning" role="alert">
                     Transformer Impedance values must be a number between 1 - 20
                 </div>
@@ -54,23 +45,21 @@
                     <input class="form-control" id="transformer-impedance-input" type="number" />
                 </div>
 
-                <div class="form-group" id="equipment-type-field">
-                    <label>Equipment Type:</label>
-                    <select class="form-control" id="equipment-type-input">
-                        <option value="">Select a type</option>
-                        <!-- <option value="panelboards-240">Panelboards or Other Equipment Rated 240V and Below</option> -->
-                        <option value="panelboards-240-600">Panelboards or Other Equipment Rated > 240V and up to 600V</option>
-                        <option value="mcc-65">600 V Class Motor Control Centers (max of 65kA short circuit current available, maximum 0.03 seconds fault clearing time)</option>
-                        <option value="mcc-42">600 V Class Motor Control Centers (max of 42kA short circuit current available, maximum 0.33 seconds fault clearing time)</option>
-                        <option value="switchgear">600 V Class Switchgear (with power circuit breakers or fused switches) and 600 V Class Switchboards</option>
-                        <option value="other">Other 600 V Class (277 V through 600 V, nominal) Equipment</option>
-                    </select>
-                </div>
-
                 @*<div class="form-check">
                     <label class="form-check-label">Line Impedance:<input type="checkbox" class="form-check-input">
                     </label>
                 </div>*@
+
+
+                <div class="alert-danger hidden" id="trans-range-warning" role="alert">
+                    Transformer Size (kVA) values must be a number between 0.5 - 20,000
+                </div>
+
+                <div class="form-group" id="transformer-size-field">
+                    <label>Transformer Size (kVA):</label>
+                    <input class="form-control" id="transformer-size-input" type="number" />
+                </div>
+
 
                 <div id="toggle-impedance">
                     <a id="toggle-text" href="#">Calculate Short Circuit Current Manually?</a>
@@ -148,10 +137,10 @@
                         </select>
                     </div>
                     @*Test purposes only*@
-                    @*<div class="form-group" id="scc-output">
+                    <div class="form-group" id="scc-output">
                         <label>SCC Output</label>
                         <input class="form-control" id="scc-result" type="number" />
-                    </div>*@
+                    </div>
 
                     <div class="form-group">
                         <button class="btn btn-primary" type="button" id="calculate-SCC">Calculate SCC</button>
@@ -166,6 +155,19 @@
                 <div class="form-group" id="fault-clearning-time-field">
                     <label>Fault Clearing Time (seconds) <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Refer to upstream Circuit Breaker specifications."></span>:</label>
                     <input class="form-control" id="fault-clearing-time-input" type="number" />
+                </div>
+
+                <div class="form-group" id="equipment-type-field">
+                    <label>Equipment Type:</label>
+                    <select class="form-control" id="equipment-type-input">
+                        <option value="">Select a type</option>
+                        <!-- <option value="panelboards-240">Panelboards or Other Equipment Rated 240V and Below</option> -->
+                        <option value="panelboards-240-600">Panelboards or Other Equipment Rated > 240V and up to 600V</option>
+                        <option value="mcc-65">600 V Class Motor Control Centers (max of 65kA short circuit current available, maximum 0.03 seconds fault clearing time)</option>
+                        <option value="mcc-42">600 V Class Motor Control Centers (max of 42kA short circuit current available, maximum 0.33 seconds fault clearing time)</option>
+                        <option value="switchgear">600 V Class Switchgear (with power circuit breakers or fused switches) and 600 V Class Switchboards</option>
+                        <option value="other">Other 600 V Class (277 V through 600 V, nominal) Equipment</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
@@ -257,6 +259,73 @@
                             <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Distance from an exposed conductor within which a shock hazard exists. Training or escort required."></span>
                         </h6>
                     </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h3 href="#arcflashboundaries" data-toggle="collapse">
+                    Arc Flash Boundaries (Applicable at >100V and >500A)
+                    <span style="color:black" class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="From:
+                     Arc Flash Calculations for Exposures to DC Systems - Daniel R. Doan, Senior Member, IEEE - IEEE TRANSACTIONS ON INDUSTRY APPLICATIONS, VOL. 46, NO. 6, NOVEMBER/DECEMBER 2010
+                     60Hz Arc Flash Calculations – Arc-InOpen-Air &amp; Arc-In-A-Box Using a Simplified Approach, Fontaine &amp; Walsh Electrical Safety Workshop (ESW), 2012 IEEE IAS, Date: Jan. 31 2012-Feb. 3 2012"></span>
+                </h3>
+                <div id="arcflashboundaries" class="collapse in">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="important">The calculated Arc Flash boundary does not account for hearing or lung damage or potential flying debris which may be present during a failure mode event.</p>
+                            <p><em>Free space</em> is defined as omni-directional energy radiation. An example of an <em>enclosed box</em> is a rack system with the front panel removed.</p>
+                        </div>
+                    </div>
+                    <div class="row results">
+                        <div class="col-md-6">
+                            <div id="arc-flash-free-space-incident-energy" class="display"></div>
+                            <h6>
+                                Free Space Incident Energy at 18"
+                                <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Free space incident energy at a standard working distance of 18&quot;.
+                                    Assumes worst case of all energy being converted into radiant heat.
+                                    Calculated from:
+                                    Incident Energy = 0.005 * Volts * Current * Time / 46 2 (46cm = 18&quot;)
+                                    Any questions should be referred to an electrical safety expert."></span>
+                            </h6>
+                        </div>
+                        <div class="col-md-6">
+                            <div id="arc-flash-display-free-space" class="display"></div>
+                            <h6>
+                                Free Space Arc Flash Boundary for 1.2 cal/cm<sup>2</sup>
+                                <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Free space threshold distance for 2nd degree burn where the worker is exposed to 1.2 cal/cm^2 (5 J/cm^2)
+                                    utilizing a multiplying factor of 3 * Free Space. Assumes absolute worst case of all energy being converted into radiant heat.
+                                    Calculated from:
+                                    Distance (cm) = sqrt((0.005 / 1.2) * Volts * Current * Time)
+                                    PPE is not required when working at or greater than this distance."></span>
+                            </h6>
+                        </div>
+                    </div>
+                    <div class="row results">
+                        <div class="col-md-6">
+                            <div id="arc-flash-incident-energy" class="display"></div>
+                            <h6>
+                                Enclosed Box Incident Energy at 18"
+                                <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Enclosed Box incident energy at a standard working distance of 18&quot;.
+                                    Assumes worst case of all energy being converted into radiant heat.
+                                    Calculated from:
+                                    Incident Energy = 3 * 0.005 * Volts * Current * Time / 46^2 (46cm = 18&quot;)
+                                    A safety factor of 3 * Incident Energy is utilized to account for box energy focusing effects.
+                                    Any questions should be referred to an electrical safety expert."></span>
+                            </h6>
+                        </div>
+                        <div class="col-md-6">
+                            <div id="arc-flash-display-enclosed-space" class="display"></div>
+                            <h6>
+                                Enclosed Box Arc Flash Boundary for 1.2 cal/cm<sup>2</sup>
+                                <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Enclosed Box threshold distance for 2nd degree burn where the worker is exposed to 1.2 cal/cm^2 (5 J/cm^2)
+                                    utilizing a multiplying factor of 3 * Free Space. Assumes absolute worst case of all energy being converted into radiant heat.
+                                    Calculated from: Distance (cm) = sqrt((0.005 / 1.2) * 3 * Volts * Current * Time)
+                                    PPE is not required when working at or greater than this distance."></span>
+
+                            </h6>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
