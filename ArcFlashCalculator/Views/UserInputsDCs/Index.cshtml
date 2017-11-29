@@ -393,4 +393,25 @@
     <script src="~/Scripts/UserInputsDC/js/safetyreqs.js"></script>
     <script src="~/Scripts/UserInputsDC/js/ui.js"></script>
 
+    @section Scripts
+    {
+        <script type="text/javascript">
+            var dialog = bootbox.dialog({
+                title: 'Please Read',
+                message: "This tool is intended to be used ONLY on utilization equipment and never on facility distribution systems (i.e. inside of a breaker box, inside of high voltage switchgear, etc.)! Please see a licensed electrician or your AHJ for all facility related electrical work.",
+                buttons: {
+                    confirm: {
+                        label: "Accept",
+                        className: 'btn-success',
+                        callback: function () {
+                            console.log('accept clicked');
+                        }
+                    }
+                },
+                closeButton: false,
+                onEscape: false
+            });
+        </script>
+    }
+
 

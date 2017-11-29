@@ -313,6 +313,8 @@ $(function () {
             $("#manualShortCircuitCurrent").show();
             $("#short-circuit-current-field").hide();
 
+            //$("#toggle-text").text("Hello world!");
+
         } else {
             manualImpedance = true;
             $("#short-circuit-current-field").show();
