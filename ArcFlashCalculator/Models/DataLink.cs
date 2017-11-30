@@ -214,7 +214,7 @@ namespace ArcFlashCalculator.Models
                 {
                     if (db.Database.Exists())
                     {
-                        Users ui = db.users.Where(u => u.Email == email).First();
+                        Users ui = db.users.First(e => e.Email == email);
                         return ui;
                     }
                     else
@@ -228,6 +228,25 @@ namespace ArcFlashCalculator.Models
             {
                 LogError(e);
                 throw;
+            }
+        }
+
+        public static bool CheckForUser(string email)
+        {
+            try
+            {
+                using (ArcCalculatorDbContext db = new ArcCalculatorDbContext())
+                {
+                    if (db.Database.Exists())
+                    {
+                        Users ui = db.users.First(e => e.Email == email);
+                    }
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
             }
         }
 

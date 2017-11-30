@@ -54,7 +54,7 @@ namespace ArcFlashCalculator.Controllers
             {
                 User user = new User();
                 user.Error = false;
-            
+
                 return View(user);
             }
             catch (Exception e)
@@ -68,7 +68,7 @@ namespace ArcFlashCalculator.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public ActionResult Login (User user)
+        public ActionResult Login(User user)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace ArcFlashCalculator.Controllers
                     if (Encrypter.VerifyHash(user.Password, u.Password))
                     {
                         //TODO: Figure out how to set the validation for a user
-                        RedirectToAction("Create");
+                        return RedirectToAction("ReportHome");
                     }
                     else
                     {
@@ -241,8 +241,7 @@ namespace ArcFlashCalculator.Controllers
                 if (ModelState.IsValid)
                 {
                     //TODO: Check the cookie
-                    Users nameCheck = ViewModels.GetUser(newUser.Email);
-                    if (nameCheck == null)
+                    if (!ViewModels.CheckForUser(newUser.Email))
                     {
                         newUser.Password = Encrypter.ComputeHash(newUser.Password, null);
                         Users myUser = new Users();
@@ -257,7 +256,7 @@ namespace ArcFlashCalculator.Controllers
                         return View(newUser);
                     }
                 }
-                return View();
+                return RedirectToAction("Delete");
             }
             catch (Exception e)
             {
