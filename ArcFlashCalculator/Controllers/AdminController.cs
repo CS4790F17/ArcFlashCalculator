@@ -6,9 +6,9 @@ using System.Web;
 using System.Web.Mvc;
 using ArcFlashCalculator.Security;
 
+
 namespace ArcFlashCalculator.Controllers
 {
-    [Authorize]
     public class AdminController : Controller
     {
         //GET: Admin/Delete
@@ -55,6 +55,7 @@ namespace ArcFlashCalculator.Controllers
                 if (Encrypter.VerifyHash(user.user.Password, u.Password))
                 {
                     //TODO: Figure out how to set the validation for a user
+                    
                     RedirectToAction("Create");                   
                 } else
                 {
