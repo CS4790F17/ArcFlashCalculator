@@ -51,10 +51,9 @@
                 <a class="navbar-brand" href="#">WebSiteName</a>
             </div>*@
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">My Profile</a></li>
-                <li><a href="#">Reports</a></li>
-                <li><a href="#">Account Management</a></li>
-                <li><a href="#">Page 3</a></li>
+                <li>@Html.ActionLink("Change Password", "ChangePassword", "Admin", null, null)</li>
+                <li>@Html.ActionLink("Reports", "ReportHome", "Admin", null, null)</li>
+                <li>@Html.ActionLink("Account Management", "Delete", "Admin", null, null)</li>
             </ul>
         </div>
     </nav>

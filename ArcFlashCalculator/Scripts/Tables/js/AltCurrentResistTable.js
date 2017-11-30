@@ -28,7 +28,7 @@
         },
         aluminum: {
             PVCConduit: 1.8,
-            aluminumConduit: 1,8,
+            aluminumConduit: 1.8,
             steelConduit: 1.8
         }
     },
@@ -248,4 +248,6 @@
             steelConduit: 0.046
         }
     }
+
+    
 }

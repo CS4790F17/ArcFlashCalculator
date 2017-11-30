@@ -1,4 +1,5 @@
-﻿
+﻿@using MVCGrid.Web
+@using ArcFlashCalculator.Models
 @{
     ViewBag.Title = "DC Input History";
     Layout = "~/Views/Shared/_AdminNavbarPartial.cshtml";
@@ -10,7 +11,7 @@
 <div class="panel panel-default">
     <div class="panel-body">
 
-        @Html.Partial("_MVCGridToolbar", new ArcFlashCalculator.Models.MVCGridToolbarModel()
+        @Html.Partial("_MVCGridToolbar", new MVCGridToolbarModel()
     {
         MVCGridName = "UserInputsDC",
         PageSize = true,
@@ -18,6 +19,16 @@
         Export = true,
         GlobalSearch = true
     })
-         @*@Html.MVCGrid("UserInputsDC")*@
+         @Html.MVCGrid("UserInputsDC")
     </div>
 </div>
+
+<script type="text/javascript">
+    $(function () {
+        $('#selPageSize').change(function () {
+            MVCGrid.setPageSize('UserInputsDC', $('#selPageSize').val());
+        });
+        // set value of dropdown to grid setting
+        $('#selPageSize').val(MVCGrid.getPageSize('UserInputsDC'));
+    });
+</script>

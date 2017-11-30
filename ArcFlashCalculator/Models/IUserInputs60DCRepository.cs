@@ -14,10 +14,10 @@ namespace ArcFlashCalculator.Models
 
         public IEnumerable<UserInputsDC> GetData(out int totalRecords, string globalSearch, int? limitOffset, int? limitRowCount, string orderBy, bool desc)
         {
-            using (var db = new ArcCalculatorDbContext())
-            {
-                var query = db.userInputsDC.AsQueryable();
-
+           
+            
+                var query = DataLink.GetAllUserInputsDC().AsQueryable();
+                
                 if (!String.IsNullOrWhiteSpace(globalSearch))
                 {
                     query = query.Where(p => (p.PotMaxExp.ToString() + " " + p.AvailSCC.ToString() + " " + p.Duration.ToString() + " "
@@ -70,7 +70,7 @@ namespace ArcFlashCalculator.Models
                 }
 
                 return query.ToList();
-            }
+            
         }
 
         public IEnumerable<UserInputsDC> GetData(out int totalRecords, int? limitOffset, int? limitRowCount, string orderBy, bool desc)

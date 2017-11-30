@@ -3,6 +3,24 @@
     string gridName = Model.MVCGridName;
 }
 
+@section Scripts{
+    <script type="text/javascript">
+        $(function () {
+
+            $('#selPageSize').change(function () {
+                MVCGrid.setPageSize('PageSizeGrid', $('#selPageSize').val());
+            });
+
+            // set value of dropdown to grid setting
+            $('#selPageSize').val(MVCGrid.getPageSize('PageSizeGrid'));
+
+        });
+    </script>
+}
+
+
+
+
 <div class="row">
     <div class="col-md-3">
         <div class="form-inline">
@@ -10,7 +28,7 @@
             {
                 <div class="form-group">
                     <label>
-                        Page Size: <select class="form-control" data-mvcgrid-type="pageSize" data-mvcgrid-name="@(gridName)">
+                        Page Size: <select id ="selPageSize" name="selectPageSize"class="form-control" data-mvcgrid-type="pageSize" data-mvcgrid-name="@(gridName)">
                             <option value="10">10</option>
                             <option value="25">25</option>
                             <option value="50">50</option>
@@ -55,3 +73,5 @@
         </div>
     </div>
 </div>
+
+

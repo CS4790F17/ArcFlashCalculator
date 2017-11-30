@@ -1,17 +1,5 @@
 ﻿@model ArcFlashCalculator.Models.PowerDC
 
-<!DOCTYPE html>
-<html manifest="../application.manifest">
-<head>
-    <meta charset="utf-8">
-    <title>E-Safe Pro - DC</title>
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <!-- Le styles -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
     <style>
         body {
@@ -21,10 +9,6 @@
     </style>
     <!--<link href="../bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">-->
     <link href="~/Content/css/main.css" rel="stylesheet" />
-
-</head>
-
-<body>
 
     <nav id="navBtm" class="navbar navbar-default navbar-fixed-bottom hidden">
         <div class="container-fluid">
@@ -44,9 +28,17 @@
                         will automatically display as data is entered.
                     </p>
 
+                    <div class="alert-danger hidden" id="PotMaxExp-range-warning" role="alert">
+                        Potential Maximum Exposure values must be a number between 0 and 999
+                    </div>
+
                     <div class="form-group">
                         <label>Potential Maximum Exposed DC (VDC):</label>
                         <input class="form-control" id="maximum-exposed-input" type="number" />
+                    </div>
+
+                    <div class="alert-danger hidden" id="scc-range-warning" role="alert">
+                        Available Short Circuit Current values must be a number between 1 and 500,000
                     </div>
 
                     <div class="form-group">
@@ -54,6 +46,10 @@
                             Available (Bolted Fault) Short Circuit Current (Amps) <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Some power supplies are power limited therefore the maximum current available may be different for a specific voltage setting.."></span>:
                         </label>
                         <input class="form-control" id="available-current-input" type="number" />
+                    </div>
+
+                    <div class="alert-danger hidden" id="duration-warning" role="alert">
+                        Duration of Exposure values must be a number between 0.003 and 2
                     </div>
 
                     <div class="form-group">
@@ -352,7 +348,7 @@
                 <div class="section">
                     <h3 href="#classes" data-toggle="collapse">Classes</h3>
                     <div id="classes"class="row results collapse in">
-                        <div class="col-md-6"><img src="~/Content/images/dc-classes.png" /></div>
+                        <div class="col-md-6"><img style="width: 100%;"src="~/Content/images/dc-classes.png" /></div>
                     </div>
                 </div>
             </div>
@@ -396,5 +392,5 @@
     <script src="~/Scripts/UserInputsDC/js/boundaries.js"></script>
     <script src="~/Scripts/UserInputsDC/js/safetyreqs.js"></script>
     <script src="~/Scripts/UserInputsDC/js/ui.js"></script>
-</body>
-</html>
+
+

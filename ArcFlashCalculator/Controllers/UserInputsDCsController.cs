@@ -14,12 +14,19 @@ namespace ArcFlashCalculator.Controllers
     {
         private ArcCalculatorDbContext db = new ArcCalculatorDbContext();
 
-        // ------------------------------- These are the important actionresults//
         // GET: UserInputsDC/CalcDC
         public ActionResult Index()
         {
-            Models.PowerDC PowerDC = new Models.PowerDC();
-            return View(PowerDC);
+            try
+            {
+                Models.PowerDC PowerDC = new Models.PowerDC();
+                return View(PowerDC);
+            }
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
         }
 
         // POST: UserInputs60Hz/Calc60Hz
@@ -27,33 +34,57 @@ namespace ArcFlashCalculator.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(PowerDC powerDC)
         {
-            if (ModelState.IsValid)
+            try
             {
-                ViewModels.CreateUserInputsDC(powerDC.Inputs);
+                if (ModelState.IsValid)
+                {
+                    ViewModels.CreateUserInputsDC(powerDC.Inputs);
+                }
+                return View();
             }
-            return View();
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
         }
         // ------------------------------- These are the important actionresults//
 
         // GET: UserInputsDCs/Details/5
         public ActionResult Details(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                UserInputsDC userInputsDC = db.userInputsDC.Find(id);
+                if (userInputsDC == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(userInputsDC);
             }
-            UserInputsDC userInputsDC = db.userInputsDC.Find(id);
-            if (userInputsDC == null)
+            catch (Exception e)
             {
-                return HttpNotFound();
+                DataLink.LogError(e);
+                throw;
             }
-            return View(userInputsDC);
         }
 
         // GET: UserInputsDCs/Create
         public ActionResult Create()
         {
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
         }
 
         // POST: UserInputsDCs/Create
@@ -63,30 +94,46 @@ namespace ArcFlashCalculator.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,PotMaxExp,AvailSCC,Duration,IPAddress")] UserInputsDC userInputsDC)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.userInputsDC.Add(userInputsDC);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    db.userInputsDC.Add(userInputsDC);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
-            return View(userInputsDC);
+                return View(userInputsDC);
+            }
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
         }
 
         // GET RID OF THIS METHOD AND IT'S VIEW ///
         // GET: UserInputsDCs/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                UserInputsDC userInputsDC = db.userInputsDC.Find(id);
+                if (userInputsDC == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(userInputsDC);
             }
-            UserInputsDC userInputsDC = db.userInputsDC.Find(id);
-            if (userInputsDC == null)
+            catch (Exception e)
             {
-                return HttpNotFound();
+                DataLink.LogError(e);
+                throw;
             }
-            return View(userInputsDC);
         }
 
 
@@ -98,28 +145,44 @@ namespace ArcFlashCalculator.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,PotMaxExp,AvailSCC,Duration,IPAddress")] UserInputsDC userInputsDC)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(userInputsDC).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(userInputsDC).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View(userInputsDC);
             }
-            return View(userInputsDC);
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
         }
 
         // GET: UserInputsDCs/Delete/5
         public ActionResult Delete(int? id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                UserInputsDC userInputsDC = db.userInputsDC.Find(id);
+                if (userInputsDC == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(userInputsDC);
             }
-            UserInputsDC userInputsDC = db.userInputsDC.Find(id);
-            if (userInputsDC == null)
+            catch (Exception e)
             {
-                return HttpNotFound();
+                DataLink.LogError(e);
+                throw;
             }
-            return View(userInputsDC);
         }
 
         // POST: UserInputsDCs/Delete/5
@@ -127,19 +190,35 @@ namespace ArcFlashCalculator.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            UserInputsDC userInputsDC = db.userInputsDC.Find(id);
-            db.userInputsDC.Remove(userInputsDC);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            try
+            {
+                UserInputsDC userInputsDC = db.userInputsDC.Find(id);
+                db.userInputsDC.Remove(userInputsDC);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)
+            try
             {
-                db.Dispose();
+                if (disposing)
+                {
+                    db.Dispose();
+                }
+                base.Dispose(disposing);
             }
-            base.Dispose(disposing);
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
         }
     }
 }

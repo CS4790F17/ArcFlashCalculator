@@ -9,11 +9,24 @@ namespace ArcFlashCalculator.Controllers
 {
     public class SubRFController : Controller
     {
+        //public ActionResult index()
+        //{
+        //    return View();
+        //}
+
         // GET: SubRF/CalcSubRF
         public ActionResult Index()
         {
-            SubRF powerSubRF = new SubRF();
-            return View(powerSubRF);
+            try
+            {
+                SubRF powerSubRF = new SubRF();
+                return View(powerSubRF);
+            }
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
         }
 
         // POST: SubRF/CalcSubRF
@@ -21,11 +34,19 @@ namespace ArcFlashCalculator.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(SubRF subRF)
         {
-            if (ModelState.IsValid)
+            try
             {
-                //Do stuff here
+                if (ModelState.IsValid)
+                {
+                    //Do stuff here
+                }
+                return View();
             }
-            return View();
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
         }
     }
 }

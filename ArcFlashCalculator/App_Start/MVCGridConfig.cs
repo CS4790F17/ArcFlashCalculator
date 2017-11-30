@@ -2,16 +2,11 @@
 
 namespace ArcFlashCalculator
 {
-    using System;
-    using System.Web;
-    using System.Web.Mvc;
-    using System.Linq;
-    using System.Collections.Generic;
 
     using MVCGrid.Models;
     using MVCGrid.Web;
+    using System.Web.Mvc;
     using Models;
-
     public static class MVCGridConfig
     {
         public static void RegisterGrids()
@@ -34,11 +29,10 @@ namespace ArcFlashCalculator
 
             // Grid Definitions
 
-            MVCGridDefinitionTable.Add("UserInputs60HzReport", new MVCGridBuilder<UserInputs60Hz>(colDefaults)
+            MVCGridDefinitionTable.Add("UserInputs60Hz", new MVCGridBuilder<UserInputs60Hz>(colDefaults)
                 .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .WithSorting(sorting: true, defaultSortColumn: "Id", defaultSortDirection: SortDirection.Dsc)
                 .WithPaging(paging: true, itemsPerPage: 10, allowChangePageSize: true, maxItemsPerPage: 100)
-                .WithQueryStringPrefix("grid1")
                 .WithAdditionalQueryOptionNames("search")
                 .AddColumns(cols =>
                 {
@@ -76,7 +70,7 @@ namespace ArcFlashCalculator
                     int totalRecords;
                     string globalSearch = options.GetAdditionalQueryOptionString("search");
                     string sortColumn = options.GetSortColumnData<string>();
-                    var repo = new UserInputs60HzRepository();
+                    var repo = DependencyResolver.Current.GetService<UserInputs60HzRepository>();
                     var items = repo.GetData(out totalRecords, globalSearch, options.GetLimitOffset(), options.GetLimitRowcount(),
                         sortColumn, options.SortDirection == SortDirection.Dsc);
                     return new QueryResult<UserInputs60Hz>()
@@ -90,7 +84,7 @@ namespace ArcFlashCalculator
             MVCGridDefinitionTable.Add("UserInputsDC", new MVCGridBuilder<UserInputsDC>(colDefaults)
                 .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .WithSorting(sorting: true, defaultSortColumn: "Id", defaultSortDirection: SortDirection.Dsc)
-                .WithPaging(paging: true, itemsPerPage: 10, allowChangePageSize: true, maxItemsPerPage: 100)
+            //    .WithPaging(paging: true, itemsPerPage: 10, allowChangePageSize: true, maxItemsPerPage: 100)
                 .WithQueryStringPrefix("grid2")
                 .WithAdditionalQueryOptionNames("search")
                 .AddColumns(cols =>
@@ -120,7 +114,7 @@ namespace ArcFlashCalculator
                     int totalRecords;
                     string globalSearch = options.GetAdditionalQueryOptionString("search");
                     string sortColumn = options.GetSortColumnData<string>();
-                    var repo = DependencyResolver.Current.GetService<IUserInputsDCRepository>();
+                    var repo = DependencyResolver.Current.GetService<UserInputsDCRepository>();
                     var items = repo.GetData(out totalRecords, globalSearch, options.GetLimitOffset(), options.GetLimitRowcount(),
                         sortColumn, options.SortDirection == SortDirection.Dsc);
                     return new QueryResult<UserInputsDC>()
@@ -131,35 +125,36 @@ namespace ArcFlashCalculator
                 })
             );
 
-//            MVCGridDefinitionTable.Add("UserIPs", new MVCGridBuilder<UserIPs>(colDefaults)
-//                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
-//                .WithSorting(sorting: true, defaultSortColumn: "Id", defaultSortDirection: SortDirection.Dsc)
-//                .WithPaging(paging: true, itemsPerPage: 10, allowChangePageSize: true, maxItemsPerPage: 100)
-//                .WithAdditionalQueryOptionNames("search")
-//                .AddColumns(cols =>
-//                {
-//                    cols.Add("IPAddress").WithHeaderText("IP Address")
-//                        .WithVisibility(true, true)
-//                        .WithValueExpression(p => p.IPAddress.ToString());
-//                    cols.Add("DateAdded").WithHeaderText("Date Added")
-//                        .WithVisibility(visible: true, allowChangeVisibility: true)
-//                        .WithValueExpression(p => p.DateAdded.HasValue ? p.DateAdded.Value.ToShortDateString() : "");
-//                })
-//               .WithRetrieveDataMethod((context) =>
-//                {
-//                    var options = context.QueryOptions;
-//                    int totalRecords;
-//                    string globalSearch = options.GetAdditionalQueryOptionString("search");
-//                    string sortColumn = options.GetSortColumnData<string>();
-//                    var items = repo.GetData(out totalRecords, globalSearch, options.GetLimitOffset(), options.GetLimitRowcount(),
-//                        sortColumn, options.SortDirection == SortDirection.Dsc);
-//                    return new QueryResult<UserIPs>()
-//                    {
-//                        Items = items,
-//                        TotalRecords = totalRecords
-//                    }
-//                }) 
-//);
+            MVCGridDefinitionTable.Add("UserIP", new MVCGridBuilder<UserIP>(colDefaults)
+                .WithAuthorizationType(AuthorizationType.AllowAnonymous)
+                .WithSorting(sorting: true, defaultSortColumn: "Id", defaultSortDirection: SortDirection.Dsc)
+         //       .WithPaging(paging: true, itemsPerPage: 10, allowChangePageSize: true, maxItemsPerPage: 100)
+                .WithAdditionalQueryOptionNames("search")
+                .AddColumns(cols =>
+                {
+                    cols.Add("IPAddress").WithHeaderText("IP Address")
+                        .WithVisibility(true, true)
+                        .WithValueExpression(p => p.IPAddress.ToString());
+                    cols.Add("DateAdded").WithHeaderText("Date Added")
+                        .WithVisibility(visible: true, allowChangeVisibility: true)
+                        .WithValueExpression(p => p.DateAdded.HasValue ? p.DateAdded.Value.ToShortDateString() : "");
+                })
+               .WithRetrieveDataMethod((context) =>
+                {
+                    var options = context.QueryOptions;
+                    int totalRecords;
+                    string globalSearch = options.GetAdditionalQueryOptionString("search");
+                    string sortColumn = options.GetSortColumnData<string>();
+                    var repo = DependencyResolver.Current.GetService<UserIPRepository>();
+                    var items = repo.GetData(out totalRecords, globalSearch, options.GetLimitOffset(), options.GetLimitRowcount(),
+                        sortColumn, options.SortDirection == SortDirection.Dsc);
+                    return new QueryResult<UserIP>()
+                    {
+                        Items = items,
+                        TotalRecords = totalRecords
+                    };
+                })
+);
 
         }
     }

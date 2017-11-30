@@ -9,12 +9,18 @@ namespace ArcFlashCalculator.Controllers
 {
     public class BatteryController : Controller
     {
-
         // GET: Battery/CalcBat
         public ActionResult Index()
         {
-            Battery battery = new Battery();
-            return View(battery);
+            try {
+                Battery battery = new Battery();
+                return View(battery);
+            }
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
         }
 
         // POST: Battery/CalcBat
@@ -22,11 +28,19 @@ namespace ArcFlashCalculator.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(Battery battery)
         {
-            if (ModelState.IsValid)
+            try
             {
-                //Do stuff here
+                if (ModelState.IsValid)
+                {
+                    //Do stuff here
+                }
+                return View();
             }
-            return View();
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
         }
     }
 }
