@@ -52,10 +52,8 @@ namespace ArcFlashCalculator.Controllers
         {
             try
             {
-                User user = new User();
-                user.Error = false;
-
-                return View(user);
+                Login login = new Login();
+                return View(login);
             }
             catch (Exception e)
             {
@@ -68,7 +66,7 @@ namespace ArcFlashCalculator.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public ActionResult Login(User user)
+        public ActionResult Login(Login login)
         {
             try
             {
@@ -76,10 +74,10 @@ namespace ArcFlashCalculator.Controllers
                 if (ModelState.IsValid)
                 {
                     //Get the information for the user they are trying to login as
-                    Users u = ViewModels.GetUser(user.Email);
+                    Users u = ViewModels.GetUser(login.user.Email);
 
                     //Check to the entered password against the saved password
-                    if (Encrypter.VerifyHash(user.Password, u.Password))
+                    if (Encrypter.VerifyHash(login.user.Password, u.Password))
                     {
                         //TODO: Figure out how to set the validation for a user
                         return RedirectToAction("ReportHome");
@@ -87,8 +85,8 @@ namespace ArcFlashCalculator.Controllers
                     else
                     {
                         //It failed so return the view with the user input
-                        user.Error = true;
-                        return View(user);
+                        login.Error = true;
+                        return View(login);
                     }
                 }
                 return View();
@@ -101,13 +99,11 @@ namespace ArcFlashCalculator.Controllers
         }
 
         //GET: Admin/Password
-        public ActionResult Password()
+        public ActionResult ChangePassword()
         {
             try
             {
                 ChangePassword cp = new ChangePassword();
-                cp.UserOrPasswordError = false;
-                cp.confirmError = false;
                 return View(cp);
             }
             catch (Exception e)
@@ -120,35 +116,45 @@ namespace ArcFlashCalculator.Controllers
         //POST: Admin/Password
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Password(ChangePassword changedPassword)
+        public ActionResult ChangePassword(ChangePassword changedPassword)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    //Check that the new and confirmed password match
-                    if (changedPassword.newPassword.Equals(changedPassword.confirmPassword))
+                    //Check that the password is complex enough
+                    if (CheckComplexity(changedPassword.newPassword))
                     {
-                        //Email is our email
-                        Users user = ViewModels.GetUser(changedPassword.email);
-
-                        //Check that the oldpassword matches our password
-                        if (Encrypter.VerifyHash(changedPassword.oldPassword, user.Email))
+                        //Check that the new and confirmed password match
+                        if (changedPassword.newPassword.Equals(changedPassword.confirmPassword))
                         {
-                            user.Password = Encrypter.ComputeHash(changedPassword.newPassword, null);
-                            RedirectToAction("Create");
+                            //Email is our email
+                            Users user = ViewModels.GetUser(changedPassword.user.Email);
+
+                            //Check that the oldpassword matches our password
+                            if (Encrypter.VerifyHash(changedPassword.user.Password, user.Password))
+                            {
+                                user.Password = Encrypter.ComputeHash(changedPassword.newPassword, null);
+
+                                ViewModels.UpdateUser(user, System.Data.Entity.EntityState.Modified);
+                                return RedirectToAction("ReportHome");
+                            }
+                            else
+                            {
+                                changedPassword.UserOrPasswordError = true;
+                                return View(changedPassword);
+                            }
                         }
                         else
                         {
-                            changedPassword.UserOrPasswordError = true;
+                            changedPassword.confirmError = true;
                             return View(changedPassword);
                         }
-                    }
-                    else
+                    } else
                     {
-                        changedPassword.confirmError = true;
+                        changedPassword.PasswordComplexityError = true;
                         return View(changedPassword);
-                    }
+                    }                
                 }
                 return View();
             }
@@ -220,8 +226,7 @@ namespace ArcFlashCalculator.Controllers
         {
             try
             {
-                User newUser = new User();
-                newUser.Error = false;
+                CreateNewUser newUser = new CreateNewUser();
                 return View(newUser);
             }
             catch (Exception e)
@@ -234,42 +239,35 @@ namespace ArcFlashCalculator.Controllers
         //POST: Admin/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(User newUser)
+        public ActionResult Create(CreateNewUser newUser)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
                     //TODO: Check the cookie
-                    if (!ViewModels.CheckForUser(newUser.Email))
+                    if (!ViewModels.CheckForUser(newUser.user.Email))
                     {
-                        newUser.Password = Encrypter.ComputeHash(newUser.Password, null);
-                        Users myUser = new Users();
-                        myUser.Email = newUser.Email;
-                        myUser.Password = newUser.Password;
-                        ViewModels.CreateUser(myUser);
+                        if (CheckComplexity(newUser.user.Password))
+                        {
+                            newUser.user.Password = Encrypter.ComputeHash(newUser.user.Password, null);
+                            Users myUser = new Users();
+                            myUser.Email = newUser.user.Email;
+                            myUser.Password = newUser.user.Password;
+                            ViewModels.CreateUser(myUser);
+                        } else
+                        {
+                            newUser.passwordError = true;
+                            return View(newUser);
+                        }
                     }
                     else
                     {
-                        //The name was already assigned
-                        newUser.Error = true;
+                        newUser.emailError = true;
                         return View(newUser);
                     }
                 }
                 return RedirectToAction("Delete");
-            }
-            catch (Exception e)
-            {
-                DataLink.LogError(e);
-                throw;
-            }
-        }
-
-        public ActionResult ChangePassword()
-        {
-            try
-            {
-                return View();
             }
             catch (Exception e)
             {
@@ -290,6 +288,31 @@ namespace ArcFlashCalculator.Controllers
                 DataLink.LogError(e);
                 throw;
             }
+        }
+
+        public bool CheckComplexity(string password)
+        {
+            int digits = 0;
+            int uppers = 0;
+            int symbols = 0;
+            if (password.Length >= 15 && password.Length <= 25)
+            {
+                foreach (char c in password)
+                {
+                    if (char.IsDigit(c)) digits++;
+                    if (char.IsUpper(c)) uppers++;
+                    if (!char.IsDigit(c) && !char.IsLetter(c)) symbols++;
+                }
+
+                if (digits >= 2) {
+                    if (uppers >= 2) {
+                        if (symbols >= 2) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
     }
 }

@@ -206,26 +206,29 @@ namespace ArcFlashCalculator.Models
     {
         public ChangePassword()
         {
-
+            user = new Users();
+            confirmError = false;
+            UserOrPasswordError = false;
+            PasswordComplexityError = false;
         }
 
-        public string email { get; set; }
-        public string oldPassword { get; set; }
+        public Users user { get; set; }
         public string newPassword { get; set; }
         public string confirmPassword { get; set; }
         public bool confirmError { get; set; }
         public bool UserOrPasswordError { get; set; }
+        public bool PasswordComplexityError { get; set; }
     }
 
-    public class User
+    public class Login
     {
-        public User()
+        public Login()
         {
-
+            user = new Users();
+            Error = false;
         }
 
-        public string Password { get; set; }
-        public string Email { get; set; }
+        public Users user { get; set; }
         public bool Error { get; set; }
     }
 
@@ -238,5 +241,19 @@ namespace ArcFlashCalculator.Models
 
         public string IPAddress { get; set; }
         public DateTime? DateAdded { get; set; }
+    }
+
+    public class CreateNewUser
+    {
+        public CreateNewUser()
+        {
+            user = new Users();
+            passwordError = false;
+            emailError = false;
+        }
+
+        public Users user { get; set; }
+        public bool passwordError { get; set; }
+        public bool emailError { get; set; }
     }
 }

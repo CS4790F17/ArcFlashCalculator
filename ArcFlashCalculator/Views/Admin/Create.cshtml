@@ -1,4 +1,4 @@
-﻿@model ArcFlashCalculator.Models.User
+﻿@model ArcFlashCalculator.Models.CreateNewUser
 
 @{
     Layout = "~/Views/Shared/_AdminNavbarPartial.cshtml";
@@ -21,17 +21,17 @@
         <div class="form-horizontal">
             <hr />
             <div class="form-group">
-                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.user.Email, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-offset-2 col-md-10">
-                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.user.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.user.Email, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.user.Password, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-offset-2 col-md-10">
-                    @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    @Html.PasswordFor(model => model.user.Password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.user.Password, "", new { @class = "text-danger" })
                 </div>
             </div>
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })

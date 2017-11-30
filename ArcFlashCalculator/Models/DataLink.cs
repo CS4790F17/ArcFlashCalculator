@@ -6,6 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.Data.Entity;
+using System.Web.Mvc;
+using System.Net;
 
 namespace ArcFlashCalculator.Models
 {
@@ -57,6 +59,8 @@ namespace ArcFlashCalculator.Models
                 {
                     if (db.Database.Exists())
                     {
+                        ui.date = DateTime.Now;
+                        ui.IPAddress = HttpContext.Current.Request.UserHostAddress;
                         db.userInputs60Hz.Add(ui);
                         db.SaveChanges();
                     }
@@ -123,6 +127,8 @@ namespace ArcFlashCalculator.Models
                 {
                     if (db.Database.Exists())
                     {
+                        ui.date = DateTime.Now;
+                        ui.IPAddress = HttpContext.Current.Request.UserHostAddress;
                         db.userInputsDC.Add(ui);
                         db.SaveChanges();
                     }
@@ -258,6 +264,7 @@ namespace ArcFlashCalculator.Models
                 {
                     if (db.Database.Exists())
                     {
+                        u.DateCreated = DateTime.Now;
                         db.users.Add(u);
                         db.SaveChanges();
                     }
