@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ArcFlashCalculator.Models.Users>
+﻿@model ArcFlashCalculator.Models.AdminControl
 @{
     Layout = "~/Views/Shared/_AdminNavbarPartial.cshtml";
 }
@@ -19,7 +19,7 @@
             <th>Date Added</th>
             <th></th>
         </tr>
-       @foreach (var item in Model)
+       @foreach (var item in Model.users)
        {
         <tr>
             <td>

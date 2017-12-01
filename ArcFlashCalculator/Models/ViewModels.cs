@@ -256,4 +256,16 @@ namespace ArcFlashCalculator.Models
         public bool passwordError { get; set; }
         public bool emailError { get; set; }
     }
+
+    public class AdminControl
+    {
+        public AdminControl()
+        {
+            users = ViewModels.GetAllUsers();
+            isRootAdmin = false;
+        }
+
+        public List<Users> users { get; set; }
+        public bool isRootAdmin { get; set; }
+    }
 }

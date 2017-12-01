@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using ArcFlashCalculator.Security;
 
 
 namespace ArcFlashCalculator.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         //GET: Admin/Delete
@@ -16,8 +18,16 @@ namespace ArcFlashCalculator.Controllers
         {
             try
             {
-                List<Users> userList = ViewModels.GetAllUsers();
-                return View(userList);
+                AdminControl adminControl = new AdminControl();
+                string cookieName = FormsAuthentication.FormsCookieName;
+                HttpCookie authCookie = HttpContext.Request.Cookies[cookieName];
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
+                string UserName = ticket.Name;
+                if (CheckForRootAdmin(UserName))
+                {
+                    adminControl.isRootAdmin = true;
+                }
+                return View(adminControl);
             }
             catch (Exception e)
             {
@@ -80,6 +90,7 @@ namespace ArcFlashCalculator.Controllers
                     if (Encrypter.VerifyHash(login.user.Password, u.Password))
                     {
                         //TODO: Figure out how to set the validation for a user
+                        FormsAuthentication.SetAuthCookie(login.user.Email, false);
                         return RedirectToAction("ReportHome");
                     }
                     else
@@ -290,6 +301,21 @@ namespace ArcFlashCalculator.Controllers
             }
         }
 
+        //GET: Admin/Logoff
+        public ActionResult LogOff()
+        {
+            try
+            {
+                FormsAuthentication.SignOut();
+                return RedirectToAction("Login");
+            }
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
+        }
+
         public bool CheckComplexity(string password)
         {
             int digits = 0;
@@ -311,6 +337,16 @@ namespace ArcFlashCalculator.Controllers
                         }
                     }
                 }
+            }
+            return false;
+        }
+
+        public bool CheckForRootAdmin(string email)
+        {
+            Users admin = ViewModels.GetUser(email);
+            if (admin.AdminBit == true)
+            {
+                return true;
             }
             return false;
         }
