@@ -83,19 +83,27 @@ namespace ArcFlashCalculator.Controllers
                 //A user has been returned. Pull out the email that is specified. Has the user's password and compare it to the hash in the database.
                 if (ModelState.IsValid)
                 {
-                    //Get the information for the user they are trying to login as
-                    Users u = ViewModels.GetUser(login.user.Email);
-
-                    //Check to the entered password against the saved password
-                    if (Encrypter.VerifyHash(login.user.Password, u.Password))
+                    if (ViewModels.CheckForUser(login.user.Email))
                     {
-                        //TODO: Figure out how to set the validation for a user
-                        FormsAuthentication.SetAuthCookie(login.user.Email, false);
-                        return RedirectToAction("ReportHome");
+                        //Get the information for the user they are trying to login as
+                        Users u = ViewModels.GetUser(login.user.Email);
+
+                        //Check to the entered password against the saved password
+                        if (Encrypter.VerifyHash(login.user.Password, u.Password))
+                        {
+                            //TODO: Figure out how to set the validation for a user
+                            FormsAuthentication.SetAuthCookie(login.user.Email, false);
+                            return RedirectToAction("ReportHome");
+                        }
+                        else
+                        {
+                            //It failed so return the view with the user input
+                            login.Error = true;
+                            return View(login);
+                        }
                     }
                     else
                     {
-                        //It failed so return the view with the user input
                         login.Error = true;
                         return View(login);
                     }

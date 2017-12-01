@@ -27,6 +27,9 @@
                     @Html.ValidationMessageFor(model => model.user.Password, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="userPassErr">
+                <p style="color:red;padding-left:190px;">You have entered an invalid E-mail and/or Password combination.</p>
+            </div>
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
@@ -35,4 +38,23 @@
             </div>
         </div>
     }
-        </div>
+</div>
+
+@{
+    if (Model.Error)
+    {
+        <style>
+            div.userPassErr {
+                display: block;
+            }
+        </style>
+    }
+    else
+    {
+        <style>
+            div.userPassErr {
+                display: none;
+            }
+        </style>
+    }
+}
