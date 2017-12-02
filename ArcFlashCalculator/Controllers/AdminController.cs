@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using ArcFlashCalculator.Security;
-
+using System.Text.RegularExpressions;
 
 namespace ArcFlashCalculator.Controllers
 {
@@ -25,9 +25,9 @@ namespace ArcFlashCalculator.Controllers
                 string UserName = ticket.Name;
                 if (CheckForRootAdmin(UserName))
                 {
-                    adminControl.isRootAdmin = true;
+                    return View(adminControl);
                 }
-                return View(adminControl);
+                return RedirectToAction("ReportHome");
             }
             catch (Exception e)
             {
@@ -63,8 +63,7 @@ namespace ArcFlashCalculator.Controllers
             try
             {
                 Login login = new Login();
-                login.Error = false;
-                return View("Login", login);
+                return View(login);
             }
             catch (Exception e)
             {
@@ -106,17 +105,22 @@ namespace ArcFlashCalculator.Controllers
                             {
                                 //It failed so return the view with the user input
                                 login.Error = true;
+                                login.user.Password = null;
                                 return View(login);
                             }
                         }
                         else
                         {
                             login.Error = true;
+                            login.user.Email = null;
+                            login.user.Password = null;
                             return View(login);
                         }
                     }
                 }
                 login.Error = true;
+                login.user.Email = null;
+                login.user.Password = null;
                 return View(login);
             }
             catch (Exception e)
@@ -170,22 +174,35 @@ namespace ArcFlashCalculator.Controllers
                             else
                             {
                                 changedPassword.UserOrPasswordError = true;
+                                changedPassword.confirmError = false;
+                                changedPassword.PasswordComplexityError = false;
+                                changedPassword.user.Email = null;
+                                changedPassword.user.Password = null;
                                 return View(changedPassword);
                             }
                         }
                         else
                         {
                             changedPassword.confirmError = true;
+                            changedPassword.PasswordComplexityError = false;
+                            changedPassword.UserOrPasswordError = false;
+                            changedPassword.user.Email = null;
+                            changedPassword.user.Password = null;
                             return View(changedPassword);
                         }
                     }
                     else
                     {
                         changedPassword.PasswordComplexityError = true;
+                        changedPassword.confirmError = false;
+                        changedPassword.UserOrPasswordError = false;
+                        changedPassword.user.Email = null;
+                        changedPassword.user.Password = null;
                         return View(changedPassword);
                     }
                 }
-                return View();
+                changedPassword.UserOrPasswordError = true;
+                return View(changedPassword);
             }
             catch (Exception e)
             {
@@ -274,26 +291,38 @@ namespace ArcFlashCalculator.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    //TODO: Check the cookie
-                    if (!ViewModels.CheckForUser(newUser.user.Email))
+                    if (!CheckValidateEmail(newUser.user.Email))
                     {
-                        if (CheckComplexity(newUser.user.Password))
+                        if (!ViewModels.CheckForUser(newUser.user.Email))
                         {
-                            newUser.user.Password = Encrypter.ComputeHash(newUser.user.Password, null);
-                            Users myUser = new Users();
-                            myUser.Email = newUser.user.Email;
-                            myUser.Password = newUser.user.Password;
-                            ViewModels.CreateUser(myUser);
+                            if (CheckComplexity(newUser.user.Password))
+                            {
+                                newUser.user.Password = Encrypter.ComputeHash(newUser.user.Password, null);
+                                Users myUser = new Users();
+                                myUser.Email = newUser.user.Email;
+                                myUser.Password = newUser.user.Password;
+                                ViewModels.CreateUser(myUser);
+                            }
+                            else
+                            {
+                                newUser.passwordError = true;
+                                newUser.user.Email = null;
+                                newUser.user.Password = null;
+                                return View(newUser);
+                            }
                         }
                         else
                         {
-                            newUser.passwordError = true;
+                            newUser.emailError = true;
+                            newUser.user.Email = null;
+                            newUser.user.Password = null;
                             return View(newUser);
                         }
-                    }
-                    else
+                    } else
                     {
                         newUser.emailError = true;
+                        newUser.user.Email = null;
+                        newUser.user.Password = null;
                         return View(newUser);
                     }
                 }
@@ -306,6 +335,7 @@ namespace ArcFlashCalculator.Controllers
             }
         }
 
+        //GET: Admin/Account
         public ActionResult Account()
         {
             try
@@ -367,6 +397,16 @@ namespace ArcFlashCalculator.Controllers
         {
             Users admin = ViewModels.GetUser(email);
             if (admin.AdminBit == true)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool CheckValidateEmail(string email)
+        {
+            Regex rgx = new Regex("[@]");
+            if (rgx.IsMatch(email))
             {
                 return true;
             }
