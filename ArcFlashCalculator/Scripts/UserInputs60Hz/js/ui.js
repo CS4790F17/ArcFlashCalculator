@@ -280,9 +280,9 @@ var UI = {
     showArcFlash: function (volts, amps, seconds, equipmentTypeInput) {
         "use strict";
         if ((volts > 208) && (amps > 700)) {
-            // free space
             //var freeSpaceCal = Boundaries.incidentEnergyAt18OpenDisplay(volts, amps, seconds);
-            var freeSpaceCal = 0; 
+            var freeSpaceCal = 0;
+            var enclosedSpaceCal = 0; 
             
             var arcingCurrentFree = 0;
             var arcingCurrentEnclosed = 0;
@@ -294,7 +294,8 @@ var UI = {
             var k1Enclosed = -0.555;
             var k2 = -0.113;
             var calculationFactor = 1.5;
-            var distExponent = 0; 
+            var distExponent = 0;
+            var cal = 0; 
 
             if (equipmentTypeInput === 'panelboards-240-600') {
                 conductorGap = 25;
@@ -317,14 +318,13 @@ var UI = {
                 distExponent = 1.473;
             }
 
+            // free space
             arcingCurrentFree = kFreeSpace + (.662 * Math.log($("#short-circuit-current-input").val())) + 0.0966 * volts + 0.000526 * conductorGap + 0.5588 * volts * Math.log($("#short-circuit-current-input").val()) - 0.00304 * conductorGap * Math.log($("#short-circuit-current-input").val());
             arcingCurrentFree = Math.log(arcingCurrentFree); 
            
             incidentEnergy = k1OpenAir + k2 + 1.081 * Math.log(arcingCurrentFree) + 0.0011  * conductorGap;
-            //incidentEnergy = Math.log(incidentEnergy);
 
             incidentEnergy = Math.pow(10, Math.log(incidentEnergy));
-
 
             freeSpaceCal = 4.184 * calculationFactor * incidentEnergy * ($("#fault-clearing-time-input").val() / 0.2) * (Math.pow(610, distExponent) / Math.pow(458, distExponent));
 
@@ -332,9 +332,21 @@ var UI = {
             $('#arc-flash-display-free-space').text(Boundaries.arcFlashOpen(volts, amps, seconds));
 
             // enclosed space
-            var cal = Boundaries.incidentEnergyAt18Display(volts, amps, seconds);
+            //var cal = Boundaries.incidentEnergyAt18Display(volts, amps, seconds);
+            arcingCurrentFree = kEnclosed + (.662 * Math.log($("#short-circuit-current-input").val())) + 0.0966 * volts + 0.000526 * conductorGap + 0.5588 * volts * Math.log($("#short-circuit-current-input").val()) - 0.00304 * conductorGap * Math.log($("#short-circuit-current-input").val());
+            arcingCurrentFree = Math.log(arcingCurrentFree);
+
+            incidentEnergy = k1Enclosed + k2 + 1.081 * Math.log(arcingCurrentFree) + 0.0011 * conductorGap;
+
+            incidentEnergy = Math.pow(10, Math.log(incidentEnergy));
+
+            enclosedSpaceCal = 4.184 * calculationFactor * incidentEnergy * ($("#fault-clearing-time-input").val() / 0.2) * (Math.pow(610, distExponent) / Math.pow(458, distExponent));
+
+            cal = enclosedSpaceCal;
+
             $('#arc-flash-incident-energy').html(cal + ' cal/cm<sup>2</sup>');
             $('#arc-flash-display-enclosed-space').text(Boundaries.arcFlashEnclosed(volts, amps, seconds));
+
         }
         else {
             $('#arc-flash-incident-energy').text('Not applicable');
