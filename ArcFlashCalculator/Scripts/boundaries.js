@@ -34,10 +34,6 @@ var Boundaries = {
     //New calculation for the 60Hz page 
    arcFlashOpen60Hz: function (volts, amps, time) {
        "use strict";
-       // var v2 = volts * volts,
-       //     rsys = volts / amps,
-       //     numerator = 0.005 * (v2/rsys) * time,
-       //     cm = Math.ceil(Math.sqrt(numerator / 1.2));
        var cm = Math.ceil(Math.sqrt((0.005 / 1.2) * volts * amps * time));
        return Boundaries.toDisplay(cm);
    },
