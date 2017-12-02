@@ -18,16 +18,17 @@ To run this project on a local machine you will need Visual Studio 2017 and a mo
 ## Versioning
 CURRENT: v1
 ## Authors
-Landon Tholen 
-Daniel Woodward
-Kevin Williams
-Alex Ala
-Nicholas Hayes
-Sean O'Neil 
-Wesley Smith 
-U.S. Army Research Lab
+* Landon Tholen 
+* Daniel Woodward
+* Kevin Williams
+* Alex Ala
+* Nicholas Hayes
+* Sean O'Neil 
+* Wesley Smith 
+* U.S. Army Research Lab
 
 ## License 
 
 ## Acknowledgements
-Special Thanks to Professor Rob Hilton for guiding this capstone project 
+* Special Thanks to Professor Rob Hilton for guiding this capstone project 
+* Parts of this application are from an arc flash calculator developed by the US Army Research Laboratory and DoD's Defense Safety Oversight Council Electrical Safety Working Group. http://apps.ctc.com/esafe-pro/
