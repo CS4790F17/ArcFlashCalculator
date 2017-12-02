@@ -329,6 +329,7 @@ var UI = {
             freeSpaceCal = 4.184 * calculationFactor * incidentEnergy * ($("#fault-clearing-time-input").val() / 0.2) * (Math.pow(610, distExponent) / Math.pow(458, distExponent));
 
             $('#arc-flash-free-space-incident-energy').html(freeSpaceCal.toFixed(1) + ' cal/cm<sup>2</sup>');
+
             $('#arc-flash-display-free-space').text(Boundaries.arcFlashOpen(volts, amps, seconds));
 
             // enclosed space
@@ -345,6 +346,7 @@ var UI = {
             cal = enclosedSpaceCal;
 
             $('#arc-flash-incident-energy').html(cal.toFixed(1) + ' cal/cm<sup>2</sup>');
+
             $('#arc-flash-display-enclosed-space').text(Boundaries.arcFlashEnclosed(volts, amps, seconds));
 
         }

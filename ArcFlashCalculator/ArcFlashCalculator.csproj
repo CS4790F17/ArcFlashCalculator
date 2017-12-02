@@ -314,6 +314,7 @@
     <Content Include="Scripts\bootbox.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\boundaries.js" />
     <Content Include="Scripts\Capacitor\js\classifications.js" />
     <Content Include="Scripts\Capacitor\js\safetyreqs.js" />
     <Content Include="Scripts\Capacitor\js\ui.js" />
