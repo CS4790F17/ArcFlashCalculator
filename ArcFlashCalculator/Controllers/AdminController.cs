@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using ArcFlashCalculator.Security;
 using System.Text.RegularExpressions;
+using System.Data.Entity;
 
 namespace ArcFlashCalculator.Controllers
 {
@@ -22,8 +23,8 @@ namespace ArcFlashCalculator.Controllers
                 string cookieName = FormsAuthentication.FormsCookieName;
                 HttpCookie authCookie = HttpContext.Request.Cookies[cookieName];
                 FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
-                string UserName = ticket.Name;
-                if (CheckForRootAdmin(UserName))
+                string emailAddress = ticket.Name;
+                if (CheckForRootAdmin(emailAddress))
                 {
                     return View(adminControl);
                 }
@@ -136,6 +137,11 @@ namespace ArcFlashCalculator.Controllers
             try
             {
                 ChangePassword cp = new ChangePassword();
+                string cookieName = FormsAuthentication.FormsCookieName;
+                HttpCookie authCookie = HttpContext.Request.Cookies[cookieName];
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
+                string emailAddress = ticket.Name;
+                cp.user.Email = emailAddress;
                 return View(cp);
             }
             catch (Exception e)
@@ -318,7 +324,8 @@ namespace ArcFlashCalculator.Controllers
                             newUser.user.Password = null;
                             return View(newUser);
                         }
-                    } else
+                    }
+                    else
                     {
                         newUser.emailError = true;
                         newUser.user.Email = null;
@@ -357,6 +364,76 @@ namespace ArcFlashCalculator.Controllers
             {
                 FormsAuthentication.SignOut();
                 return RedirectToAction("Login");
+            }
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
+        }
+
+        //GET: Admin/PasswordOverride
+        public ActionResult PasswordOverride(int? id)
+        {
+            try
+            {
+                AdminChangePassword change = new AdminChangePassword();
+                if (id != null)
+                {
+                    Users user = ViewModels.GetUser(id);
+                    change.user.Email = user.Email;
+                }
+                return View(change);
+            }
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
+        }
+
+        //POST: Admin/PasswordOverride
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PasswordOverride(AdminChangePassword change, int id)
+        {
+            try
+            {
+                //Check inputs are not null               
+                if (ModelState.IsValid)
+                {
+                    //Check that new is equal to confirm
+                    if (change.confirmPassword.Equals(change.newPassword))
+                    {
+                        //Check password complexity
+                        if (CheckComplexity(change.newPassword))
+                        {
+                            change.user = ViewModels.GetUser(id);
+                            change.user.Password = Encrypter.ComputeHash(change.newPassword, null);
+                            ViewModels.UpdateUser(change.user, EntityState.Modified);
+                            return RedirectToAction("Delete");
+                        } else
+                        {
+                            change.ComplexityError = true;
+                            change.confirmError = false;
+                            change.newPassword = null;
+                            change.confirmPassword = null;
+                            return View(change);
+                        }
+                    } else
+                    {
+                        change.confirmError = true;
+                        change.ComplexityError = false;
+                        change.newPassword = null;
+                        change.confirmPassword = null;
+                        return View(change);
+                    }
+                }
+                change.confirmError = true;
+                change.ComplexityError = false;
+                change.newPassword = null;
+                change.confirmPassword = null;
+                return View(change);
             }
             catch (Exception e)
             {

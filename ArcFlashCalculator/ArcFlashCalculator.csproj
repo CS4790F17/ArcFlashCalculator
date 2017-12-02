@@ -780,6 +780,7 @@
     <Content Include="Views\Admin\Create.cshtml" />
     <Content Include="Views\Admin\Delete.cshtml" />
     <Content Include="Views\Admin\Account.cshtml" />
+    <Content Include="Views\Admin\PasswordOverride.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Role\" />

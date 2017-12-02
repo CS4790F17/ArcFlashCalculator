@@ -268,4 +268,19 @@ namespace ArcFlashCalculator.Models
         public List<Users> users { get; set; }
         public bool isRootAdmin { get; set; }
     }
+
+    public class AdminChangePassword
+    {
+        public AdminChangePassword()
+        {
+            user = new Users();
+            ComplexityError = false;
+        }
+
+        public Users user { get; set; }
+        public string newPassword { get; set; }
+        public string confirmPassword { get; set; }
+        public bool confirmError { get; set; }
+        public bool ComplexityError { get; set; }
+    }
 }
