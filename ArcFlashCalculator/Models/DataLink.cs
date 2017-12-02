@@ -392,11 +392,9 @@ namespace ArcFlashCalculator.Models
         public int Id { get; set; }
 
         [DisplayName("Email")]
-        [Required(ErrorMessage = "An Email is required")]
         public string Email { get; set; }
 
         [DisplayName("Password")]
-        [Required(ErrorMessage = "A Password is required")]
         public string Password { get; set; }
 
         public DateTime DateCreated { get; set; }

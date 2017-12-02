@@ -63,7 +63,8 @@ namespace ArcFlashCalculator.Controllers
             try
             {
                 Login login = new Login();
-                return View(login);
+                login.Error = false;
+                return View("Login", login);
             }
             catch (Exception e)
             {
@@ -80,35 +81,43 @@ namespace ArcFlashCalculator.Controllers
         {
             try
             {
-                //A user has been returned. Pull out the email that is specified. Has the user's password and compare it to the hash in the database.
                 if (ModelState.IsValid)
                 {
-                    if (ViewModels.CheckForUser(login.user.Email))
+                    //A user has been returned. Pull out the email that is specified. Has the user's password and compare it to the hash in the database.
+                    if (login.user.Email != null && login.user.Password != null)
                     {
-                        //Get the information for the user they are trying to login as
-                        Users u = ViewModels.GetUser(login.user.Email);
-
-                        //Check to the entered password against the saved password
-                        if (Encrypter.VerifyHash(login.user.Password, u.Password))
+                        if (ViewModels.CheckForUser(login.user.Email))
                         {
-                            //TODO: Figure out how to set the validation for a user
-                            FormsAuthentication.SetAuthCookie(login.user.Email, false);
-                            return RedirectToAction("ReportHome");
+                            //Get the information for the user they are trying to login as
+                            Users u = ViewModels.GetUser(login.user.Email);
+
+                            //Check to the entered password against the saved password
+                            if (Encrypter.VerifyHash(login.user.Password, u.Password))
+                            {
+                                if (FormsAuthentication.FormsCookieName != null)
+                                {
+                                    FormsAuthentication.SignOut();
+                                }
+                                //TODO: Figure out how to set the validation for a user
+                                FormsAuthentication.SetAuthCookie(login.user.Email, false);
+                                return RedirectToAction("ReportHome");
+                            }
+                            else
+                            {
+                                //It failed so return the view with the user input
+                                login.Error = true;
+                                return View(login);
+                            }
                         }
                         else
                         {
-                            //It failed so return the view with the user input
                             login.Error = true;
                             return View(login);
                         }
                     }
-                    else
-                    {
-                        login.Error = true;
-                        return View(login);
-                    }
                 }
-                return View();
+                login.Error = true;
+                return View(login);
             }
             catch (Exception e)
             {
@@ -169,11 +178,12 @@ namespace ArcFlashCalculator.Controllers
                             changedPassword.confirmError = true;
                             return View(changedPassword);
                         }
-                    } else
+                    }
+                    else
                     {
                         changedPassword.PasswordComplexityError = true;
                         return View(changedPassword);
-                    }                
+                    }
                 }
                 return View();
             }
@@ -274,7 +284,8 @@ namespace ArcFlashCalculator.Controllers
                             myUser.Email = newUser.user.Email;
                             myUser.Password = newUser.user.Password;
                             ViewModels.CreateUser(myUser);
-                        } else
+                        }
+                        else
                         {
                             newUser.passwordError = true;
                             return View(newUser);
@@ -338,9 +349,12 @@ namespace ArcFlashCalculator.Controllers
                     if (!char.IsDigit(c) && !char.IsLetter(c)) symbols++;
                 }
 
-                if (digits >= 2) {
-                    if (uppers >= 2) {
-                        if (symbols >= 2) {
+                if (digits >= 2)
+                {
+                    if (uppers >= 2)
+                    {
+                        if (symbols >= 2)
+                        {
                             return true;
                         }
                     }
