@@ -218,6 +218,7 @@ namespace ArcFlashCalculator.Models
         public bool confirmError { get; set; }
         public bool UserOrPasswordError { get; set; }
         public bool PasswordComplexityError { get; set; }
+        public bool blankFieldError { get; set; }
     }
 
     public class Login
