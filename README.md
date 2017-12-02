@@ -26,6 +26,7 @@ CURRENT: v1
 * Sean O'Neil 
 * Wesley Smith 
 * U.S. Army Research Lab
+* DoD's Defense Safety Oversight Council Electrical Safety Working Group
 
 ## License 
 
