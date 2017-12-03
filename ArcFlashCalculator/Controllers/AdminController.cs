@@ -162,7 +162,7 @@ namespace ArcFlashCalculator.Controllers
                 if (ModelState.IsValid)
                 {
                     //Check that no fields were left blank
-                    if (changedPassword.user.Email != null && changedPassword.user.Password != null)
+                    if (changedPassword.user.Email != null && changedPassword.user.Password != null && changedPassword.confirmPassword != null && changedPassword.newPassword != null)
                     {
                         //Check that the password is complex enough
                         if (CheckComplexity(changedPassword.newPassword))
@@ -317,32 +317,20 @@ namespace ArcFlashCalculator.Controllers
                 {
                     if (CheckValidateEmail(newUser.user.Email))
                     {
-                        if (CheckValidateEmail(newUser.user.Email))
+                        if (!ViewModels.CheckForUser(newUser.user.Email))
                         {
-                            if (!ViewModels.CheckForUser(newUser.user.Email))
+                            if (CheckComplexity(newUser.user.Password))
                             {
-                                if (CheckComplexity(newUser.user.Password))
-                                {
-                                    newUser.user.Password = Encrypter.ComputeHash(newUser.user.Password, null);
-                                    Users myUser = new Users();
-                                    myUser.Email = newUser.user.Email;
-                                    myUser.Password = newUser.user.Password;
-                                    ViewModels.CreateUser(myUser);
-                                }
-                                else
-                                {
-                                    newUser.passwordError = true;
-                                    newUser.emailError = false;
-                                    newUser.blankFieldError = false;
-                                    newUser.user.Email = null;
-                                    newUser.user.Password = null;
-                                    return View(newUser);
-                                }
+                                newUser.user.Password = Encrypter.ComputeHash(newUser.user.Password, null);
+                                Users myUser = new Users();
+                                myUser.Email = newUser.user.Email;
+                                myUser.Password = newUser.user.Password;
+                                ViewModels.CreateUser(myUser);
                             }
                             else
                             {
-                                newUser.emailError = true;
-                                newUser.passwordError = false;
+                                newUser.passwordError = true;
+                                newUser.emailError = false;
                                 newUser.blankFieldError = false;
                                 newUser.user.Email = null;
                                 newUser.user.Password = null;
@@ -361,9 +349,9 @@ namespace ArcFlashCalculator.Controllers
                     }
                     else
                     {
-                        newUser.blankFieldError = true;
-                        newUser.emailError = false;
+                        newUser.emailError = true;
                         newUser.passwordError = false;
+                        newUser.blankFieldError = false;
                         newUser.user.Email = null;
                         newUser.user.Password = null;
                         return View(newUser);
@@ -448,7 +436,8 @@ namespace ArcFlashCalculator.Controllers
                             change.user.Password = Encrypter.ComputeHash(change.newPassword, null);
                             ViewModels.UpdateUser(change.user, EntityState.Modified);
                             return RedirectToAction("Delete");
-                        } else
+                        }
+                        else
                         {
                             change.ComplexityError = true;
                             change.confirmError = false;
@@ -456,7 +445,8 @@ namespace ArcFlashCalculator.Controllers
                             change.confirmPassword = null;
                             return View(change);
                         }
-                    } else
+                    }
+                    else
                     {
                         change.confirmError = true;
                         change.ComplexityError = false;
