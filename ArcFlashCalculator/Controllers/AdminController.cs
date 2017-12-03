@@ -297,7 +297,7 @@ namespace ArcFlashCalculator.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (!CheckValidateEmail(newUser.user.Email))
+                    if (CheckValidateEmail(newUser.user.Email))
                     {
                         if (!ViewModels.CheckForUser(newUser.user.Email))
                         {
