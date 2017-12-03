@@ -1,5 +1,5 @@
 # ArcFlashCalculator
-The Arc Flash Calculator is developed to provide professional electricians safety recommendations for their operating environment. The calculator allows the training technicians to input a series of parameters detailing their work environment after which a series of safety precautions and PPE recomendations will be displayed. 
+The Arc Flash Calculator is developed to provide professional electricians safety recommendations for their operating environment. The calculator allows the trained technicians to input a series of parameters detailing their work environment after which a series of safety precautions and PPE recomendations will be displayed. 
 
 This application is intended to be utilized by TRAINED and QUALIFIED personnel who must design, repair, troubleshoot or install potentially hazardous electrical equipment in the performance of their duties. It is not intended as a stand-alone electrical safety guide, rather as a single part in a larger overall safety analysis. Additional training may be required as deemed adequate by supervisory staff.
 
@@ -8,6 +8,8 @@ If the operating environment has different equipment, hazards or environmental f
 ## Getting Started 
 To access as a user you will need a modern web browser and the URL of the server where the application is hosted. 
 To run this project on a local machine you will need Visual Studio 2017 and a modern web browser.
+
+## Usage
 
 ## Built With
 * [ASP.NET](https://www.asp.net/) - The Web Framework
