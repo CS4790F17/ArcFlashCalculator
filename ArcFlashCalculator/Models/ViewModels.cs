@@ -210,6 +210,7 @@ namespace ArcFlashCalculator.Models
             confirmError = false;
             UserOrPasswordError = false;
             PasswordComplexityError = false;
+            blankFieldError = false;
         }
 
         public Users user { get; set; }
@@ -251,11 +252,13 @@ namespace ArcFlashCalculator.Models
             user = new Users();
             passwordError = false;
             emailError = false;
+            blankFieldError = false;
         }
 
         public Users user { get; set; }
         public bool passwordError { get; set; }
         public bool emailError { get; set; }
+        public bool blankFieldError { get; set; }
     }
 
     public class AdminControl

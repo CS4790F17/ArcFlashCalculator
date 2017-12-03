@@ -34,6 +34,17 @@
                     @Html.ValidationMessageFor(model => model.user.Password, "", new { @class = "text-danger" })
                 </div>
             </div>
+            @*Error messages*@
+            <div class="passComplexityErr">
+                <p style="color:red;padding-left:190px;">Your new password must contain at least 15 characters, including 2 capital letters, 2 numbers, and 2 special characters.</p>
+            </div>
+            <div class="emailErr">
+                <p style="color:red;padding-left:190px;">The e-mail field must contain an e-mail, including &#64;.</p>
+            </div>
+            <div class="blankErr">
+                <p style="color:red;padding-left:190px;">All fields must be filled in.</p>
+            </div>
+
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
@@ -57,3 +68,56 @@
         margin-top: 1.5rem;
     }
 </style>
+
+@{
+    if (Model.passwordError)
+    {
+        <style>
+            div.passComplexityErr {
+                display: block;
+            }
+        </style>
+    }
+    else
+    {
+        <style>
+            div.passComplexityErr {
+                display: none;
+            }
+        </style>
+    }
+
+    if (Model.emailError)
+    {
+        <style>
+            div.emailErr {
+                display: block;
+            }
+        </style>
+    }
+    else
+    {
+        <style>
+            div.emailErr {
+                display: none;
+            }
+        </style>
+    }
+
+    if (Model.blankFieldError)
+    {
+        <style>
+            div.blankErr {
+                display: block;
+            }
+        </style>
+    }
+    else
+    {
+        <style>
+            div.blankErr {
+                display: none;
+            }
+        </style>
+    }
+}

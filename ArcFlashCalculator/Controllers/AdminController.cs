@@ -315,21 +315,36 @@ namespace ArcFlashCalculator.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (!CheckValidateEmail(newUser.user.Email))
+                    //Check that no fields were left blank
+                    if (newUser.user.Email != null && newUser.user.Password != null)
                     {
-                        if (!ViewModels.CheckForUser(newUser.user.Email))
+                        if (CheckValidateEmail(newUser.user.Email))
                         {
-                            if (CheckComplexity(newUser.user.Password))
+                            if (!ViewModels.CheckForUser(newUser.user.Email))
                             {
-                                newUser.user.Password = Encrypter.ComputeHash(newUser.user.Password, null);
-                                Users myUser = new Users();
-                                myUser.Email = newUser.user.Email;
-                                myUser.Password = newUser.user.Password;
-                                ViewModels.CreateUser(myUser);
+                                if (CheckComplexity(newUser.user.Password))
+                                {
+                                    newUser.user.Password = Encrypter.ComputeHash(newUser.user.Password, null);
+                                    Users myUser = new Users();
+                                    myUser.Email = newUser.user.Email;
+                                    myUser.Password = newUser.user.Password;
+                                    ViewModels.CreateUser(myUser);
+                                }
+                                else
+                                {
+                                    newUser.passwordError = true;
+                                    newUser.emailError = false;
+                                    newUser.blankFieldError = false;
+                                    newUser.user.Email = null;
+                                    newUser.user.Password = null;
+                                    return View(newUser);
+                                }
                             }
                             else
                             {
-                                newUser.passwordError = true;
+                                newUser.emailError = true;
+                                newUser.passwordError = false;
+                                newUser.blankFieldError = false;
                                 newUser.user.Email = null;
                                 newUser.user.Password = null;
                                 return View(newUser);
@@ -338,6 +353,8 @@ namespace ArcFlashCalculator.Controllers
                         else
                         {
                             newUser.emailError = true;
+                            newUser.passwordError = false;
+                            newUser.blankFieldError = false;
                             newUser.user.Email = null;
                             newUser.user.Password = null;
                             return View(newUser);
@@ -345,7 +362,9 @@ namespace ArcFlashCalculator.Controllers
                     }
                     else
                     {
-                        newUser.emailError = true;
+                        newUser.blankFieldError = true;
+                        newUser.emailError = false;
+                        newUser.passwordError = false;
                         newUser.user.Email = null;
                         newUser.user.Password = null;
                         return View(newUser);
