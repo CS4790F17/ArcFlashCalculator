@@ -3,7 +3,7 @@ The Arc Flash Calculator is developed to provide professional electricians safet
 
 This application is intended to be utilized by TRAINED and QUALIFIED personnel who must design, repair, troubleshoot or install potentially hazardous electrical equipment in the performance of their duties. It is not intended as a stand-alone electrical safety guide, rather as a single part in a larger overall safety analysis. Additional training may be required as deemed adequate by supervisory staff.
 
-If the operating environment has different equipment, hazards or environmental factors that are not covered by this application please refer to your organization's Electrical Safety Subject Matter Expert.  
+If the operating environment has equipment, hazards or environmental factors that are not covered by this application please refer to your organization's Electrical Safety Subject Matter Expert.  
 
 ## Getting Started 
 To access as a user you will need a modern web browser and the URL of the server where the application is hosted. 
