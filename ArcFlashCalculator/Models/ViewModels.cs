@@ -286,5 +286,6 @@ namespace ArcFlashCalculator.Models
         public string confirmPassword { get; set; }
         public bool confirmError { get; set; }
         public bool ComplexityError { get; set; }
+        public bool blankFieldError { get; set; }
     }
 }
