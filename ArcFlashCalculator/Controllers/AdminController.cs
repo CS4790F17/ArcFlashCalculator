@@ -426,37 +426,42 @@ namespace ArcFlashCalculator.Controllers
                 //Check inputs are not null               
                 if (ModelState.IsValid)
                 {
-                    //Check that new is equal to confirm
-                    if (change.confirmPassword.Equals(change.newPassword))
+                    if (change.confirmPassword != null && change.newPassword != null)
                     {
-                        //Check password complexity
-                        if (CheckComplexity(change.newPassword))
+                        //Check that new is equal to confirm
+                        if (change.confirmPassword.Equals(change.newPassword))
                         {
-                            change.user = ViewModels.GetUser(id);
-                            change.user.Password = Encrypter.ComputeHash(change.newPassword, null);
-                            ViewModels.UpdateUser(change.user, EntityState.Modified);
-                            return RedirectToAction("Delete");
-                        }
-                        else
+                            //Check password complexity
+                            if (CheckComplexity(change.newPassword))
+                            {
+                                change.user = ViewModels.GetUser(id);
+                                change.user.Password = Encrypter.ComputeHash(change.newPassword, null);
+                                ViewModels.UpdateUser(change.user, EntityState.Modified);
+                                return RedirectToAction("Delete");
+                            } else
+                            {
+                                change.ComplexityError = true;
+                                change.confirmError = change.blankFieldError = false;
+                                change.newPassword = change.confirmPassword = null;
+                                return View(change);
+                            }
+                        } else
                         {
-                            change.ComplexityError = true;
-                            change.confirmError = false;
-                            change.newPassword = null;
-                            change.confirmPassword = null;
+                            change.confirmError = true;
+                            change.ComplexityError = change.blankFieldError = false;
+                            change.newPassword = change.confirmPassword = null;
                             return View(change);
                         }
-                    }
-                    else
+                    } else
                     {
-                        change.confirmError = true;
-                        change.ComplexityError = false;
-                        change.newPassword = null;
-                        change.confirmPassword = null;
+                        change.blankFieldError = true;
+                        change.ComplexityError = change.confirmError = false;
+                        change.newPassword = change.confirmPassword = null;
                         return View(change);
                     }
                 }
                 change.confirmError = true;
-                change.ComplexityError = false;
+                change.ComplexityError = change.blankFieldError = false;
                 change.newPassword = null;
                 change.confirmPassword = null;
                 return View(change);
