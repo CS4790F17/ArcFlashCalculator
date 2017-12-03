@@ -10,6 +10,10 @@ To access as a user you will need a modern web browser and the URL of the server
 To run this project on a local machine you will need Visual Studio 2017 and a modern web browser.
 
 ## Usage
+To utilize this application the user will begin at the homepage where they will acknowledge a safety warning and be presented with a series of options for calculations as well as information about the application itself. After selecting one of the calculation options (60Hz Power, DC, Capacitor, Battery, Sub-RF (1Hz-3kHz)) where the user will be prompted to enter various values regarding the system and the environment. Upon entering these values the user will be shown various safety calculations regarding the operation as well as charts and tables showing safety information based upon the user's information. They will also recieve the recommended PPE for the operation as well.
+
+### Admin Usage
+A special feature of this Arc Flash Calculator is the reporting capabilities that are made available to members with a admin login.
 
 ## Built With
 * [ASP.NET](https://www.asp.net/) - The Web Framework
