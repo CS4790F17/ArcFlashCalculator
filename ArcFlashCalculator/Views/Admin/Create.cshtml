@@ -35,14 +35,14 @@
                 </div>
             </div>
             @*Error messages*@
-            <div class="passComplexityErr">
-                <p style="color:red;padding-left:190px;">Your new password must contain at least 15 characters, including 2 capital letters, 2 numbers, and 2 special characters.</p>
+            <div class="passComplexityErr col-md-offset-2 col-md-10">
+                <p style="color:red;">Your new password must contain at least 15 characters, including 2 capital letters, 2 numbers, and 2 special characters.</p>
             </div>
-            <div class="emailErr">
-                <p style="color:red;padding-left:190px;">The e-mail field must contain an e-mail, including &#64;.</p>
+            <div class="emailErr col-md-offset-2 col-md-10">
+                <p style="color:red;">The e-mail field must contain an e-mail, including &#64;.</p>
             </div>
-            <div class="blankErr">
-                <p style="color:red;padding-left:190px;">All fields must be filled in.</p>
+            <div class="blankErr col-md-offset-2 col-md-10">
+                <p style="color:red;">All fields must be filled in.</p>
             </div>
 
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
