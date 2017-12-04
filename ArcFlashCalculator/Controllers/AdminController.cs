@@ -20,10 +20,7 @@ namespace ArcFlashCalculator.Controllers
             try
             {
                 AdminControl adminControl = new AdminControl();
-                string cookieName = FormsAuthentication.FormsCookieName;
-                HttpCookie authCookie = HttpContext.Request.Cookies[cookieName];
-                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
-                string emailAddress = ticket.Name;
+                string emailAddress = GetEmailFromToken(FormsAuthentication.FormsCookieName);
                 if (CheckForRootAdmin(emailAddress))
                 {
                     return View(adminControl);
@@ -519,6 +516,14 @@ namespace ArcFlashCalculator.Controllers
                 return true;
             }
             return false;
+        }
+
+        public string GetEmailFromToken(string cookieName)
+        {
+            HttpCookie authCookie = HttpContext.Request.Cookies[cookieName];
+            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
+            string emailAddress = ticket.Name;
+            return emailAddress;
         }
     }
 }

@@ -54,9 +54,9 @@ namespace ArcFlashCalculator
                     cols.Add("Voltage").WithHeaderText("Voltage")
                          .WithVisibility(true, true)
                          .WithValueExpression(p => p.Voltage.ToString());
-                    cols.Add("OEInFreshAir").WithHeaderText("OEInFreshAir")
+                    cols.Add("FreeAir").WithHeaderText("FreeAir")
                          .WithVisibility(true, true)
-                         .WithValueExpression(p => p.OEInFreshAir.ToString());
+                         .WithValueExpression(p => p.FreeAir.ToString());
                     cols.Add("IPAddress").WithHeaderText("IP Address")
                         .WithVisibility(true, true)
                         .WithValueExpression(p => p.IPAddress);
