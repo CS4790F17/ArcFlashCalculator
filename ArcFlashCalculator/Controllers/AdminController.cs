@@ -4,10 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using ArcFlashCalculator.Security;
+using System.Text.RegularExpressions;
+using System.Data.Entity;
 
 namespace ArcFlashCalculator.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         //GET: Admin/Delete
@@ -15,8 +19,13 @@ namespace ArcFlashCalculator.Controllers
         {
             try
             {
-                List<Users> userList = ViewModels.GetAllUsers();
-                return View(userList);
+                AdminControl adminControl = new AdminControl();
+                string emailAddress = GetEmailFromToken(FormsAuthentication.FormsCookieName);
+                if (CheckForRootAdmin(emailAddress))
+                {
+                    return View(adminControl);
+                }
+                return RedirectToAction("ReportHome");
             }
             catch (Exception e)
             {
@@ -51,9 +60,8 @@ namespace ArcFlashCalculator.Controllers
         {
             try
             {
-                User user = new User();
-                user.error = false;
-                return View(user);
+                Login login = new Login();
+                return View(login);
             }
             catch (Exception e)
             {
@@ -66,30 +74,52 @@ namespace ArcFlashCalculator.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AllowAnonymous]
-        public ActionResult Login(User user)
+        public ActionResult Login(Login login)
         {
             try
             {
-                //A user has been returned. Pull out the email that is specified. Has the user's password and compare it to the hash in the database.
                 if (ModelState.IsValid)
                 {
-                    //Get the information for the user they are trying to login as
-                    Users u = ViewModels.GetUser(user.user.Email);
+                    //A user has been returned. Pull out the email that is specified. Has the user's password and compare it to the hash in the database.
+                    if (login.user.Email != null && login.user.Password != null)
+                    {
+                        if (ViewModels.CheckForUser(login.user.Email))
+                        {
+                            //Get the information for the user they are trying to login as
+                            Users u = ViewModels.GetUser(login.user.Email);
 
-                    //Check to the entered password against the saved password
-                    if (Encrypter.VerifyHash(user.user.Password, u.Password))
-                    {
-                        //TODO: Figure out how to set the validation for a user
-                        RedirectToAction("Create");
-                    }
-                    else
-                    {
-                        //It failed so return the view with the user input
-                        user.error = true;
-                        return View(user);
+                            //Check to the entered password against the saved password
+                            if (Encrypter.VerifyHash(login.user.Password, u.Password))
+                            {
+                                if (FormsAuthentication.FormsCookieName != null)
+                                {
+                                    FormsAuthentication.SignOut();
+                                }
+                                //TODO: Figure out how to set the validation for a user
+                                FormsAuthentication.SetAuthCookie(login.user.Email, false);
+                                return RedirectToAction("ReportHome");
+                            }
+                            else
+                            {
+                                //It failed so return the view with the user input
+                                login.Error = true;
+                                login.user.Password = null;
+                                return View(login);
+                            }
+                        }
+                        else
+                        {
+                            login.Error = true;
+                            login.user.Email = null;
+                            login.user.Password = null;
+                            return View(login);
+                        }
                     }
                 }
-                return View();
+                login.Error = true;
+                login.user.Email = null;
+                login.user.Password = null;
+                return View(login);
             }
             catch (Exception e)
             {
@@ -99,13 +129,16 @@ namespace ArcFlashCalculator.Controllers
         }
 
         //GET: Admin/Password
-        public ActionResult Password()
+        public ActionResult ChangePassword()
         {
             try
             {
                 ChangePassword cp = new ChangePassword();
-                cp.UserOrPasswordError = false;
-                cp.confirmError = false;
+                string cookieName = FormsAuthentication.FormsCookieName;
+                HttpCookie authCookie = HttpContext.Request.Cookies[cookieName];
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
+                string emailAddress = ticket.Name;
+                cp.user.Email = emailAddress;
                 return View(cp);
             }
             catch (Exception e)
@@ -118,37 +151,79 @@ namespace ArcFlashCalculator.Controllers
         //POST: Admin/Password
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Password(ChangePassword changedPassword)
+        public ActionResult ChangePassword(ChangePassword changedPassword)
         {
             try
             {
+                //ModelState doesn't seem to serve much of a purpose - manually check if fields are null
                 if (ModelState.IsValid)
                 {
-                    //Check that the new and confirmed password match
-                    if (changedPassword.newPassword.Equals(changedPassword.confirmPassword))
+                    //Check that no fields were left blank
+                    if (changedPassword.user.Email != null && changedPassword.user.Password != null && changedPassword.confirmPassword != null && changedPassword.newPassword != null)
                     {
-                        //Email is our email
-                        Users user = ViewModels.GetUser(changedPassword.email);
-
-                        //Check that the oldpassword matches our password
-                        if (Encrypter.VerifyHash(changedPassword.oldPassword, user.Email))
+                        //Check that the password is complex enough
+                        if (CheckComplexity(changedPassword.newPassword))
                         {
-                            user.Password = Encrypter.ComputeHash(changedPassword.newPassword, null);
-                            RedirectToAction("Create");
+                            //Check that the new and confirmed password match
+                            if (changedPassword.newPassword.Equals(changedPassword.confirmPassword))
+                            {
+                                //Email is our email
+                                Users user = ViewModels.GetUser(changedPassword.user.Email);
+
+                                //Check that the oldpassword matches our password
+                                if (Encrypter.VerifyHash(changedPassword.user.Password, user.Password))
+                                {
+                                    user.Password = Encrypter.ComputeHash(changedPassword.newPassword, null);
+
+                                    ViewModels.UpdateUser(user, System.Data.Entity.EntityState.Modified);
+                                    return RedirectToAction("ReportHome");
+                                }
+                                else
+                                {
+                                    changedPassword.UserOrPasswordError = true;
+                                    changedPassword.blankFieldError = false;
+                                    changedPassword.confirmError = false;
+                                    changedPassword.PasswordComplexityError = false;
+                                    changedPassword.user.Email = null;
+                                    changedPassword.user.Password = null;
+                                    return View(changedPassword);
+                                }
+                            }
+                            else
+                            {
+                                changedPassword.confirmError = true;
+                                changedPassword.PasswordComplexityError = false;
+                                changedPassword.blankFieldError = false;
+                                changedPassword.UserOrPasswordError = false;
+                                changedPassword.user.Email = null;
+                                changedPassword.user.Password = null;
+                                return View(changedPassword);
+                            }
                         }
                         else
                         {
-                            changedPassword.UserOrPasswordError = true;
+                            changedPassword.PasswordComplexityError = true;
+                            changedPassword.blankFieldError = false;
+                            changedPassword.confirmError = false;
+                            changedPassword.UserOrPasswordError = false;
+                            changedPassword.user.Email = null;
+                            changedPassword.user.Password = null;
                             return View(changedPassword);
                         }
                     }
                     else
                     {
-                        changedPassword.confirmError = true;
+                        changedPassword.blankFieldError = true;
+                        changedPassword.PasswordComplexityError = false;
+                        changedPassword.confirmError = false;
+                        changedPassword.UserOrPasswordError = false;
+                        changedPassword.user.Email = null;
+                        changedPassword.user.Password = null;
                         return View(changedPassword);
                     }
                 }
-                return View();
+                changedPassword.UserOrPasswordError = true;
+                return View(changedPassword);
             }
             catch (Exception e)
             {
@@ -176,7 +251,7 @@ namespace ArcFlashCalculator.Controllers
         {
             try
             {
-                return View();
+                return View("Report60Hz");
             }
             catch (Exception e)
             {
@@ -218,8 +293,7 @@ namespace ArcFlashCalculator.Controllers
         {
             try
             {
-                User newUser = new User();
-                newUser.error = false;
+                CreateNewUser newUser = new CreateNewUser();
                 return View(newUser);
             }
             catch (Exception e)
@@ -232,27 +306,55 @@ namespace ArcFlashCalculator.Controllers
         //POST: Admin/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(User newUser)
+        public ActionResult Create(CreateNewUser newUser)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    //TODO: Check the cookie
-                    Users nameCheck = ViewModels.GetUser(newUser.user.Email);
-                    if (nameCheck == null)
+                    if (CheckValidateEmail(newUser.user.Email))
                     {
-                        newUser.user.Password = Encrypter.ComputeHash(newUser.user.Password, null);
-                        ViewModels.CreateUser(newUser.user);
+                        if (!ViewModels.CheckForUser(newUser.user.Email))
+                        {
+                            if (CheckComplexity(newUser.user.Password))
+                            {
+                                newUser.user.Password = Encrypter.ComputeHash(newUser.user.Password, null);
+                                Users myUser = new Users();
+                                myUser.Email = newUser.user.Email;
+                                myUser.Password = newUser.user.Password;
+                                ViewModels.CreateUser(myUser);
+                            }
+                            else
+                            {
+                                newUser.passwordError = true;
+                                newUser.emailError = false;
+                                newUser.blankFieldError = false;
+                                newUser.user.Email = null;
+                                newUser.user.Password = null;
+                                return View(newUser);
+                            }
+                        }
+                        else
+                        {
+                            newUser.emailError = true;
+                            newUser.passwordError = false;
+                            newUser.blankFieldError = false;
+                            newUser.user.Email = null;
+                            newUser.user.Password = null;
+                            return View(newUser);
+                        }
                     }
                     else
                     {
-                        //The name was already assigned
-                        newUser.error = true;
+                        newUser.emailError = true;
+                        newUser.passwordError = false;
+                        newUser.blankFieldError = false;
+                        newUser.user.Email = null;
+                        newUser.user.Password = null;
                         return View(newUser);
                     }
                 }
-                return View();
+                return RedirectToAction("Delete");
             }
             catch (Exception e)
             {
@@ -261,19 +363,7 @@ namespace ArcFlashCalculator.Controllers
             }
         }
 
-        public ActionResult ChangePassword()
-        {
-            try
-            {
-                return View();
-            }
-            catch (Exception e)
-            {
-                DataLink.LogError(e);
-                throw;
-            }
-        }
-
+        //GET: Admin/Account
         public ActionResult Account()
         {
             try
@@ -286,6 +376,154 @@ namespace ArcFlashCalculator.Controllers
                 DataLink.LogError(e);
                 throw;
             }
+        }
+
+        //GET: Admin/Logoff
+        public ActionResult LogOff()
+        {
+            try
+            {
+                FormsAuthentication.SignOut();
+                return RedirectToAction("Login");
+            }
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
+        }
+
+        //GET: Admin/PasswordOverride
+        public ActionResult PasswordOverride(int? id)
+        {
+            try
+            {
+                AdminChangePassword change = new AdminChangePassword();
+                if (id != null)
+                {
+                    Users user = ViewModels.GetUser(id);
+                    change.user.Email = user.Email;
+                }
+                return View(change);
+            }
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
+        }
+
+        //POST: Admin/PasswordOverride
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult PasswordOverride(AdminChangePassword change, int id)
+        {
+            try
+            {
+                //Check inputs are not null               
+                if (ModelState.IsValid)
+                {
+                    if (change.confirmPassword != null && change.newPassword != null)
+                    {
+                        //Check that new is equal to confirm
+                        if (change.confirmPassword.Equals(change.newPassword))
+                        {
+                            //Check password complexity
+                            if (CheckComplexity(change.newPassword))
+                            {
+                                change.user = ViewModels.GetUser(id);
+                                change.user.Password = Encrypter.ComputeHash(change.newPassword, null);
+                                ViewModels.UpdateUser(change.user, EntityState.Modified);
+                                return RedirectToAction("Delete");
+                            } else
+                            {
+                                change.ComplexityError = true;
+                                change.confirmError = change.blankFieldError = false;
+                                change.newPassword = change.confirmPassword = null;
+                                return View(change);
+                            }
+                        } else
+                        {
+                            change.confirmError = true;
+                            change.ComplexityError = change.blankFieldError = false;
+                            change.newPassword = change.confirmPassword = null;
+                            return View(change);
+                        }
+                    } else
+                    {
+                        change.blankFieldError = true;
+                        change.ComplexityError = change.confirmError = false;
+                        change.newPassword = change.confirmPassword = null;
+                        return View(change);
+                    }
+                }
+                change.confirmError = true;
+                change.ComplexityError = change.blankFieldError = false;
+                change.newPassword = null;
+                change.confirmPassword = null;
+                return View(change);
+            }
+            catch (Exception e)
+            {
+                DataLink.LogError(e);
+                throw;
+            }
+        }
+
+        public bool CheckComplexity(string password)
+        {
+            int digits = 0;
+            int uppers = 0;
+            int symbols = 0;
+            if (password.Length >= 15 && password.Length <= 25)
+            {
+                foreach (char c in password)
+                {
+                    if (char.IsDigit(c)) digits++;
+                    if (char.IsUpper(c)) uppers++;
+                    if (!char.IsDigit(c) && !char.IsLetter(c)) symbols++;
+                }
+
+                if (digits >= 2)
+                {
+                    if (uppers >= 2)
+                    {
+                        if (symbols >= 2)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        public bool CheckForRootAdmin(string email)
+        {
+            Users admin = ViewModels.GetUser(email);
+            if (admin.AdminBit == true)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool CheckValidateEmail(string email)
+        {
+            Regex rgx = new Regex("[@]");
+            if (rgx.IsMatch(email))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public string GetEmailFromToken(string cookieName)
+        {
+            HttpCookie authCookie = HttpContext.Request.Cookies[cookieName];
+            FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
+            string emailAddress = ticket.Name;
+            return emailAddress;
         }
     }
 }

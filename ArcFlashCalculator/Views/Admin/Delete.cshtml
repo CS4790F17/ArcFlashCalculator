@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ArcFlashCalculator.Models.Users>
+﻿@model ArcFlashCalculator.Models.AdminControl
 @{
     Layout = "~/Views/Shared/_AdminNavbarPartial.cshtml";
 }
@@ -19,7 +19,7 @@
             <th>Date Added</th>
             <th></th>
         </tr>
-       @foreach (var item in Model)
+       @foreach (var item in Model.users)
        {
         <tr>
             <td>
@@ -32,7 +32,7 @@
                 @using (Ajax.BeginForm("Delete", "Admin", new { id = item.Id }, new AjaxOptions { HttpMethod = "POST", OnSuccess = "function(){alert('success')}", OnFailure = "function(){alert('epic fail')}" }))
                 {
                     @Html.AntiForgeryToken()
-                    @Html.ActionLink("Change Password", "ChangePassword", new { id = item.Id }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Change Password", "PasswordOverride", new { id = item.Id }, new { @class = "btn btn-primary" })
                     <input type="submit" value="Delete Account" class="btn btn-danger" />
                 }
             </td>

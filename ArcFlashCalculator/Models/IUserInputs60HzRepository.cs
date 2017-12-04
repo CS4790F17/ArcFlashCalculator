@@ -18,7 +18,7 @@ namespace ArcFlashCalculator.Models
             if (!String.IsNullOrWhiteSpace(globalSearch))
                 {
                     query = query.Where(p => (p.TransSize.ToString() + " " + p.Impedance.ToString() + " " + p.SCC.ToString() + " "
-                                                + p.FaultClearing.ToString() + " " + p.Voltage.ToString() + " " + p.OEInFreshAir.ToString() + " "
+                                                + p.FaultClearing.ToString() + " " + p.Voltage.ToString() + " " + p.FreeAir.ToString() + " "
                                                 + p.IPAddress + " " + p.date.ToString()).Contains(globalSearch));
                 }
 
@@ -58,11 +58,11 @@ namespace ArcFlashCalculator.Models
                             else
                                 query = query.OrderByDescending(p => p.Voltage);
                             break;
-                        case "oeinfreshair":
+                        case "FreeAir":
                             if (!desc)
-                                query = query.OrderBy(p => p.OEInFreshAir);
+                                query = query.OrderBy(p => p.FreeAir);
                             else
-                                query = query.OrderByDescending(p => p.OEInFreshAir);
+                                query = query.OrderByDescending(p => p.FreeAir);
                             break;
                         case "ipaddress":
                             if (!desc)

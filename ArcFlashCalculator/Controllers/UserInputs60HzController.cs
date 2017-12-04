@@ -78,7 +78,7 @@ namespace ArcFlashCalculator.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,TransSize,Impedance,SCC,FaultClearing,Voltage,OEInFreshAir,IPAddress")] UserInputs60Hz userInputs60Hz)
+        public ActionResult Create([Bind(Include = "Id,TransSize,Impedance,SCC,FaultClearing,Voltage,FreeAir,IPAddress")] UserInputs60Hz userInputs60Hz)
         {
             try
             {
@@ -126,7 +126,7 @@ namespace ArcFlashCalculator.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,TransSize,Impedance,SCC,FaultClearing,Voltage,OEInFreshAir,IPAddress")] UserInputs60Hz userInputs60Hz)
+        public ActionResult Edit([Bind(Include = "Id,TransSize,Impedance,SCC,FaultClearing,Voltage,FreeAir,IPAddress")] UserInputs60Hz userInputs60Hz)
         {
             try
             {

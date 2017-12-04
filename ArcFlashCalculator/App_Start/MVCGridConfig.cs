@@ -2,11 +2,12 @@
 
 namespace ArcFlashCalculator
 {
+
     using MVCGrid.Models;
     using MVCGrid.Web;
     using System.Web.Mvc;
     using Models;
-    public class MVCGridConfig
+    public static class MVCGridConfig
     {
         public static void RegisterGrids()
         {
@@ -31,7 +32,7 @@ namespace ArcFlashCalculator
             MVCGridDefinitionTable.Add("UserInputs60Hz", new MVCGridBuilder<UserInputs60Hz>(colDefaults)
                 .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .WithSorting(sorting: true, defaultSortColumn: "Id", defaultSortDirection: SortDirection.Dsc)
-            //    .WithPaging(paging: true, itemsPerPage: 10, allowChangePageSize: true, maxItemsPerPage: 100)
+                .WithPaging(paging: true, itemsPerPage: 10, allowChangePageSize: true, maxItemsPerPage: 100)
                 .WithAdditionalQueryOptionNames("search")
                 .AddColumns(cols =>
                 {
@@ -53,9 +54,9 @@ namespace ArcFlashCalculator
                     cols.Add("Voltage").WithHeaderText("Voltage")
                          .WithVisibility(true, true)
                          .WithValueExpression(p => p.Voltage.ToString());
-                    cols.Add("OEInFreshAir").WithHeaderText("OEInFreshAir")
+                    cols.Add("FreeAir").WithHeaderText("FreeAir")
                          .WithVisibility(true, true)
-                         .WithValueExpression(p => p.OEInFreshAir.ToString());
+                         .WithValueExpression(p => p.FreeAir.ToString());
                     cols.Add("IPAddress").WithHeaderText("IP Address")
                         .WithVisibility(true, true)
                         .WithValueExpression(p => p.IPAddress);

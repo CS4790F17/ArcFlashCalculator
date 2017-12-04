@@ -53,6 +53,11 @@ namespace ArcFlashCalculator.Models
             return DataLink.GetUser(email);
         }
 
+        public static bool CheckForUser(string email)
+        {
+            return DataLink.CheckForUser(email);
+        }
+
         public static void CreateUser(Users u)
         {
             DataLink.CreateUser(u);
@@ -201,26 +206,32 @@ namespace ArcFlashCalculator.Models
     {
         public ChangePassword()
         {
-
+            user = new Users();
+            confirmError = false;
+            UserOrPasswordError = false;
+            PasswordComplexityError = false;
+            blankFieldError = false;
         }
 
-        public string email { get; set; }
-        public string oldPassword { get; set; }
+        public Users user { get; set; }
         public string newPassword { get; set; }
         public string confirmPassword { get; set; }
         public bool confirmError { get; set; }
         public bool UserOrPasswordError { get; set; }
+        public bool PasswordComplexityError { get; set; }
+        public bool blankFieldError { get; set; }
     }
 
-    public class User
+    public class Login
     {
-        public User()
+        public Login()
         {
-
+            user = new Users();
+            Error = false;
         }
 
         public Users user { get; set; }
-        public bool error { get; set; }
+        public bool Error { get; set; }
     }
 
     public class UserIP
@@ -232,5 +243,49 @@ namespace ArcFlashCalculator.Models
 
         public string IPAddress { get; set; }
         public DateTime? DateAdded { get; set; }
+    }
+
+    public class CreateNewUser
+    {
+        public CreateNewUser()
+        {
+            user = new Users();
+            passwordError = false;
+            emailError = false;
+            blankFieldError = false;
+        }
+
+        public Users user { get; set; }
+        public bool passwordError { get; set; }
+        public bool emailError { get; set; }
+        public bool blankFieldError { get; set; }
+    }
+
+    public class AdminControl
+    {
+        public AdminControl()
+        {
+            users = ViewModels.GetAllUsers();
+            isRootAdmin = false;
+        }
+
+        public List<Users> users { get; set; }
+        public bool isRootAdmin { get; set; }
+    }
+
+    public class AdminChangePassword
+    {
+        public AdminChangePassword()
+        {
+            user = new Users();
+            ComplexityError = false;
+        }
+
+        public Users user { get; set; }
+        public string newPassword { get; set; }
+        public string confirmPassword { get; set; }
+        public bool confirmError { get; set; }
+        public bool ComplexityError { get; set; }
+        public bool blankFieldError { get; set; }
     }
 }
