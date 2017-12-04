@@ -56,10 +56,20 @@ var Boundaries = {
     //New calculation for the 60Hz page enclosed calculations
    arcFlashEnclosed60Hz: function (volts, amps, time) {
        "use strict";
-       // var v2 = volts * volts,
-       //     rsys = volts / amps,
-       //     numerator = 0.005 * (v2/rsys) * time,
-       //     cm = Math.ceil(3 * Math.sqrt(numerator / 1.2));
+       /*
+              * Empirically derived formula for the derived Arc Flash Boundary Calculation
+              * Db = Math.pow((4.184 * Cf * En * (t / 0.2) * (Math.pow(610, x) / Eb)), x)
+              */
+       Db = 0; //Distance (mm) of the arc flash boundary from the arcing point
+       Cf = 0; //Calculation factor - 1.0 for voltages above 1kV and 1.5 for voltages at or below 1kV
+       En = 0; //Incident energy normalized - pulled from the UI.js calculation
+       t = 0; //Time (s) 
+       x = 0; // Distance exponent from Table D.4.2
+       Eb = 0; //Incident in J/cm^2 at the distance of the Arc Flash Boundary
+       V = 0; //System voltage, kV
+       Ibf = 0; //Bolted three-phase available short circuit current 
+
+
        var cm = Math.ceil(Math.sqrt((0.005 / 1.2) * 3 * volts * amps * time));
        return Boundaries.toDisplay(cm);
    },
