@@ -330,7 +330,8 @@ var UI = {
 
             $('#arc-flash-free-space-incident-energy').html(freeSpaceCal.toFixed(1) + ' cal/cm<sup>2</sup>');
 
-            $('#arc-flash-display-free-space').text(Boundaries.arcFlashOpen(volts, amps, seconds));
+            //////////////////////////////////////////// NEED TO COMPLETE
+            $('#arc-flash-display-free-space').text(Boundaries.arcFlashOpen60Hz(volts, amps, seconds, freeSpaceCal.toFixed(1), distExponent));
 
             // enclosed space
             //var cal = Boundaries.incidentEnergyAt18Display(volts, amps, seconds);
@@ -347,7 +348,8 @@ var UI = {
 
             $('#arc-flash-incident-energy').html(cal.toFixed(1) + ' cal/cm<sup>2</sup>');
 
-            $('#arc-flash-display-enclosed-space').text(Boundaries.arcFlashEnclosed(volts, amps, seconds));
+            //////////////////////////////////////////// NEED TO COMPLETE
+            $('#arc-flash-display-enclosed-space').text(Boundaries.arcFlashEnclosed60Hz(volts, amps, seconds, cal, distExponent));
 
         }
         else {
