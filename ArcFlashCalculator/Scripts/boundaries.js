@@ -47,7 +47,7 @@ var Boundaries = {
        Eb = 5.0; //Incident in J/cm^2 at the distance of the Arc Flash Boundary
        V = volts; //System voltage, kV
 
-       Db = 
+       Db = Math.pow((4.184 * Cf * En * (t / 0.2) * (Math.pow(610,x) / Eb)), 1/x)
 
        //var cm = Math.ceil(Math.sqrt((0.005 / 1.2) * volts * amps * time));
        return Boundaries.toDisplay(Db);
@@ -68,6 +68,8 @@ var Boundaries = {
        var x = dispatchEvent; // Distance exponent from Table D.4.2
        var Eb = 5.0; //Incident in J/cm^2 at the distance of the Arc Flash Boundary - The is the onset of a second degree burn which is assumed to be when the skin receives 5.0 J/cm^2 of incident energy. 
        var V = volts; //System voltage, kV
+
+       Db = Math.pow((4.184 * Cf * En * (t / 0.2) * (Math.pow(610, x) / Eb)), 1 / x)
 
        //var cm = Math.ceil(Math.sqrt((0.005 / 1.2) * 3 * volts * amps * time));
        return Boundaries.toDisplay(Db);
