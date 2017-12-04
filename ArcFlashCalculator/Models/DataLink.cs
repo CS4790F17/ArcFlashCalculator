@@ -353,9 +353,9 @@ namespace ArcFlashCalculator.Models
         [Required(ErrorMessage = "A Voltage is required")]
         public int Voltage { get; set; }
 
-        [DisplayName("Output Energy in Free Air")]
+        [DisplayName("Free Air")]
         [Required(ErrorMessage = "A Output Energy in Free Air is required")]
-        public decimal OEInFreshAir { get; set; }
+        public decimal FreeAir { get; set; }
 
         public string IPAddress { get; set; }
 
