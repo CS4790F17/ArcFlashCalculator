@@ -205,7 +205,51 @@ var UI = {
 };
 
 $(function() {
-   "use strict";
+    "use strict";
+
+    $("#workersPopover").popover({
+        trigger: 'hover',
+        title: '<h3>Workers Definitions</h3>',
+        content: "<strong>Alone</strong> - No other workers required.<br/><strong>Two Person</strong> - An additional worker qualified to work on energized circuits, understanding the work activities and the hazards present, and trained to know what to do in case of an electrical accident involving the other worker. Must be within eyesight of the hazardous task.<br/><strong>Safety Watch</strong> - The safety watch should be a worker qualified to work on energized circuits who accepts responsibility for monitoring qualified worker(s) performing high-hazard electrical work. Must be actively working with/beside the primary worker and have the same PPE and training.",
+        html: true
+    });
+
+    $("#workerControlPopover").popover({
+        trigger: 'hover',
+        title: '<h3>Training Definitions</h3>',
+        content: "<strong>EEWP</strong> - Energized Electrical Work Permit, higher level signing authority required<br/><strong>SOP</strong> - Standard Operating Procedure",
+        html: true
+    });
+
+    $("#enclosedBoxArcPopover").popover({
+        trigger: 'hover',
+        content: "<p>Threshold distance for 2<sup>nd</sup> degree burn where the worker is exposed to 1.2 cal/cm<sup>2</sup> (5 J/cm<sup>2</sup>). Assumes absolute worst case of all energy being converted into radiant heat.</p><p>Calculated from:<br/>Distance (cm) = sqrt(0.05 * Energy)</p>",
+        html: true
+    });
+
+    $("#prohibitedApproachPopover").popover({
+        trigger: 'hover',
+        content: "Distance from an exposed conductor within which work is considered the same as making contact with the electrical conductor or circuit part.",
+        html: true
+    });
+    
+    $("#restrictedApproachPopover").popover({
+        trigger: 'hover',
+        content: "Distance from an exposed conductor within which there is an increased risk of shock due to electrical arc over combined with inadvertent movement. PPE required.",
+        html: true
+    });
+    
+    $("#limitedApproachPopover").popover({
+        trigger: 'hover',
+        content: "Distance from an exposed conductor within which a shock hazard exists. Training or escort required.",
+        html: true
+    });
+
+    $("#cdEnergyPopover").popover({
+        trigger: 'hover',
+        content: "Energy = 0.5 CV<sup>2</sup>",
+        html: true
+    });
 
    UI.evaluate();
    

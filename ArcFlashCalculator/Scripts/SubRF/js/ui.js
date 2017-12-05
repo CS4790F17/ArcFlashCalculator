@@ -224,7 +224,58 @@ var UI = {
 };
 
 $(function() {
-   "use strict";
+    "use strict";
+
+    $("#workersPopover").popover({
+        trigger: 'hover',
+        title: '<h3>Workers Definitions</h3>',
+        content: "<strong>Alone</strong> - No other workers required.<br/><strong>Two Person</strong> - An additional worker qualified to work on energized circuits, understanding the work activities and the hazards present, and trained to know what to do in case of an electrical accident involving the other worker. Must be within eyesight of the hazardous task.<br/><strong>Safety Watch</strong> - The safety watch should be a worker qualified to work on energized circuits who accepts responsibility for monitoring qualified worker(s) performing high-hazard electrical work. Must be actively working with/beside the primary worker and have the same PPE and training.",
+        html: true
+    });
+
+    $("#workerControlPopover").popover({
+        trigger: 'hover',
+        title: '<h3>Training Definitions</h3>',
+        content: "<strong>EEWP</strong> - Energized Electrical Work Permit, higher level signing authority required<br/><strong>SOP</strong> - Standard Operating Procedure",
+        html: true
+    });
+
+    $("#arcFlashBoundariesPopover").popover({
+        trigger: 'hover',
+        content: "From:<p>Arc Flash Calculations for Exposures to DC Systems - Daniel R. Doan, Senior Member, IEEE - IEEE TRANSACTIONS ON INDUSTRY APPLICATIONS, VOL. 46, NO. 6, NOVEMBER/DECEMBER 2010</p><p>DC Arc Flash Calculations – Arc-InOpen-Air &amp; Arc-In-A-Box Using a Simplified Approach, Fontaine &amp; Walsh Electrical Safety Workshop (ESW), 2012 IEEE IAS, Date: Jan. 31 2012-Feb. 3 2012</p>",
+        html: true
+    });
+
+    $("#freeSpaceIncidentPopover").popover({
+        trigger: 'hover',
+        content: "<p>Free space incident energy at a standard working distance of 18&quot;. Assumes worst case of all energy being converted into radiant heat.</p><p>Calculated from:<br/>Incident Energy = 0.005 * Volts * Current * Time / 46<sup>2</sup><br/>(46cm = 18&quot;)</p><p>Any questions should be referred to an electrical safety expert.</p>",
+        html: true
+    });
+
+    $("#freeSpaceArcFlashPopover").popover({
+        trigger: 'hover',
+        content: "<p>Free space threshold distance for 2<sup>nd</sup> degree burn where the worker is exposed to 1.2 cal/cm<sup>2</sup> (5 J/cm<sup>2</sup>) utilizing a multiplying factor of 3 * Free Space. Assumes absolute worst case of all energy being converted into radiant heat.</p><p>Calculated from:<br/> Distance (cm) = sqrt((0.005 / 1.2) * Volts * Current * Time)</p><p>PPE is not required when working at or greater than this distance.</p>",
+        html: true
+    });
+
+    $("#enclosedBoxIncidentPopover").popover({
+        trigger: 'hover',
+        content: "<p>Enclosed Box incident energy at a standard working distance of 18&quot;. Assumes worst case of all energy being converted into radiant heat.</p><p>Calculated from:<br/>Incident Energy = 3 * 0.005 * Volts * Current * Time / 46<sup>2</sup><br/>(46cm = 18&quot;)</p><p>A safety factor of 3 * Incident Energy is utilized to account for box energy focusing effects. Any questions should be referred to an electrical safety expert.</p>",
+        html: true
+    });
+
+    $("#enclosedBoxArcFlashPopover").popover({
+        trigger: 'hover',
+        content: "<p>Enclosed Box threshold distance for 2<sup>nd</sup> degree burn where the worker is exposed to 1.2 cal/cm<sup>2</sup> (5 J/cm<sup>2</sup>) utilizing a multiplying factor of 3 * Free Space. Assumes absolute worst case of all energy being converted into radiant heat.</p><p>Calculated from:<br/> Distance (cm) = sqrt((0.005 / 1.2) * 3 * Volts * Current * Time)</p><p>PPE is not required when working at or greater than this distance.</p>",
+        html: true
+    });
+
+    $("#workerModePopover").popover({
+        title: 'Work Modes',
+        trigger: 'hover',
+        content: '<strong>Mode 0</strong> - Electrically safe work condition<br/><strong>Mode 1</strong> - De-energize and verify a safe work condition exists<br/><strong>Mode 2</strong> - Testing, troubleshoot, tune and adjust<br/><strong>Mode 3</strong> - Energized, Energized Electrical Work Permit (EEWP) to modify, repair or adjust"',
+        html: true
+    });
 
    UI.evaluate();
    

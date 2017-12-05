@@ -97,7 +97,7 @@
                     <div class="col-md-4">
                         <div id="joules-display" class="display"></div><h6>
                             DC Energy
-                            <i class="icon-question-sign help-tooltip" data-title="Energy = 0.5 CV<sup>2</sup>"></i>
+                            <span class="glyphicon glyphicon-question-sign" href="#" id="dcEnergyPopover" data-toggle="popover"></span>
                         </h6>
                     </div>
                 </div>
@@ -110,17 +110,14 @@
                         <div id="limited-approach-fixed-circuit-display" class="display"></div>
                         <h6>
                             Limited Approach Fixed Circuit Part
-                            <i id="limited-approach-help" class="icon-question-sign help-tooltip"
-                                data-title="Distance from an exposed conductor within which a shock hazard exists. Training or escort required."></i>
+                            <span class="glyphicon glyphicon-question-sign" href="#" id="limitedApproachPopover" data-toggle="popover"></span>
                         </h6>
                     </div>
                     <div class="col-md-4">
                         <div id="restricted-approach-display" class="display"></div>
                         <h6>
                             Restricted Approach
-                            <i id="restricted-approach-help" class="icon-question-sign help-tooltip"
-                                data-title="Distance from an exposed conductor within which there is an increased risk of shock
-                    due to electrical arc over combined with inadvertent movement. PPE required."></i>
+                            <span class="glyphicon glyphicon-question-sign" href="#" id="restrictedApproachPopover" data-toggle="popover"></span>
                         </h6>
                     </div>
                 </div>
@@ -129,8 +126,7 @@
                         <div id="prohibited-approach-display" class="display"></div>
                         <h6>
                             Prohibited Approach
-                            <i id="prohibited-approach-help" class="icon-question-sign help-tooltip"
-                                data-title="Distance from an exposed conductor within which work is considered the same as making contact with the electrical conductor or circuit part."></i>
+                            <span class="glyphicon glyphicon-question-sign" href="#" id="prohibitedApproachPopover" data-toggle="popover"></span>
                         </h6>
                     </div>
                 </div>
@@ -145,10 +141,7 @@
                         <div id="arc-flash-display" class="display"></div>
                         <h6>
                             Enclosed Box Arc Flash Boundary for 1.2 cal/cm<sup>2</sup>
-                            <i id="arc-flash-help" class="icon-question-sign help-tooltip"
-                                data-title="<p>Threshold distance for 2<sup>nd</sup> degree burn where the worker is exposed to 1.2 cal/cm<sup>2</sup> (5 J/cm<sup>2</sup>).
-                                Assumes absolute worst case of all energy being converted into radiant heat.</p>
-                                <p>Calculated from:<br/>Distance (cm) = sqrt(0.05 * Energy)</p>"></i>
+                            <span class="glyphicon glyphicon-question-sign" href="#" id="enclosedBoxArcPopover" data-toggle="popover"></span>
                         </h6>
                     </div>
                     <div class="col-md-4">
@@ -175,21 +168,14 @@
             <div class="section">
                 <h3>Safety Requirements</h3>
                 <div class="row results">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div id="safety-req-workers-display" class="display"></div><h6>
-                            Workers <i class="icon-question-sign help-popover"
-                                        data-title="Workers Definitions"
-                                        data-content="<strong>Alone</strong> - No other workers required.<br/>
-                                <strong>Two Person</strong> - An additional worker qualified to work on energized circuits, understanding the work activities and the hazards present, and trained to know what to do in case of an electrical accident involving the other worker. Must be within eyesight of the hazardous task.<br/>
-                                <strong>Safety Watch</strong> - The safety watch should be a worker qualified to work on energized circuits who accepts responsibility for monitoring qualified worker(s) performing high-hazard electrical work. Must be actively working with/beside the primary worker and have the same PPE and training."></i>
+                            Workers <span class="glyphicon glyphicon-question-sign" href="#" id="workersPopover" data-toggle="popover"></span>
                         </h6>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div id="safety-req-work-control-display" class="display"></div><h6>
-                            Work Control <i class="icon-question-sign help-popover"
-                                            data-title="Training Definitions"
-                                            data-content="<strong>EEWP</strong> - Energized Electrical Work Permit, higher level signing authority required<br/>
-                                <strong>SOP</strong> - Standard Operating Procedure"></i>
+                            Work Control <span class="glyphicon glyphicon-question-sign" href="#" id="workerControlPopover" data-toggle="popover"></span>
                         </h6>
                     </div>
                 </div>
@@ -271,3 +257,24 @@
 <!-- using DC boundaries -->
 <script src="~/Scripts/UserInputsDC/js/boundaries.js"></script>
 <script src="~/Scripts/Capacitor/js/ui.js"></script>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        var dialog = bootbox.dialog({
+            title: 'Please Read',
+            message: "This tool is intended to be used ONLY on utilization equipment and never on facility distribution systems (i.e. inside of a breaker box, inside of high voltage switchgear, etc.)! Please see a licensed electrician or your AHJ for all facility related electrical work.",
+            buttons: {
+                confirm: {
+                    label: "Accept",
+                    className: 'btn-success',
+                    callback: function () {
+                        console.log('accept clicked');
+                    }
+                }
+            },
+            closeButton: false,
+            onEscape: false
+        });
+    </script>
+}

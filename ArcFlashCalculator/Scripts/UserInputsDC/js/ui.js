@@ -233,6 +233,20 @@ var UI = {
 $(function() {
    "use strict";
 
+   $("#workersPopover").popover({
+       trigger: 'hover',
+       title: '<h3>Workers Definitions</h3>',
+       content: "<strong>Alone</strong> - No other workers required.<br/><strong>Two Person</strong> - An additional worker qualified to work on energized circuits, understanding the work activities and the hazards present, and trained to know what to do in case of an electrical accident involving the other worker. Must be within eyesight of the hazardous task.<br/><strong>Safety Watch</strong> - The safety watch should be a worker qualified to work on energized circuits who accepts responsibility for monitoring qualified worker(s) performing high-hazard electrical work. Must be actively working with/beside the primary worker and have the same PPE and training.",
+       html: true
+   });
+
+   $("#workerControlPopover").popover({
+       trigger: 'hover',
+       title: '<h3>Training Definitions</h3>',
+       content: "<strong>EEWP</strong> - Energized Electrical Work Permit, higher level signing authority required<br/><strong>SOP</strong> - Standard Operating Procedure",
+       html: true
+   });
+
    UI.evaluate();
    
    // bind form fields

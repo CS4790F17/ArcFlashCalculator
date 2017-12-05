@@ -41,20 +41,14 @@
 
                 <div class="form-group">
                     <label>
-                        Duration of Exposure (Seconds) <i class="icon-question-sign help-tooltip"
-                                                            data-title="Clearing time of upstream fuse or circuit breaker. System Inductance should be taken into account when deriving fuse/breaker clearing time. In addition, when deriving fuse or circuit breaker clearing time the Arcing Current = 0.5 * Short Circuit Current since at the max power point the Arc resistance = System resistance. Enter 2 seconds if you do not know the clearing time."></i>:
+                        Duration of Exposure (Seconds) <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Clearing time of upstream fuse or circuit breaker. System Inductance should be taken into account when deriving fuse/breaker clearing time. In addition, when deriving fuse or circuit breaker clearing time the Arcing Current = 0.5 * Short Circuit Current since at the max power point the Arc resistance = System resistance. Enter 2 seconds if you do not know the clearing time."></span>:
                     </label>
                     <input class="form-control" id="duration-input" type="number" />
                 </div>
 
                 <div class="form-group">
                     <label>
-                        Work Mode <i id="work-mode-help" class="icon-question-sign help-popover"
-                                        data-title="Work Modes"
-                                        data-content="<strong>Mode 0</strong> - Electrically safe work condition<br/>
-                                <strong>Mode 1</strong> - De-energize and verify a safe work condition exists<br/>
-                                <strong>Mode 2</strong> - Testing, troubleshoot, tune and adjust<br/>
-                                <strong>Mode 3</strong> - Energized, Energized Electrical Work Permit (EEWP) to modify, repair or adjust"></i>:
+                        Work Mode <span class="glyphicon glyphicon-question-sign" href="#" id="workerModePopover" data-toggle="popover"></span>:
                     </label>
                     <select class="form-control" id="work-mode-input">
                         <option value="">Select a mode</option>
@@ -114,16 +108,16 @@
                         <div id="limited-approach-movable-conductor-display" class="display"></div>
                         <h6>
                             Limited Approach Movable Conductor
-                            <i id="limited-approach-movable-help" class="icon-question-sign help-tooltip"
-                                data-title="Distance from a bare conductor that can move (e.g., an overhead transmission line conductor). This is unlikely indoors."></i>
+                            <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Distance from a bare conductor that can move (e.g., an overhead transmission line conductor). This is unlikely indoors."></span>
+                           
                         </h6>
                     </div>
                     <div class="col-md-4">
                         <div id="limited-approach-fixed-circuit-display" class="display"></div>
                         <h6>
                             Limited Approach Fixed Circuit Part
-                            <i id="limited-approach-help" class="icon-question-sign help-tooltip"
-                                data-title="Distance from an exposed conductor within which a shock hazard exists. Training or escort required."></i>
+                            <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Distance from an exposed conductor within which a shock hazard exists. Training or escort required."></span>
+                           
                         </h6>
                     </div>
                 </div>
@@ -132,17 +126,17 @@
                         <div id="restricted-approach-display" class="display"></div>
                         <h6>
                             Restricted Approach
-                            <i id="restricted-approach-help" class="icon-question-sign help-tooltip"
-                                data-title="Distance from an exposed conductor within which there is an increased risk of shock
-                    due to electrical arc over combined with inadvertent movement. PPE required."></i>
+                            <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Distance from an exposed conductor within which there is an increased risk of shock
+                    due to electrical arc over combined with inadvertent movement. PPE required."></span>
+                            
                         </h6>
                     </div>
                     <div class="col-md-4">
                         <div id="prohibited-approach-display" class="display"></div>
                         <h6>
                             Prohibited Approach
-                            <i id="prohibited-approach-help" class="icon-question-sign help-tooltip"
-                                data-title="Distance from an exposed conductor within which work is considered the same as making contact with the electrical conductor or circuit part."></i>
+                            <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Distance from an exposed conductor within which work is considered the same as making contact with the electrical conductor or circuit part."></span>
+                           
                         </h6>
                     </div>
                 </div>
@@ -155,33 +149,21 @@
 
             <div class="section">
                 <h3>
-                    Arc Flash Boundaries <i class="icon-question-sign help-tooltip"
-                                            data-title="From:
-                    <p>Arc Flash Calculations for Exposures to DC Systems - Daniel R. Doan, Senior Member, IEEE - IEEE TRANSACTIONS ON INDUSTRY APPLICATIONS, VOL. 46, NO. 6, NOVEMBER/DECEMBER 2010</p>
-                    <p>DC Arc Flash Calculations – Arc-InOpen-Air &amp; Arc-In-A-Box Using a Simplified Approach, Fontaine &amp; Walsh Electrical Safety Workshop (ESW), 2012 IEEE IAS, Date: Jan. 31 2012-Feb. 3 2012</p>"></i>
+                    Arc Flash Boundaries <span class="glyphicon glyphicon-question-sign" href="#" id="arcFlashBoundariesPopover" data-toggle="popover"></span>
                 </h3>
                 <div class="row results">
                     <div class="col-md-4">
                         <div id="arc-flash-free-space-incident-energy" class="display"></div>
                         <h6>
                             Free Space Incident Energy at 18"
-                            <i class="icon-question-sign help-tooltip"
-                                data-title="<p>Free space incident energy at a standard working distance of 18&quot;.
-                                Assumes worst case of all energy being converted into radiant heat.</p>
-                                <p>Calculated from:<br/>
-                                Incident Energy = 0.005 * Volts * Current * Time / 46<sup>2</sup><br/>(46cm = 18&quot;)</p>
-                                <p>Any questions should be referred to an electrical safety expert.</p>"></i>
+                            <span class="glyphicon glyphicon-question-sign" href="#" id="freeSpaceIncidentPopover" data-toggle="popover"></span>
                         </h6>
                     </div>
                     <div class="col-md-4">
                         <div id="arc-flash-display-free-space" class="display"></div>
                         <h6>
                             Free Space Arc Flash Boundary for 1.2 cal/cm<sup>2</sup>
-                            <i class="icon-question-sign help-tooltip"
-                                data-title="<p>Free space threshold distance for 2<sup>nd</sup> degree burn where the worker is exposed to 1.2 cal/cm<sup>2</sup> (5 J/cm<sup>2</sup>)
-                                utilizing a multiplying factor of 3 * Free Space. Assumes absolute worst case of all energy being converted into radiant heat.</p>
-                                <p>Calculated from:<br/> Distance (cm) = sqrt((0.005 / 1.2) * Volts * Current * Time)</p>
-                                <p>PPE is not required when working at or greater than this distance.</p>"></i>
+                            <span class="glyphicon glyphicon-question-sign" href="#" id="freeSpaceArcFlashPopover" data-toggle="popover"></span>
                         </h6>
                     </div>
                 </div>
@@ -190,24 +172,14 @@
                         <div id="arc-flash-incident-energy" class="display"></div>
                         <h6>
                             Enclosed Box Incident Energy at 18"
-                            <i class="icon-question-sign help-tooltip"
-                                data-title="<p>Enclosed Box incident energy at a standard working distance of 18&quot;.
-                                Assumes worst case of all energy being converted into radiant heat.</p>
-                                <p>Calculated from:<br/>
-                                Incident Energy = 3 * 0.005 * Volts * Current * Time / 46<sup>2</sup><br/>(46cm = 18&quot;)</p>
-                                <p>A safety factor of 3 * Incident Energy is utilized to account for box energy focusing effects.
-                                Any questions should be referred to an electrical safety expert.</p>"></i>
+                            <span class="glyphicon glyphicon-question-sign" href="#" id="enclosedBoxIncidentPopover" data-toggle="popover"></span>
                         </h6>
                     </div>
                     <div class="col-md-4">
                         <div id="arc-flash-display-enclosed-space" class="display"></div>
                         <h6>
                             Enclosed Box Arc Flash Boundary for 1.2 cal/cm<sup>2</sup>
-                            <i class="icon-question-sign help-tooltip"
-                                data-title="<p>Enclosed Box threshold distance for 2<sup>nd</sup> degree burn where the worker is exposed to 1.2 cal/cm<sup>2</sup> (5 J/cm<sup>2</sup>)
-                                utilizing a multiplying factor of 3 * Free Space. Assumes absolute worst case of all energy being converted into radiant heat.</p>
-                                <p>Calculated from:<br/> Distance (cm) = sqrt((0.005 / 1.2) * 3 * Volts * Current * Time)</p>
-                                <p>PPE is not required when working at or greater than this distance.</p>"></i>
+                            <span class="glyphicon glyphicon-question-sign" href="#" id="enclosedBoxArcFlashPopover" data-toggle="popover"></span>
                         </h6>
                     </div>
                 </div>
@@ -216,21 +188,14 @@
             <div class="section">
                 <h3>Safety Requirements</h3>
                 <div class="row results">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div id="safety-req-workers-display" class="display"></div><h6>
-                            Workers <i class="icon-question-sign help-popover"
-                                        data-title="Workers Definitions"
-                                        data-content="<strong>Alone</strong> - No other workers required.<br/>
-                                <strong>Two Person</strong> - An additional worker qualified to work on energized circuits, understanding the work activities and the hazards present, and trained to know what to do in case of an electrical accident involving the other worker. Must be within eyesight of the hazardous task.<br/>
-                                <strong>Safety Watch</strong> - The safety watch should be a worker qualified to work on energized circuits who accepts responsibility for monitoring qualified worker(s) performing high-hazard electrical work. Must be actively working with/beside the primary worker and have the same PPE and training."></i>
+                            Workers <span class="glyphicon glyphicon-question-sign" href="#" id="workersPopover" data-toggle="popover"></span>
                         </h6>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div id="safety-req-work-control-display" class="display"></div><h6>
-                            Work Control <i class="icon-question-sign help-popover"
-                                            data-title="Training Definitions"
-                                            data-content="<strong>EEWP</strong> - Energized Electrical Work Permit, higher level signing authority required<br/>
-                                <strong>SOP</strong> - Standard Operating Procedure"></i>
+                            Work Control <span class="glyphicon glyphicon-question-sign" href="#" id="workerControlPopover" data-toggle="popover"></span>
                         </h6>
                     </div>
                 </div>
@@ -381,11 +346,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="~/Scripts/UserInputs60Hz/js/jquery.textchange.min.js"></script>
 
-@*<script src="../js/jquery-1.7.2.min.js"></script>
+<script src="../js/jquery-1.7.2.min.js"></script>
 <script src="../js/jquery.textchange.min.js"></script>
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <script src="../bootstrap/js/bootstrap-tooltip.js"></script>
-<script src="../bootstrap/js/bootstrap-popover.js"></script>*@
+<script src="../bootstrap/js/bootstrap-popover.js"></script>
 <script src="~/Scripts/support.js"></script>
 <script src="~/Scripts/modernizr.js"></script>
 
@@ -398,4 +363,25 @@
 <script src="~/Scripts/SubRF/js/safetyreqs.js"></script>
 <script src="~/Scripts/UserInputs60Hz/js/boundaries.js"></script>
 <script src="~/Scripts/SubRF/js/ui.js"></script>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        var dialog = bootbox.dialog({
+            title: 'Please Read',
+            message: "This tool is intended to be used ONLY on utilization equipment and never on facility distribution systems (i.e. inside of a breaker box, inside of high voltage switchgear, etc.)! Please see a licensed electrician or your AHJ for all facility related electrical work.",
+            buttons: {
+                confirm: {
+                    label: "Accept",
+                    className: 'btn-success',
+                    callback: function () {
+                        console.log('accept clicked');
+                    }
+                }
+            },
+            closeButton: false,
+            onEscape: false
+        });
+    </script>
+}
 
