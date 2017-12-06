@@ -1,6 +1,6 @@
-﻿@model IEnumerable<ArcFlashCalculator.Models.UserInputs60Hz>
+﻿@model IEnumerable<UserInputs60Hz>
+@using ArcFlashCalculator.Models
 @using MVCGrid.Web
-
 @{
     ViewBag.Title = "Report60Hz";
     Layout = "~/Views/Shared/_AdminNavbarPartial.cshtml";
@@ -13,15 +13,16 @@
 
 <div class="panel panel-default">
     <div class="panel-body">
-        @*@Html.Partial("_MVCGridToolbar", new MVCGridToolbarModel()
+        @Html.Partial("_MVCGridToolbar", new MVCGridToolbarModel()
    {
        MVCGridName = "UserInputs60Hz",
        PageSize = true,
        ColumnVisibility = true,
        Export = true,
        GlobalSearch = true
-   })*@
+   })
         @Html.MVCGrid("UserInputs60Hz")
     </div>
 </div>
-
+@Html.ActionLink("Return to Reports Home", "ReportHome", "Admin", new { @class = "btn btn-primary" }, null)
+    

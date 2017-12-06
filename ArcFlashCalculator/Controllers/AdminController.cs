@@ -23,9 +23,14 @@ namespace ArcFlashCalculator.Controllers
                 string emailAddress = GetEmailFromToken(FormsAuthentication.FormsCookieName);
                 if (CheckForRootAdmin(emailAddress))
                 {
+                    ViewBag.isAdmin = true;
                     return View(adminControl);
                 }
-                return RedirectToAction("ReportHome");
+                else
+                {
+                    ViewBag.isAdmin = false;
+                    return RedirectToAction("ReportHome");
+                }
             }
             catch (Exception e)
             {
@@ -139,7 +144,16 @@ namespace ArcFlashCalculator.Controllers
                 FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value);
                 string emailAddress = ticket.Name;
                 cp.user.Email = emailAddress;
-                return View(cp);
+                if (CheckForRootAdmin(emailAddress))
+                {
+                    ViewBag.isAdmin = true;
+                    return View(cp);
+                }
+                else
+                {
+                    ViewBag.isAdmin = false;
+                    return View(cp);
+                }
             }
             catch (Exception e)
             {
@@ -237,7 +251,17 @@ namespace ArcFlashCalculator.Controllers
         {
             try
             {
-                return View();
+                string emailAddress = GetEmailFromToken(FormsAuthentication.FormsCookieName);
+                if (CheckForRootAdmin(emailAddress))
+                {
+                    ViewBag.isAdmin = true;
+                    return View();
+                }
+                else
+                {
+                    ViewBag.isAdmin = false;
+                    return View();
+                }
             }
             catch (Exception e)
             {
@@ -251,7 +275,17 @@ namespace ArcFlashCalculator.Controllers
         {
             try
             {
-                return View("Report60Hz");
+                string emailAddress = GetEmailFromToken(FormsAuthentication.FormsCookieName);
+                if (CheckForRootAdmin(emailAddress))
+                {
+                    ViewBag.isAdmin = true;
+                    return View();
+                }
+                else
+                {
+                    ViewBag.isAdmin = false;
+                    return View();
+                }
             }
             catch (Exception e)
             {
@@ -265,7 +299,17 @@ namespace ArcFlashCalculator.Controllers
         {
             try
             {
-                return View();
+                string emailAddress = GetEmailFromToken(FormsAuthentication.FormsCookieName);
+                if (CheckForRootAdmin(emailAddress))
+                {
+                    ViewBag.isAdmin = true;
+                    return View();
+                }
+                else
+                {
+                    ViewBag.isAdmin = false;
+                    return View();
+                }
             }
             catch (Exception e)
             {
@@ -279,7 +323,17 @@ namespace ArcFlashCalculator.Controllers
         {
             try
             {
-                return View();
+                string emailAddress = GetEmailFromToken(FormsAuthentication.FormsCookieName);
+                if (CheckForRootAdmin(emailAddress))
+                {
+                    ViewBag.isAdmin = true;
+                    return View();
+                }
+                else
+                {
+                    ViewBag.isAdmin = false;
+                    return View();
+                }
             }
             catch (Exception e)
             {
@@ -294,7 +348,17 @@ namespace ArcFlashCalculator.Controllers
             try
             {
                 CreateNewUser newUser = new CreateNewUser();
-                return View(newUser);
+                string emailAddress = GetEmailFromToken(FormsAuthentication.FormsCookieName);
+                if (CheckForRootAdmin(emailAddress))
+                {
+                    ViewBag.isAdmin = true;
+                    return View(newUser);
+                }
+                else
+                {
+                    ViewBag.isAdmin = false;
+                    return View(newUser);
+                }
             }
             catch (Exception e)
             {
@@ -363,20 +427,21 @@ namespace ArcFlashCalculator.Controllers
             }
         }
 
+        //  NO LONGER USED  //
         //GET: Admin/Account
-        public ActionResult Account()
-        {
-            try
-            {
-                List<Users> userList = ViewModels.GetAllUsers();
-                return View(userList);
-            }
-            catch (Exception e)
-            {
-                DataLink.LogError(e);
-                throw;
-            }
-        }
+        //public ActionResult Account()
+        //{
+        //    try
+        //    {
+        //        List<Users> userList = ViewModels.GetAllUsers();
+        //        return View(userList);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        DataLink.LogError(e);
+        //        throw;
+        //    }
+        //}
 
         //GET: Admin/Logoff
         public ActionResult LogOff()
@@ -404,7 +469,17 @@ namespace ArcFlashCalculator.Controllers
                     Users user = ViewModels.GetUser(id);
                     change.user.Email = user.Email;
                 }
-                return View(change);
+                string emailAddress = GetEmailFromToken(FormsAuthentication.FormsCookieName);
+                if (CheckForRootAdmin(emailAddress))
+                {
+                    ViewBag.isAdmin = true;
+                    return View(change);
+                }
+                else
+                {
+                    ViewBag.isAdmin = false;
+                    return View(change);
+                }
             }
             catch (Exception e)
             {
@@ -435,21 +510,24 @@ namespace ArcFlashCalculator.Controllers
                                 change.user.Password = Encrypter.ComputeHash(change.newPassword, null);
                                 ViewModels.UpdateUser(change.user, EntityState.Modified);
                                 return RedirectToAction("Delete");
-                            } else
+                            }
+                            else
                             {
                                 change.ComplexityError = true;
                                 change.confirmError = change.blankFieldError = false;
                                 change.newPassword = change.confirmPassword = null;
                                 return View(change);
                             }
-                        } else
+                        }
+                        else
                         {
                             change.confirmError = true;
                             change.ComplexityError = change.blankFieldError = false;
                             change.newPassword = change.confirmPassword = null;
                             return View(change);
                         }
-                    } else
+                    }
+                    else
                     {
                         change.blankFieldError = true;
                         change.ComplexityError = change.confirmError = false;
