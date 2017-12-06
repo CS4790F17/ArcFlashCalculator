@@ -6,6 +6,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.Data.Entity;
+using System.Web.Mvc;
+using System.Net;
 
 namespace ArcFlashCalculator.Models
 {
@@ -57,6 +59,8 @@ namespace ArcFlashCalculator.Models
                 {
                     if (db.Database.Exists())
                     {
+                        ui.date = DateTime.Now;
+                        ui.IPAddress = HttpContext.Current.Request.UserHostAddress;
                         db.userInputs60Hz.Add(ui);
                         db.SaveChanges();
                     }
@@ -123,6 +127,8 @@ namespace ArcFlashCalculator.Models
                 {
                     if (db.Database.Exists())
                     {
+                        ui.date = DateTime.Now;
+                        ui.IPAddress = HttpContext.Current.Request.UserHostAddress;
                         db.userInputsDC.Add(ui);
                         db.SaveChanges();
                     }
@@ -214,7 +220,7 @@ namespace ArcFlashCalculator.Models
                 {
                     if (db.Database.Exists())
                     {
-                        Users ui = db.users.Where(u => u.Email == email).First();
+                        Users ui = db.users.First(e => e.Email == email);
                         return ui;
                     }
                     else
@@ -231,6 +237,25 @@ namespace ArcFlashCalculator.Models
             }
         }
 
+        public static bool CheckForUser(string email)
+        {
+            try
+            {
+                using (ArcCalculatorDbContext db = new ArcCalculatorDbContext())
+                {
+                    if (db.Database.Exists())
+                    {
+                        Users ui = db.users.First(e => e.Email == email);
+                    }
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+        }
+
         public static void CreateUser(Users u)
         {
             try
@@ -239,6 +264,7 @@ namespace ArcFlashCalculator.Models
                 {
                     if (db.Database.Exists())
                     {
+                        u.DateCreated = DateTime.Now;
                         db.users.Add(u);
                         db.SaveChanges();
                     }
@@ -327,9 +353,9 @@ namespace ArcFlashCalculator.Models
         [Required(ErrorMessage = "A Voltage is required")]
         public int Voltage { get; set; }
 
-        [DisplayName("Output Energy in Free Air")]
+        [DisplayName("Free Air")]
         [Required(ErrorMessage = "A Output Energy in Free Air is required")]
-        public decimal OEInFreshAir { get; set; }
+        public decimal FreeAir { get; set; }
 
         public string IPAddress { get; set; }
 
@@ -366,11 +392,9 @@ namespace ArcFlashCalculator.Models
         public int Id { get; set; }
 
         [DisplayName("Email")]
-        [Required(ErrorMessage = "An Email is required")]
         public string Email { get; set; }
 
         [DisplayName("Password")]
-        [Required(ErrorMessage = "A Password is required")]
         public string Password { get; set; }
 
         public DateTime DateCreated { get; set; }

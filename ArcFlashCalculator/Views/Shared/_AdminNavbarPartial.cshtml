@@ -8,6 +8,24 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    @{ 
+        if(ViewBag.isAdmin)
+        {
+            <style>
+                li.adminMng {
+                    display: inline;
+                }
+            </style>
+        }
+        else
+        {
+            <style>
+                li.adminMng {
+                    display: none;
+                }
+            </style>
+        }
+    }
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header navbar-collapse collapse">
@@ -26,12 +44,11 @@
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">Home</a></li>
-                                    <li><a href="#">60 Hz Power</a></li>
-                                    <li><a href="#">DC</a></li>
-                                    <li><a href="#">Capacitor</a></li>
-                                    <li><a href="#">Battery</a></li>
-                                    <li><a href="#">Sub RF (1Hz-3kHz)</a></li>
+                                    <li> @Html.ActionLink("60Hz Power", "Index", "UserInputs60Hz", new { @class = "btn btn-default" }, null) </li>
+                                    <li> @Html.ActionLink("DC", "Index", "UserInputsDCs", new { @class = "btn btn-default" }, null) </li>
+                                    <li> @Html.ActionLink("Capacitor", "Index", "Capacitor", new { @class = "btn btn-default" }, null) </li>
+                                    <li> @Html.ActionLink("Battery", "Index", "Battery", new { @class = "btn btn-default" }, null) </li>
+                                    <li> @Html.ActionLink("Sub-RF (1Hz - 3kHz)", "Index", "SubRF", new { @class = "btn btn-default" }, null) </li>
                                 </ul>
                             </li>
                         </ul>
@@ -53,7 +70,7 @@
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Change Password", "ChangePassword", "Admin", null, null)</li>
                 <li>@Html.ActionLink("Reports", "ReportHome", "Admin", null, null)</li>
-                <li>@Html.ActionLink("Account Management", "Delete", "Admin", null, null)</li>
+                <li class="adminMng">@Html.ActionLink("Account Management", "Delete", "Admin", null, null)</li>
             </ul>
         </div>
     </nav>
