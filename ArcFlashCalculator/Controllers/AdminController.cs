@@ -244,10 +244,7 @@ namespace ArcFlashCalculator.Controllers
                     if (nameCheck == null)
                     {
                         newUser.Password = Encrypter.ComputeHash(newUser.Password, null);
-                        Users myUser = new Users();
-                        myUser.Email = newUser.Email;
-                        myUser.Password = newUser.Password;
-                        ViewModels.CreateUser(myUser);
+                        ViewModels.CreateUser(newUser);
                     }
                     else
                     {
