@@ -8,6 +8,24 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
+    @{ 
+        if(ViewBag.isAdmin)
+        {
+            <style>
+                li.adminMng {
+                    display: inline;
+                }
+            </style>
+        }
+        else
+        {
+            <style>
+                li.adminMng {
+                    display: none;
+                }
+            </style>
+        }
+    }
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header navbar-collapse collapse">
@@ -52,7 +70,7 @@
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Change Password", "ChangePassword", "Admin", null, null)</li>
                 <li>@Html.ActionLink("Reports", "ReportHome", "Admin", null, null)</li>
-                <li>@Html.ActionLink("Account Management", "Delete", "Admin", null, null)</li>
+                <li class="adminMng">@Html.ActionLink("Account Management", "Delete", "Admin", null, null)</li>
             </ul>
         </div>
     </nav>
