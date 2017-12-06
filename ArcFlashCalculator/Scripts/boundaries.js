@@ -22,13 +22,57 @@ var Boundaries = {
    },
 
    arcFlashOpen : function(volts, amps, time) {
-      "use strict";
+       "use strict";
       // var v2 = volts * volts,
       //     rsys = volts / amps,
       //     numerator = 0.005 * (v2/rsys) * time,
       //     cm = Math.ceil(Math.sqrt(numerator / 1.2));
       var cm = Math.ceil(Math.sqrt((0.005/1.2)*volts*amps*time));
       return Boundaries.toDisplay(cm);
+   },
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    //New calculation for the 60Hz page 
+   arcFlashOpen60Hz: function (volts, amps, time, freeSpaceCal, distExponent) {
+       "use strict";
+       /*
+       * Empirically derived formula for the derived Arc Flash Boundary Calculation
+       * Db = Math.pow((4.184 * Cf * En * (t / 0.2) * (Math.pow(610, x) / Eb)), x)
+       */
+       var Db = 0; //Distance (mm) of the arc flash boundary from the arcing point
+       var Cf = 1.5; //Calculation factor - 1.0 for voltages above 1kV and 1.5 for voltages at or below 1kV
+       var En = freeSpaceCal; //Incident energy normalized - pulled from the UI.js calculation
+       var t = time; //Time (s) 
+       var x = distExponent; // Distance exponent from Table D.4.2
+       var Eb = 5.0; //Incident in J/cm^2 at the distance of the Arc Flash Boundary
+       var V = volts; //System voltage, kV
+
+       Db = Math.pow((4.184 * Cf * En * (t / 0.2) * (Math.pow(610,x) / Eb)), 1/x)
+
+       //var cm = Math.ceil(Math.sqrt((0.005 / 1.2) * volts * amps * time));
+       return Boundaries.toDisplay(Db);
+   },
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////
+    //New calculation for the 60Hz page enclosed calculations
+   arcFlashEnclosed60Hz: function (volts, amps, time, cal, distExponent) {
+       "use strict";
+       /*
+        * Empirically derived formula for the derived Arc Flash Boundary Calculation
+        * Db = Math.pow((4.184 * Cf * En * (t / 0.2) * (Math.pow(610, x) / Eb)), x)
+        */
+       var Db = 0; //Distance (mm) of the arc flash boundary from the arcing point - This is what will be calculated 
+       var Cf = 1.5; //Calculation factor - 1.0 for voltages above 1kV and 1.5 for voltages at or below 1kV
+       var En = cal; //Incident energy normalized - pulled from the UI.js calculation
+       var t = time; //Time (s) 
+       var x = distExponent; // Distance exponent from Table D.4.2
+       var Eb = 5.0; //Incident in J/cm^2 at the distance of the Arc Flash Boundary - The is the onset of a second degree burn which is assumed to be when the skin receives 5.0 J/cm^2 of incident energy. 
+       var V = volts; //System voltage, kV
+
+       Db = Math.pow((4.184 * Cf * En * (t / 0.2) * (Math.pow(610,x) / Eb)), 1/x)
+
+       //var cm = Math.ceil(Math.sqrt((0.005 / 1.2) * 3 * volts * amps * time));
+       return Boundaries.toDisplay(Db);
    },
 
    arcFlashEnclosed : function(volts, amps, time) {
