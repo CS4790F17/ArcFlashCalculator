@@ -1,5 +1,7 @@
-﻿@using MVCGrid.Web
+﻿@model IEnumerable<UserInputsDC>
 @using ArcFlashCalculator.Models
+@using MVCGrid.Web
+
 @{
     ViewBag.Title = "DC Input History";
     Layout = "~/Views/Shared/_AdminNavbarPartial.cshtml";
@@ -22,13 +24,4 @@
          @Html.MVCGrid("UserInputsDC")
     </div>
 </div>
-
-<script type="text/javascript">
-    $(function () {
-        $('#selPageSize').change(function () {
-            MVCGrid.setPageSize('UserInputsDC', $('#selPageSize').val());
-        });
-        // set value of dropdown to grid setting
-        $('#selPageSize').val(MVCGrid.getPageSize('UserInputsDC'));
-    });
-</script>
+@Html.ActionLink("Return to Reports Home", "ReportHome", "Admin", new { @class = "btn btn-primary" }, null)

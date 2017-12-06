@@ -3,22 +3,6 @@
     string gridName = Model.MVCGridName;
 }
 
-@section Scripts{
-    <script type="text/javascript">
-        $(function () {
-
-            $('#selPageSize').change(function () {
-                MVCGrid.setPageSize('PageSizeGrid', $('#selPageSize').val());
-            });
-
-            // set value of dropdown to grid setting
-            $('#selPageSize').val(MVCGrid.getPageSize('PageSizeGrid'));
-
-        });
-    </script>
-}
-
-
 
 
 <div class="row">

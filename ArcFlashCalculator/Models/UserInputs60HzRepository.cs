@@ -7,15 +7,23 @@ namespace ArcFlashCalculator.Models
     public interface IUserInputs60HzRepository
     {
         IEnumerable<UserInputs60Hz> GetData(out int totalRecords, string globalSearch, int? limitOffset, int? limitRowCount, string orderBy, bool desc);
+        IEnumerable<UserInputs60Hz> GetData(out int totalRecords, int? limitOffset, int? limitRowCount, string orderBy, bool desc);
     }
     public class UserInputs60HzRepository : IUserInputs60HzRepository
     {
+
+        public IEnumerable<UserInputs60Hz> GetData(out int totalRecords, int? limitOffset, int? limitRowCount, string orderBy, bool desc)
+        {
+            return GetData(out totalRecords, null, limitOffset, limitRowCount, orderBy, desc);
+        }
         public IEnumerable<UserInputs60Hz> GetData(out int totalRecords, string globalSearch, int? limitOffset, int? limitRowCount, string orderBy, bool desc)
         {
 
-            var query = DataLink.GetAllUserInputs60Hz().AsQueryable();
+            using (var db = new ArcCalculatorDbContext())
+            {
+                var query = db.userInputs60Hz.AsQueryable();
 
-            if (!String.IsNullOrWhiteSpace(globalSearch))
+                if (!String.IsNullOrWhiteSpace(globalSearch))
                 {
                     query = query.Where(p => (p.TransSize.ToString() + " " + p.Impedance.ToString() + " " + p.SCC.ToString() + " "
                                                 + p.FaultClearing.ToString() + " " + p.Voltage.ToString() + " " + p.FreeAir.ToString() + " "
@@ -76,8 +84,15 @@ namespace ArcFlashCalculator.Models
                             else
                                 query = query.OrderByDescending(p => p.date);
                             break;
+                        case "id":
+                            if (!desc)
+                                query = query.OrderBy(p => p.Id);
+                            else
+                                query = query.OrderByDescending(p => p.Id);
+                            break;
                     }
                 }
+
 
 
                 if (limitOffset.HasValue)
@@ -86,7 +101,9 @@ namespace ArcFlashCalculator.Models
                 }
 
                 return query.ToList();
-            
+
+            }
+
         }
     }
 }

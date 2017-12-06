@@ -510,21 +510,24 @@ namespace ArcFlashCalculator.Controllers
                                 change.user.Password = Encrypter.ComputeHash(change.newPassword, null);
                                 ViewModels.UpdateUser(change.user, EntityState.Modified);
                                 return RedirectToAction("Delete");
-                            } else
+                            }
+                            else
                             {
                                 change.ComplexityError = true;
                                 change.confirmError = change.blankFieldError = false;
                                 change.newPassword = change.confirmPassword = null;
                                 return View(change);
                             }
-                        } else
+                        }
+                        else
                         {
                             change.confirmError = true;
                             change.ComplexityError = change.blankFieldError = false;
                             change.newPassword = change.confirmPassword = null;
                             return View(change);
                         }
-                    } else
+                    }
+                    else
                     {
                         change.blankFieldError = true;
                         change.ComplexityError = change.confirmError = false;

@@ -2,24 +2,19 @@
 
 namespace ArcFlashCalculator
 {
+    using System;
+    using System.Web;
+    using System.Web.Mvc;
+    using System.Linq;
+    using System.Collections.Generic;
 
     using MVCGrid.Models;
     using MVCGrid.Web;
-    using System.Web.Mvc;
     using Models;
     public static class MVCGridConfig
     {
         public static void RegisterGrids()
         {
-            // Default grid settings
-            /*       GridDefaults gridDefaults = new GridDefaults()
-                   {
-                       Paging = true,
-                       ItemsPerPage = 10,
-                       Sorting = true,
-                       Filtering = true,
-                       NoResultsMessage = "Sorry, no results were found"
-                   }; */
 
             // Default column settings
             ColumnDefaults colDefaults = new ColumnDefaults()
@@ -54,7 +49,7 @@ namespace ArcFlashCalculator
                     cols.Add("Voltage").WithHeaderText("Voltage")
                          .WithVisibility(true, true)
                          .WithValueExpression(p => p.Voltage.ToString());
-                    cols.Add("FreeAir").WithHeaderText("FreeAir")
+                    cols.Add("FreeAir").WithHeaderText("Free Air")
                          .WithVisibility(true, true)
                          .WithValueExpression(p => p.FreeAir.ToString());
                     cols.Add("IPAddress").WithHeaderText("IP Address")
@@ -84,7 +79,7 @@ namespace ArcFlashCalculator
             MVCGridDefinitionTable.Add("UserInputsDC", new MVCGridBuilder<UserInputsDC>(colDefaults)
                 .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .WithSorting(sorting: true, defaultSortColumn: "Id", defaultSortDirection: SortDirection.Dsc)
-            //    .WithPaging(paging: true, itemsPerPage: 10, allowChangePageSize: true, maxItemsPerPage: 100)
+                .WithPaging(paging: true, itemsPerPage: 10, allowChangePageSize: true, maxItemsPerPage: 100)
                 .WithQueryStringPrefix("grid2")
                 .WithAdditionalQueryOptionNames("search")
                 .AddColumns(cols =>
@@ -128,7 +123,7 @@ namespace ArcFlashCalculator
             MVCGridDefinitionTable.Add("UserIP", new MVCGridBuilder<UserIP>(colDefaults)
                 .WithAuthorizationType(AuthorizationType.AllowAnonymous)
                 .WithSorting(sorting: true, defaultSortColumn: "Id", defaultSortDirection: SortDirection.Dsc)
-         //       .WithPaging(paging: true, itemsPerPage: 10, allowChangePageSize: true, maxItemsPerPage: 100)
+                .WithPaging(paging: true, itemsPerPage: 10, allowChangePageSize: true, maxItemsPerPage: 100)
                 .WithAdditionalQueryOptionNames("search")
                 .AddColumns(cols =>
                 {
