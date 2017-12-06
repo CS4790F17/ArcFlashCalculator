@@ -8,6 +8,7 @@ namespace ArcFlashCalculator.Models
     public interface IUserInputsDCRepository
     {
         IEnumerable<UserInputsDC> GetData(out int totalRecords, string globalSearch, int? limitOffset, int? limitRowCount, string orderBy, bool desc);
+        IEnumerable<UserInputsDC> GetData(out int totalRecords, int? limitOffset, int? limitRowCount, string orderBy, bool desc);
     }
     public class UserInputsDCRepository : IUserInputsDCRepository
     {

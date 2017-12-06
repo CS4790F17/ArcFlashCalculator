@@ -1,4 +1,7 @@
-﻿
+﻿@model IEnumerable<UserIP>
+@using ArcFlashCalculator.Models
+@using MVCGrid.Web
+
 @{
     ViewBag.Title = "User IP History";
     Layout = "~/Views/Shared/_AdminNavbarPartial.cshtml";
@@ -11,7 +14,7 @@
 <div class="panel panel-default">
     <div class="panel-body">
 
-        @Html.Partial("_MVCGridToolbar", new ArcFlashCalculator.Models.MVCGridToolbarModel()
+        @Html.Partial("_MVCGridToolbar", new MVCGridToolbarModel()
    {
        MVCGridName = "UserIP",
        PageSize = true,
@@ -21,4 +24,5 @@
    })
           @Html.MVCGrid("UserIP") 
         </div>
-    </div>
+</div>
+@Html.ActionLink("Return to Reports Home", "ReportHome", "Admin", new { @class = "btn btn-primary" }, null)

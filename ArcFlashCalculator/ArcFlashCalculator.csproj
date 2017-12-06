@@ -565,9 +565,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DataLink.cs" />
-    <Compile Include="Models\IUserInputs60DCRepository.cs" />
+    <Compile Include="Models\UserInputsDCRepository.cs" />
     <Compile Include="Models\IUserIPRepository.cs" />
-    <Compile Include="Models\IUserInputs60HzRepository.cs" />
+    <Compile Include="Models\UserInputs60HzRepository.cs" />
     <Compile Include="Models\MVCGridToolbarModel.cs" />
     <Compile Include="Models\ReturnResult.cs" />
     <Compile Include="Models\ViewModels.cs" />
