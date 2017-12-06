@@ -295,7 +295,8 @@ var UI = {
             var k2 = -0.113;
             var calculationFactor = 1.5;
             var distExponent = 0;
-            var cal = 0; 
+            var cal = 0;
+            var seconds = $("#fault-clearing-time-input").val();
 
             if (equipmentTypeInput === 'panelboards-240-600') {
                 conductorGap = 25;
@@ -350,7 +351,7 @@ var UI = {
             $('#arc-flash-incident-energy').html(cal.toFixed(1) + ' cal/cm<sup>2</sup>');
 
             //////////////////////////////////////////// NEED TO COMPLETE
-            $('#arc-flash-display-enclosed-space').text(Boundaries.arcFlashEnclosed60Hz(volts, amps, time, cal, distExponent));
+            $('#arc-flash-display-enclosed-space').text(Boundaries.arcFlashEnclosed60Hz(volts, amps, seconds, cal, distExponent));
 
         }
         else {
