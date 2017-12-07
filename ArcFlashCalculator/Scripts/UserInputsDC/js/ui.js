@@ -231,7 +231,7 @@ var UI = {
 };
 
 $(function() {
-   "use strict";
+    "use strict";
 
    $("#workersPopover").popover({
        trigger: 'hover',

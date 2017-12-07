@@ -237,7 +237,7 @@
             <div class="section">
                 <h3 href="#shockboundaries" data-toggle="collapse">Shock Boundaries</h3>
                 <div id="shockboundaries" class="row results collapse in">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div id="restricted-approach-display" class="display"></div>
                         <h6>
                             Restricted Approach
@@ -245,14 +245,14 @@
             due to electrical arc over combined with inadvertent movement. PPE required."></span>
                         </h6>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div id="prohibited-approach-display" class="display"></div>
                         <h6>
                             Prohibited Approach
                             <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Distance from an exposed conductor within which work is considered the same as making contact with the electrical conductor or circuit part."></span>
                         </h6>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div id="limited-approach-fixed-circuit-display" class="display"></div>
                         <h6>
                             Limited Approach Fixed Circuit Part
@@ -334,22 +334,21 @@
                 <div id="safetyrequirements"class="row results collapse in">
                     <div class="col-md-6">
                         <div id="safety-req-workers-display" class="display"></div><h6>
-                            Workers <span class="glyphicon glyphicon-question-sign" href="#" id="workersPopover" data-toggle="popover"></span></h6>
+                            Workers <span class="glyphicon glyphicon-question-sign" href="#" id="workersPopover" data-toggle="popover" data-placement="right"></span></h6>
                     </div>
                     <div class="col-md-6">
                         <div id="safety-req-work-control-display" class="display"></div><h6>
-                            Work Control <span class="glyphicon glyphicon-question-sign" href="#" id="workerControlPopover" data-toggle="popover" title="Training Definitions" data-content="EEWP - Energized Electrical Work Permit, higher level signing authority required
-                        SOP - Standard Operating Procedure"></span>
+                            Work Control <span class="glyphicon glyphicon-question-sign" href="#" id="workerControlPopover" data-toggle="popover" data-placement="right"></span>
                         </h6>
                     </div>
                 </div>
             </div>
 
             <div class="section" id="arc-flash-boundaries">
-                <h3 href="#arcflashboundaries" data-toggle="collapse">Arc Flash Boundaries</h3>
+                <h3 href="#arc-flash-boundary-display-container" data-toggle="collapse">Arc Flash Boundaries</h3>
                 <!-- <p>This analysis is based on 2012 NFPA 70E, Table 130.7(C)(15)(a).</p> -->
-                <div id="arcflashboundaries" class="row results collapse in" id="arc-flash-boundary-display-container">
-                    <div class="col-md-4">
+                <div class="row results collapse in" id="arc-flash-boundary-display-container">
+                    <div class="col-md-6">
                         <div id="arc-flash-boundary-display" class="display">Xmm (Y")</div><h6>Enclosed Box Arc Flash Boundary</h6>
                     </div>
                 </div>
@@ -359,7 +358,7 @@
             <div class="section" id="safety-tables">
                 <h3>Tasks Performed on Energized Equipment</h3>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <table id="panelboards-240-table" class="text-table table-130">
                             <thead>
                                 <tr>
@@ -740,7 +739,7 @@
             <div class="section" id="ppe-requirements">
                 <h3>Protective Clothing and PPE</h3>
                 <div class="row results">
-                    <div class="col-md-8 col-md-offset-2">
+                    <div class="col-md-12">
                         <div id="" class="ppe-display">
                             <h4>Minimum Class of Dielectric Gloves with Leather Protectors:</h4>
                             <ul>
@@ -750,7 +749,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
+                    <div class="col-md-12">
                         <table class="text-table">
                             <thead>
                                 <tr>
@@ -963,10 +962,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="~/Scripts/UserInputs60Hz/js/jquery.textchange.min.js"></script>
 
-    <script src="~/Scripts/UserInputs60Hz/js/jquery-1.7.2.min.js"></script>
+    @*<script src="~/Scripts/UserInputs60Hz/js/jquery-1.7.2.min.js"></script>
     <script src="~/Scripts/UserInputs60Hz/js/bootstrap.min.js"></script>
     <script src="../bootstrap/js/bootstrap-tooltip.js"></script>
-    <script src="../bootstrap/js/bootstrap-popover.js"></script>
+    <script src="../bootstrap/js/bootstrap-popover.js"></script>*@
     <script src="~/Scripts/support.js"></script>
     <script src="~/Scripts/modernizr.js"></script>
 

@@ -48,7 +48,7 @@
 
                 <div class="form-group">
                     <label>
-                        Work Mode <span class="glyphicon glyphicon-question-sign" href="#" id="workerModePopover" data-toggle="popover"></span>:
+                        Work Mode <span class="glyphicon glyphicon-question-sign" href="#" id="workerModePopover" data-toggle="popover" data-placement="top"></span>:
                     </label>
                     <select class="form-control" id="work-mode-input">
                         <option value="">Select a mode</option>
@@ -94,17 +94,17 @@
             </div>
 
             <div class="section">
-                <h3>General</h3>
-                <div class="row results">
-                    <div class="col-md-4"><div id="watts-display" class="display"></div><h6>DC Power</h6></div>
-                    <div class="col-md-4"><div id="joules-display" class="display"></div><h6>DC Energy</h6></div>
+                <h3 href="#general" data-toggle="collapse">General</h3>
+                <div id="general" class="row results collapse in">
+                    <div class="col-md-6"><div id="watts-display" class="display"></div><h6>DC Power</h6></div>
+                    <div class="col-md-6"><div id="joules-display" class="display"></div><h6>DC Energy</h6></div>
                 </div>
             </div>
 
             <div class="section">
-                <h3>Shock Boundaries</h3>
-                <div class="row results">
-                    <div class="col-md-4">
+                <h3 href="#shockboundaries" data-toggle="collapse">Shock Boundaries</h3>
+                <div id="shockboundaries" class="row results collapse in">
+                    <div class="col-md-6">
                         <div id="limited-approach-movable-conductor-display" class="display"></div>
                         <h6>
                             Limited Approach Movable Conductor
@@ -112,7 +112,7 @@
                            
                         </h6>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div id="limited-approach-fixed-circuit-display" class="display"></div>
                         <h6>
                             Limited Approach Fixed Circuit Part
@@ -120,96 +120,90 @@
                            
                         </h6>
                     </div>
-                </div>
-                <div class="row results">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div id="restricted-approach-display" class="display"></div>
                         <h6>
                             Restricted Approach
                             <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Distance from an exposed conductor within which there is an increased risk of shock
                     due to electrical arc over combined with inadvertent movement. PPE required."></span>
-                            
+
                         </h6>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div id="prohibited-approach-display" class="display"></div>
                         <h6>
                             Prohibited Approach
                             <span class="glyphicon glyphicon-question-sign" href="#" data-toggle="tooltip" title="Distance from an exposed conductor within which work is considered the same as making contact with the electrical conductor or circuit part."></span>
-                           
+
                         </h6>
                     </div>
-                </div>
-                <div class="row source">
-                    <div class="col-md-4">
-                        Using shock boundary data from the 60hz class.
+                    <div class="source">
+                        <div class="col-md-6">
+                            Using shock boundary data from the 60hz class.
+                        </div>
                     </div>
                 </div>
+                
             </div>
 
             <div class="section">
-                <h3>
-                    Arc Flash Boundaries <span class="glyphicon glyphicon-question-sign" href="#" id="arcFlashBoundariesPopover" data-toggle="popover"></span>
+                <h3 href="#arcflashboundaries" data-toggle="collapse">
+                    Arc Flash Boundaries <span class="glyphicon glyphicon-question-sign" href="#" id="arcFlashBoundariesPopover" data-toggle="popover" data-placement="top"></span>
                 </h3>
-                <div class="row results">
-                    <div class="col-md-4">
+                <div id="arcflashboundaries" class="collapse in">
+                    <div class="col-md-6">
                         <div id="arc-flash-free-space-incident-energy" class="display"></div>
                         <h6>
                             Free Space Incident Energy at 18"
-                            <span class="glyphicon glyphicon-question-sign" href="#" id="freeSpaceIncidentPopover" data-toggle="popover"></span>
+                            <span class="glyphicon glyphicon-question-sign" href="#" id="freeSpaceIncidentPopover" data-toggle="popover" data-placement="top"></span>
                         </h6>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div id="arc-flash-display-free-space" class="display"></div>
                         <h6>
                             Free Space Arc Flash Boundary for 1.2 cal/cm<sup>2</sup>
-                            <span class="glyphicon glyphicon-question-sign" href="#" id="freeSpaceArcFlashPopover" data-toggle="popover"></span>
+                            <span class="glyphicon glyphicon-question-sign" href="#" id="freeSpaceArcFlashPopover" data-toggle="popover" data-placement="top"></span>
                         </h6>
                     </div>
-                </div>
-                <div class="row results">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div id="arc-flash-incident-energy" class="display"></div>
                         <h6>
                             Enclosed Box Incident Energy at 18"
-                            <span class="glyphicon glyphicon-question-sign" href="#" id="enclosedBoxIncidentPopover" data-toggle="popover"></span>
+                            <span class="glyphicon glyphicon-question-sign" href="#" id="enclosedBoxIncidentPopover" data-toggle="popover" data-placement="top"></span>
                         </h6>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div id="arc-flash-display-enclosed-space" class="display"></div>
                         <h6>
                             Enclosed Box Arc Flash Boundary for 1.2 cal/cm<sup>2</sup>
-                            <span class="glyphicon glyphicon-question-sign" href="#" id="enclosedBoxArcFlashPopover" data-toggle="popover"></span>
+                            <span class="glyphicon glyphicon-question-sign" href="#" id="enclosedBoxArcFlashPopover" data-toggle="popover" data-placement="top"></span>
                         </h6>
                     </div>
                 </div>
             </div>
 
             <div class="section">
-                <h3>Safety Requirements</h3>
-                <div class="row results">
+                <h3 href="#safetyrequirements" data-toggle="collapse">Safety Requirements</h3>
+                <div id="safetyrequirements" class="row results collapse in">
                     <div class="col-md-6">
                         <div id="safety-req-workers-display" class="display"></div><h6>
-                            Workers <span class="glyphicon glyphicon-question-sign" href="#" id="workersPopover" data-toggle="popover"></span>
+                            Workers <span class="glyphicon glyphicon-question-sign" href="#" id="workersPopover" data-toggle="popover" data-placement="top"></span>
                         </h6>
                     </div>
                     <div class="col-md-6">
                         <div id="safety-req-work-control-display" class="display"></div><h6>
-                            Work Control <span class="glyphicon glyphicon-question-sign" href="#" id="workerControlPopover" data-toggle="popover"></span>
+                            Work Control <span class="glyphicon glyphicon-question-sign" href="#" id="workerControlPopover" data-toggle="popover" data-placement="top"></span>
                         </h6>
                     </div>
-                </div>
-                <div class="row results">
                     <div class="col-md-6"><div id="safety-req-ppe-display" class="display"></div><h6>Required Personal Protective Equipment</h6></div>
                 </div>
             </div>
-
 
             <div class="section" id="ppe-requirements">
                 <h3>Free Space PPE Requirements for Working at a Distance of 18"</h3>
                 <p>This analysis is based on 2012 NFPA 70E, Table 130.7(C)(15)(a).</p>
                 <div class="row results arc-flash-ppe">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div id="" class="ppe-display">
                             <h4>Arc Rated Clothing, Minimum Arc rating of <span id="ppe-cal-rating">4</span> cal/cm<sup>2</sup>:</h4>
                             <ul id="ppe-low">
@@ -228,7 +222,7 @@
                     </div>
                 </div>
                 <div class="row results arc-flash-ppe">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div id="" class="ppe-display">
                             <h4>Protective Equipment:</h4>
                             <ul>
@@ -241,7 +235,7 @@
                     </div>
                 </div>
                 <div class="row results">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div id="" class="ppe-display">
                             <h4>Minimum Class of Dielectric Gloves with Leather Protectors:</h4>
                             <ul>
@@ -255,7 +249,7 @@
             <div class="section" id="ppe-requirements-voltage-too-high">
                 <h3>Free Space PPE Requirements for Working at a Distance of 18"</h3>
                 <div class="row results">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="display">No PPE available to protect the worker, therefore the worker can not work at this arc flash hazard level. Methods must be used to reduce to risk of arc flash by reducing the probability of creating an arc flash to near zero.</div>
                     </div>
                 </div>
@@ -269,7 +263,7 @@
                 <h3>Enclosed Space PPE Requirements for Working at a Distance of 18"</h3>
                 <p>This analysis is based on 2012 NFPA 70E, Table 130.7(C)(15)(a).</p>
                 <div class="row results enclosed-arc-flash-ppe">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div id="" class="ppe-display">
                             <h4>Arc Rated Clothing, Minimum Arc rating of <span id="enclosed-ppe-cal-rating">4</span> cal/cm<sup>2</sup>:</h4>
                             <ul id="enclosed-ppe-low">
@@ -288,7 +282,7 @@
                     </div>
                 </div>
                 <div class="row results enclosed-arc-flash-ppe">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div id="" class="ppe-display">
                             <h4>Protective Equipment:</h4>
                             <ul>
@@ -301,7 +295,7 @@
                     </div>
                 </div>
                 <div class="row results">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div id="" class="ppe-display">
                             <h4>Minimum Class of Dielectric Gloves with Leather Protectors:</h4>
                             <ul>
@@ -315,15 +309,15 @@
             <div class="section" id="enclosed-ppe-requirements-voltage-too-high">
                 <h3>Enclosed Space PPE Requirements for Working at a Distance of 18"</h3>
                 <div class="row results">
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <div class="display">No PPE available to protect the worker, therefore the worker can not work at this arc flash hazard level. Methods must be used to reduce to risk of arc flash by reducing the probability of creating an arc flash to near zero.</div>
                     </div>
                 </div>
             </div>
 
             <div class="section">
-                <h3>Classes</h3>
-                <div class="row results">
+                <h3 href="#classes" data-toggle="collapse">Classes</h3>
+                <div id="classes" class="row results collapse in">
                     <div class="col-md-12">
                         <img style="width: 100%;" src="~/Content/images/subrf-classes.png" /></div>
                 </div>
@@ -346,11 +340,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="~/Scripts/UserInputs60Hz/js/jquery.textchange.min.js"></script>
 
-<script src="../js/jquery-1.7.2.min.js"></script>
+@*<script src="../js/jquery-1.7.2.min.js"></script>
 <script src="../js/jquery.textchange.min.js"></script>
 <script src="../bootstrap/js/bootstrap.min.js"></script>
 <script src="../bootstrap/js/bootstrap-tooltip.js"></script>
-<script src="../bootstrap/js/bootstrap-popover.js"></script>
+<script src="../bootstrap/js/bootstrap-popover.js"></script>*@
 <script src="~/Scripts/support.js"></script>
 <script src="~/Scripts/modernizr.js"></script>
 

@@ -245,11 +245,19 @@ $(function() {
         html: true
     });
 
-    $("#cdEnergyPopover").popover({
+    $("#dcEnergyPopover").popover({
         trigger: 'hover',
         content: "Energy = 0.5 CV<sup>2</sup>",
         html: true
     });
+
+    $("#dischargeMethodPopover").popover({
+        trigger: 'hover',
+        content: "Discharge stick must be approved by the agency AHJ. A Hard ground hook will apply a short circuit to the capacitor returnpoint. A Soft ground hook will utilize a properly specified resistor to control the discharge of energy from the capacitor. When not in use  capacitors should have a shorting strap placed between the positive and negative connections.",
+        html: true
+    });
+
+    
 
    UI.evaluate();
    

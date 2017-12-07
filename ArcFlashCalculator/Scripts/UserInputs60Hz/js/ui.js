@@ -434,6 +434,7 @@ var UI = {
         $('#transformer-size-input').val('');
         $('#equipment-class-input').val('');
         $('#work-mode-input').val('');
+        $('#transformer-impedance-field').val('');
         UI.evaluate();
     },
 

@@ -207,6 +207,7 @@ var UI = {
    reset : function(evt) {
       "use strict";
       evt.preventDefault();
+      $('MaxExposed-input').val('');
       $('#maximum-exposed-input').val('');
       $('#available-current-input').val('');
       $('#duration-input').val('');

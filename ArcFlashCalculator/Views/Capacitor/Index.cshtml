@@ -5,7 +5,6 @@
 </style>
 
 <link href="~/Content/css/main.css" rel="stylesheet" /> 
-   
 
 <nav id="navBtm" class="navbar navbar-default navbar-fixed-bottom hidden">
     <div class="container-fluid">
@@ -92,101 +91,96 @@
             </div>
 
             <div class="section">
-                <h3>General</h3>
-                <div class="row results">
-                    <div class="col-md-4">
+                <h3 href="#general" data-toggle="collapse">General</h3>
+                <div id="general" class="row results collapse in">
+                    <div class="col-md-6">
                         <div id="joules-display" class="display"></div><h6>
                             DC Energy
-                            <span class="glyphicon glyphicon-question-sign" href="#" id="dcEnergyPopover" data-toggle="popover"></span>
+                            <span class="glyphicon glyphicon-question-sign" href="#" id="dcEnergyPopover" data-toggle="popover" data-placement="top"></span>
                         </h6>
                     </div>
                 </div>
             </div>
 
             <div class="section">
-                <h3>Shock Boundaries</h3>
-                <div class="row results">
-                    <div class="col-md-4">
+                <h3 href="#shockboundaries" data-toggle="collapse">Shock Boundaries</h3>
+                <div id="shockboundaries" class="row results collapse in">
+                    <div class="col-md-6">
                         <div id="limited-approach-fixed-circuit-display" class="display"></div>
                         <h6>
                             Limited Approach Fixed Circuit Part
-                            <span class="glyphicon glyphicon-question-sign" href="#" id="limitedApproachPopover" data-toggle="popover"></span>
+                            <span class="glyphicon glyphicon-question-sign" href="#" id="limitedApproachPopover" data-toggle="popover" data-placement="top"></span>
                         </h6>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div id="restricted-approach-display" class="display"></div>
                         <h6>
                             Restricted Approach
-                            <span class="glyphicon glyphicon-question-sign" href="#" id="restrictedApproachPopover" data-toggle="popover"></span>
+                            <span class="glyphicon glyphicon-question-sign" href="#" id="restrictedApproachPopover" data-toggle="popover" data-placement="top"></span>
                         </h6>
                     </div>
-                </div>
-                <div class="row results">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div id="prohibited-approach-display" class="display"></div>
                         <h6>
                             Prohibited Approach
-                            <span class="glyphicon glyphicon-question-sign" href="#" id="prohibitedApproachPopover" data-toggle="popover"></span>
+                            <span class="glyphicon glyphicon-question-sign" href="#" id="prohibitedApproachPopover" data-toggle="popover" data-placement="top"></span>
                         </h6>
                     </div>
                 </div>
+
             </div>
 
             <div class="section">
-                <h3>Arc Flash Boundaries (Applicable at >100V and >10kJ)</h3>
-                <p class="important">The calculated Arc Flash boundary does not account for hearing or lung damage or potential flying debris which may be present during a failure mode event.</p>
-                <p>Lung damage may occur if you are within the Enclosed Box Arc Flash boundary.</p>
-                <div class="row results">
-                    <div class="col-md-4">
-                        <div id="arc-flash-display" class="display"></div>
-                        <h6>
-                            Enclosed Box Arc Flash Boundary for 1.2 cal/cm<sup>2</sup>
-                            <span class="glyphicon glyphicon-question-sign" href="#" id="enclosedBoxArcPopover" data-toggle="popover"></span>
-                        </h6>
-                    </div>
-                    <div class="col-md-4">
-                        <div id="distances-table-wrapper">
-                            <table id="distances-table" class="text-table">
-                                <thead>
-                                    <tr>
-                                        <th>Distance</th>
-                                        <th>cal/cm<sup>2</sup></th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
+                <h3 href="#arcflashboundaries" data-toggle="collapse">Arc Flash Boundaries (Applicable at >100V and >10kJ)</h3>
+                <div id="arcflashboundaries" class="collapse in">
+                    <p class="important">The calculated Arc Flash boundary does not account for hearing or lung damage or potential flying debris which may be present during a failure mode event.</p>
+                    <p>Lung damage may occur if you are within the Enclosed Box Arc Flash boundary.</p>
+                    <div class="row results">
+                        <div class="col-md-6">
+                            <div id="arc-flash-display" class="display"></div>
                             <h6>
-                                Distance vs cal/cm<sup>2</sup> <i id="arc-flash-help" class="icon-question-sign help-tooltip"
-                                                                    data-title="<p>The Distance vs. Calorie table presented includes a safety factor of 3 to account for potential focusing factors from a non omni-directional release of energy. It is presented for informational purposes and should only to be utilized during emergency situations. It does not account for hearing or lung damage or potential flying debris which may be present during a failure mode event.</p>
-                        <p>Energy (J) at a distance (cm) = 3 x Energy / (4 * PI * R^2)<br/>Energy (cal) at a distance (cm) = (Energy (J) at a distance (cm)) / 4.184</p>"></i>
+                                Enclosed Box Arc Flash Boundary for 1.2 cal/cm<sup>2</sup>
+                                <span class="glyphicon glyphicon-question-sign" href="#" id="enclosedBoxArcPopover" data-toggle="popover" data-placement="top"></span>
                             </h6>
+                        </div>
+                        <div class="col-md-6">
+                            <div id="distances-table-wrapper">
+                                <table id="distances-table" class="text-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Distance</th>
+                                            <th>cal/cm<sup>2</sup></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                                <h6>
+                                    Distance vs cal/cm<sup>2</sup> <i id="arc-flash-help" class="icon-question-sign help-tooltip"
+                                                                      data-title="<p>The Distance vs. Calorie table presented includes a safety factor of 3 to account for potential focusing factors from a non omni-directional release of energy. It is presented for informational purposes and should only to be utilized during emergency situations. It does not account for hearing or lung damage or potential flying debris which may be present during a failure mode event.</p>
+                            <p>Energy (J) at a distance (cm) = 3 x Energy / (4 * PI * R^2)<br/>Energy (cal) at a distance (cm) = (Energy (J) at a distance (cm)) / 4.184</p>"></i>
+                                </h6>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <div class="section">
-                <h3>Safety Requirements</h3>
-                <div class="row results">
+                <h3 href="#safetyrequirements" data-toggle="collapse">Safety Requirements</h3>
+                <div id="safetyrequirements" class="row results collapse in">
                     <div class="col-md-6">
                         <div id="safety-req-workers-display" class="display"></div><h6>
-                            Workers <span class="glyphicon glyphicon-question-sign" href="#" id="workersPopover" data-toggle="popover"></span>
+                            Workers <span class="glyphicon glyphicon-question-sign" href="#" id="workersPopover" data-toggle="popover" data-placement="top"></span>
                         </h6>
                     </div>
                     <div class="col-md-6">
                         <div id="safety-req-work-control-display" class="display"></div><h6>
-                            Work Control <span class="glyphicon glyphicon-question-sign" href="#" id="workerControlPopover" data-toggle="popover"></span>
+                            Work Control <span class="glyphicon glyphicon-question-sign" href="#" id="workerControlPopover" data-toggle="popover" data-placement="top"></span>
                         </h6>
                     </div>
-                </div>
-                <div class="row results">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div id="safety-req-energy-removal-display" class="display"></div><h6>
-                            Discharge Method <i class="icon-question-sign help-tooltip"
-                                                data-title="Discharge stick must be approved by the agency AHJ. A Hard ground hook will apply a short circuit to the capacitor return
-                            point. A Soft ground hook will utilize a properly specified resistor to control the discharge of
-                            energy from the capacitor. When not in use  capacitors should have a shorting strap placed
-                            between the positive and negative connections."></i>
+                            Discharge Method <span class="glyphicon glyphicon-question-sign" href="#" id="dischargeMethodPopover" data-toggle="popover" data-placement="top"></span>
                         </h6>
                     </div>
                 </div>
@@ -217,9 +211,9 @@
             </div>
 
             <div class="section">
-                <h3>Classes</h3>
-                <div class="row results">
-                    <div class="col-md-6"><img style="width: 100%;" src="~/Content/images/capacitor-classes.png"/></div>
+                <h3 href="#classes" data-toggle="collapse">Classes</h3>
+                <div id="classes"class="row results collapse in">
+                    <div class="col-md-12"><img style="width: 100%;" src="~/Content/images/capacitor-classes.png"/></div>
                 </div>
             </div>
         </div>
