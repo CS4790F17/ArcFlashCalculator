@@ -66,7 +66,7 @@ namespace ArcFlashCalculator.Models
                             else
                                 query = query.OrderByDescending(p => p.Voltage);
                             break;
-                        case "FreeAir":
+                        case "freeair":
                             if (!desc)
                                 query = query.OrderBy(p => p.FreeAir);
                             else

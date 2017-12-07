@@ -12,7 +12,10 @@ namespace ArcFlashCalculator.Models
     }
     public class UserInputsDCRepository : IUserInputsDCRepository
     {
-
+        public IEnumerable<UserInputsDC> GetData(out int totalRecords, int? limitOffset, int? limitRowCount, string orderBy, bool desc)
+        {
+            return GetData(out totalRecords, null, limitOffset, limitRowCount, orderBy, desc);
+        }
         public IEnumerable<UserInputsDC> GetData(out int totalRecords, string globalSearch, int? limitOffset, int? limitRowCount, string orderBy, bool desc)
         {
            
@@ -74,9 +77,5 @@ namespace ArcFlashCalculator.Models
             
         }
 
-        public IEnumerable<UserInputsDC> GetData(out int totalRecords, int? limitOffset, int? limitRowCount, string orderBy, bool desc)
-        {
-            return GetData(out totalRecords, limitOffset, limitRowCount, orderBy, desc);
-        }
     }
 }

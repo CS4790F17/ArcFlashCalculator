@@ -566,7 +566,7 @@
     </Compile>
     <Compile Include="Models\DataLink.cs" />
     <Compile Include="Models\UserInputsDCRepository.cs" />
-    <Compile Include="Models\IUserIPRepository.cs" />
+    <Compile Include="Models\UserIPRepository.cs" />
     <Compile Include="Models\UserInputs60HzRepository.cs" />
     <Compile Include="Models\MVCGridToolbarModel.cs" />
     <Compile Include="Models\ReturnResult.cs" />
