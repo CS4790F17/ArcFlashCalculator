@@ -363,63 +363,200 @@
                         <table id="panelboards-240-table" class="text-table table-130">
                             <thead>
                                 <tr>
-                                    <th>Tasks Performed on Energized Equipment</th>
-                                    <th>Hazard/Risk Category</th>
-                                    <th>Rubber Insulating Gloves</th>
-                                    <th>Insulated and Insulating Hand Tools</th>
+                                    <th>Equipment</th>
+                                    <th>Arc-Flash PPE Category</th>
+                                    <th>Arc-Flash Boundary</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>Perform infrared thermography and other non-contact inspections outside the restricted approach boundary</td>
-                                    <td>0</td>
-                                    <td>No</td>
-                                    <td>No</td>
-                                </tr>
-                                <tr>
-                                    <td>Circuit breaker (CB) or fused switch operation with covers on</td>
-                                    <td>0</td>
-                                    <td>No</td>
-                                    <td>No</td>
-                                </tr>
-                                <tr>
-                                    <td>CB or fused switch operation with covers off</td>
-                                    <td>0</td>
-                                    <td>No</td>
-                                    <td>No</td>
-                                </tr>
-                                <tr>
-                                    <td>Work on energized electrical conductors and circuit parts, including voltage testing</td>
+                                    <td>Panelboards or other equipment rated 240 volts and below. Parameters: Maximum of 25kA available fault current; maximum of 0.03 sec ( 2 cycles) fault clearing time; minimum working distance 455 mm (18 in.)</td>
                                     <td>1</td>
-                                    <td>Yes</td>
-                                    <td>Yes</td>
+                                    <td>485 mm (19 in.)</td>
                                 </tr>
                                 <tr>
-                                    <td>Remove/install CBs or fused switches</td>
-                                    <td>1</td>
-                                    <td>Yes</td>
-                                    <td>Yes</td>
+                                    <td>Panelboards or other equipment rated greater than 240 volts and up to 600 volts. Parameters: Maximum of 25 kA available fault current; maximum of 0.03 sec (2 cycles) fault clearing time; minimum working distance 455 mm (18 in.)</td>
+                                    <td>2</td>
+                                    <td>900 mm (3 ft)</td>
                                 </tr>
                                 <tr>
-                                    <td>Removal of bolted covers (to expose bare, energized electrical conductors and circuit parts)</td>
-                                    <td>1</td>
-                                    <td>No</td>
-                                    <td>No</td>
+                                    <td>600-volt class motor control centers (MCCs).  Parameters: Maximum of 65 kA available fault current; maximum of 0.03 sec (2 cycles) fault clearing time; minimum working distance 455 mm (18 in.)</td>
+                                    <td>2</td>
+                                    <td>1.5 m (5 ft)</td>
                                 </tr>
                                 <tr>
-                                    <td>Opening hinged covers (to expose bare, energized electrical conductors and circuit parts)</td>
-                                    <td>0</td>
-                                    <td>No</td>
-                                    <td>No</td>
+                                    <td>600-volt class motor control centers (MCCs). Parameters: Maximum of 42 kA available fault current; maximum of 0.33 sec (20 cycles) fault clearing time; minimum working distance 455 mm (18 in.)</td>
+                                    <td>4</td>
+                                    <td>4.3 m (14 ft)</td>
                                 </tr>
                                 <tr>
-                                    <td>Work on energized electrical conductors and circuit parts of utilization equipment fed directly by a branch circuit of the panelboard</td>
-                                    <td>1</td>
-                                    <td>Yes</td>
-                                    <td>Yes</td>
+                                    <td>600-volt class switchgear (with power circuit breakers or fused switches) and 600-volt class switchboards. Parameters: Maximum of 35 kA available fault current; maximum of up to 0.5 sec (30 cycles) fault clearing time; minimum  working distance 455 mm (18 in.)</td>
+                                    <td>4</td>
+                                    <td>6 m (20 ft)</td>
+                                </tr>
+                                <tr>
+                                    <td>Other 600-volt class (277 volts through 600 volts, nominal) equipment. Parameters: Maximum of 65 kA avilable fault current; maximum of 0.03 sec (2 cycles) fault clearing time; minimum working distance 455 mm (18 in.)</td>
+                                    <td>2</td>
+                                    <td>1.5 m (5 ft)</td>
+                                </tr>
+                                <tr>
+                                    <td>NEMA E2 (fused contactor) motor starters, 2.3 kV through 7.2 kV. Parameters: Maximum of 35 kA available fault current; maximum of up to 0.24 sec (15 cycles) fault clearing time; minimum working distance 910 mm (36 in.)</td>
+                                    <td>4</td>
+                                    <td>12 m (40 ft)</td>
+                                </tr>
+                                <tr>
+                                    <td>Metal-clad switchgear, 1 kV through 15 kV. Parameters: Maximum of 35 kA avilable fault current; maximum of up to 0.24 sec (15 cycles) fault clearing time; minimum working distance 910 mm (36 in.)</td>
+                                    <td>4</td>
+                                    <td>12 m (40 ft)</td>
+                                </tr>
+                                <tr>
+                                    <td>Arc-resistant switchgear 1 kV through 15 kV [for clearing times of less than 0.5 sec (30 cycles) with an available fault current not to exceed the arc-resistant rating of the equipment], and metal-enclosed interrupter switchgear, fused or unfused of arc-resistant-type construction, 1 kV through 15 kV. Parameters: Maximum of 35 kA avilable fault current; maximum of up to 0.24 sec (15 cycles) fault clearing time; minimum working distance 910 mm (36 in.)</td>
+                                    <td>4 (doors open) OR N/A (doors closed)</td>
+                                    <td>12 m (40 ft) OR N/A (doors closed)</td>
+                                </tr>
+                                <tr>
+                                    <td>Other equipment 1 kV through 15 kV. Parameters: Maximum of 35 kA avilable fault current; maximum of up to 0.24 sec (15 cycles) fault clearing time; minimum working distance 910 mm (36 in.) </td>
+                                    <td>4</td>
+                                    <td>12 m (40 ft)</td>
                                 </tr>
                             </tbody>
                         </table>
+
+                        @*new table for the PPE definitions*@
+                        <table id="panelboards-240-table" class="text-table table-130">
+                            <thead>
+                                <tr>
+                                    <th>Arc-Flash PPE Category</th>
+                                    <th>PPE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td><pre>Arc-rated Clothing, Minimum Arc Rating of 4 cal/cm^2 (16.75 J/cm^2) 
+                                             Arc-rated long-sleeve shirt and pants or arc-rated coverall
+                                             Arc-rated face shield or arc flash suit hood
+                                             Arc-rated jacket, parka, rainwear, or hard hat liner (AN)
+                                             Protective Equipment
+                                             Hard hat
+                                             Safety glasses or safety goggles (SR)    
+                                             Hearing protection (ear canal inserts)
+                                             Heavy-duty leather gloves
+                                             Leather footwear
+                                        </pre>                                    
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>
+                                        <pre>
+                                            Arc-rated Clothing, Minimum Arc Rating of 8 cal/cm^2 (33.4 J/cm^2)
+                                            Arc-rated long-sleeve shirt and pants or arc-rated coverall
+                                            Arc-rated flash suit hood or arc-rated face shield and arc-rated balaclava
+                                            Arc-rated jacket, parka, rainwear, or hard hat liner (AN)
+                                            Protective Equipment
+                                            Hard Hat
+                                            Safety glasses or safety goggles (SR)
+                                            Hearing protection (ear canal inserts)
+                                            Heavy-duty leather gloves
+                                            Leather footwear
+                                        </pre>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>
+                                        <pre>
+                                            Arc-Rated Clothing Selected so That the System Arc Rating Meets the Required Minimum Arc Rating of 25 cal/cm^2 (104.7 J/cm^2)
+                                            Arc-rated long-sleeve shirt (AR)
+                                            Arc-rated pants (AR) 
+                                            Arc-rated coverall (AR)
+                                            Arc-rated arc flash suit jacket (AR)
+                                            Arc-rated arc flash suit pants (AR)
+                                            Arc-rated arc flash suit hood 
+                                            Arc-rated gloves
+                                            Arc-rated jacket, parka, rainwear, or hard hat liner (AN)
+                                            Protective Equipment 
+                                            Hard hat
+                                            Safety glasses or safety goggles (SR)
+                                            Hearing protection (ear canal inserts)
+                                            Leather footwear
+                                        </pre>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>
+                                        <pre>
+                                            Arc-Rated Clothing Selected so That the SYstme Arc Rating Meets the Required Minimum Arc Rating of 40 cal/cm^2 (167.5 J/cm^2)
+                                            Arc-rated pants (AR)
+                                            Arc-rated long-sleeve shirt (AR)
+                                            Arc-rated coverall (AR)
+                                            Arc-rated
+
+                                       </pre>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        @*<thead>
+            <tr>
+                <th>Tasks Performed on Energized Equipment</th>
+                <th>Hazard/Risk Category</th>
+                <th>Rubber Insulating Gloves</th>
+                <th>Insulated and Insulating Hand Tools</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Perform infrared thermography and other non-contact inspections outside the restricted approach boundary</td>
+                <td>0</td>
+                <td>No</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>Circuit breaker (CB) or fused switch operation with covers on</td>
+                <td>0</td>
+                <td>No</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>CB or fused switch operation with covers off</td>
+                <td>0</td>
+                <td>No</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>Work on energized electrical conductors and circuit parts, including voltage testing</td>
+                <td>1</td>
+                <td>Yes</td>
+                <td>Yes</td>
+            </tr>
+            <tr>
+                <td>Remove/install CBs or fused switches</td>
+                <td>1</td>
+                <td>Yes</td>
+                <td>Yes</td>
+            </tr>
+            <tr>
+                <td>Removal of bolted covers (to expose bare, energized electrical conductors and circuit parts)</td>
+                <td>1</td>
+                <td>No</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>Opening hinged covers (to expose bare, energized electrical conductors and circuit parts)</td>
+                <td>0</td>
+                <td>No</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td>Work on energized electrical conductors and circuit parts of utilization equipment fed directly by a branch circuit of the panelboard</td>
+                <td>1</td>
+                <td>Yes</td>
+                <td>Yes</td>
+            </tr>
+        </tbody>*@
 
                         <table id="panelboards-240-600-table" class="text-table table-130">
                             <thead>
